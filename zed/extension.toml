@@ -1,0 +1,7 @@
+id = "ember-tide"
+name = "Ember Tide"
+version = "1.0.0"
+schema_version = 1
+authors = ["Hoang"]
+description = "A warm–cool dark theme: night-blue background, ember coral and amber, tide blue and teal."
+repository = "https://github.com/GITHUB_USER/ember-tide-theme"

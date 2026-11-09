@@ -1,0 +1,61 @@
+{
+  "name": "ember-tide-theme",
+  "displayName": "Ember Tide",
+  "description": "A warm–cool dark theme: night-blue background, ember coral and amber, tide blue and teal. Also available for Zed.",
+  "version": "1.0.0",
+  "publisher": "PUBLISHER_ID",
+  "author": {
+    "name": "Hoang"
+  },
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GITHUB_USER/ember-tide-theme"
+  },
+  "bugs": {
+    "url": "https://github.com/GITHUB_USER/ember-tide-theme/issues"
+  },
+  "homepage": "https://github.com/GITHUB_USER/ember-tide-theme#readme",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "theme",
+    "dark theme",
+    "color theme",
+    "ember",
+    "tide",
+    "warm",
+    "blue",
+    "zed",
+    "night"
+  ],
+  "galleryBanner": {
+    "color": "#111721",
+    "theme": "dark"
+  },
+  "pricing": "Free",
+  "contributes": {
+    "themes": [
+      {
+        "label": "Ember Tide",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ember-tide-color-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "build:zed": "node install.mjs zed",
+    "package": "node build.mjs && npx --yes @vscode/vsce package --no-dependencies --out dist/",
+    "install:vscode": "node install.mjs vscode",
+    "install:all": "node install.mjs",
+    "check": "node scripts/check-release.mjs",
+    "publish:vscode": "npm run check && npx --yes @vscode/vsce publish --no-dependencies",
+    "publish:ovsx": "npm run check && npx --yes ovsx publish --no-dependencies"
+  }
+}

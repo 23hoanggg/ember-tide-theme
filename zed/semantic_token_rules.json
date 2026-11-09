@@ -1,0 +1,60 @@
+[
+  {
+    "token_type": "decorator",
+    "foreground_color": "#FF9E64"
+  },
+  {
+    "token_type": "function",
+    "token_modifiers": [
+      "decorator"
+    ],
+    "foreground_color": "#FF9E64"
+  },
+  {
+    "token_type": "method",
+    "token_modifiers": [
+      "decorator"
+    ],
+    "foreground_color": "#FF9E64"
+  },
+  {
+    "token_type": "namespace",
+    "foreground_color": "#EBD39B"
+  },
+  {
+    "token_type": "parameter",
+    "foreground_color": "#F2B880",
+    "font_style": "italic"
+  },
+  {
+    "token_type": "typeParameter",
+    "foreground_color": "#F2CC78"
+  },
+  {
+    "token_type": "variable",
+    "token_modifiers": [
+      "defaultLibrary"
+    ],
+    "foreground_color": "#F08C86"
+  },
+  {
+    "token_type": "variable",
+    "foreground_color": "#EDA898"
+  },
+  {
+    "token_type": "property",
+    "foreground_color": "#72D4C9"
+  },
+  {
+    "token_type": "field",
+    "foreground_color": "#72D4C9"
+  },
+  {
+    "token_type": "function",
+    "foreground_color": "#70C7FF"
+  },
+  {
+    "token_type": "method",
+    "foreground_color": "#70C7FF"
+  }
+]

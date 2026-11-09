@@ -1,0 +1,12 @@
+src/**
+dist/**
+zed/**
+scripts/**
+images/preview-*.png
+build.mjs
+install.mjs
+palette.mjs
+PUBLISHING.md
+.gitignore
+node_modules/**
+*.vsix

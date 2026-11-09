@@ -1,6 +1,6 @@
 # Ember Tide
 
-A warm–cool dark theme for **VS Code** and **Zed**: a night-blue canvas, ember coral and amber for the things you
+A warm–cool dark theme for **VS Code**, **Zed** and **your terminal**: a night-blue canvas, ember coral and amber for the things you
 write, tide blue and teal for the things you call. Both editors are generated from a single palette, so they look the same.
 
 ![Ember Tide — TypeScript](images/preview-typescript.png)
@@ -25,14 +25,14 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 | Property / field | `#72D4C9` | teal |
 | Type / class | `#F2CC78` | gold |
 | Built-in type (`string`, `int`…) | `#B3B1FF` | lavender |
-| Namespace / module | `#EBD39B` | cream |
-| Number / constant / boolean | `#F9AA6B` | orange |
-| Decorator / attribute | `#FF9E64` | deep orange |
+| Namespace / module | `#BDAA67` | olive gold |
+| Number / constant / boolean | `#FF9F5E` | orange |
+| Decorator / attribute | `#8EE0B5` | mint |
 | String | `#ACE08F` | green |
 | Variable | `#EDA898` | coral |
-| Parameter | `#F2B880` *italic* | peach |
-| `this` / `self` | `#F08C86` *italic* | red coral |
-| Comment | `#808EA6` *italic* | slate |
+| Parameter | `#FF8689` *italic* | coral red |
+| `this` / `self` | `#8AB3FF` *italic* | periwinkle |
+| Comment | `#8694AC` *italic* | slate |
 
 ## Install
 
@@ -59,6 +59,11 @@ add the rules from [`zed/semantic_token_rules.json`](zed/semantic_token_rules.js
 }
 ```
 
+### Terminal
+
+Matching palettes for Ptyxis, GNOME Terminal, Konsole, Windows Terminal, iTerm2, Ghostty, Kitty, Alacritty and WezTerm
+live in [`terminals/`](terminals/) — see [`terminals/README.md`](terminals/README.md) for per-terminal install steps.
+
 ## Recommended settings
 
 The screenshots use [JetBrains Mono](https://www.jetbrains.com/lp/mono/) at 15px with a 1.55 line height:
@@ -77,10 +82,10 @@ The screenshots use [JetBrains Mono](https://www.jetbrains.com/lp/mono/) at 15px
 Requires Node.js 18+. Works on Linux, macOS and Windows.
 
 ```sh
-npm run build           # generate themes/ (VS Code) and zed/themes/ (Zed) from palette.mjs
-npm run install:vscode  # package the .vsix and install it into every VS Code variant found
+npm run build           # generate themes/ (VS Code), zed/ (Zed) and terminals/ from palette.mjs
+npm run install:vscode  # package the .vsix and install it into VS Code / VSCodium / Cursor / Windsurf
 npm run build:zed       # copy the theme into Zed's themes folder
-npm run install:all     # both
+npm run install:all     # VS Code + Zed + Ptyxis palette (Linux)
 ```
 
 All colors live in [`palette.mjs`](palette.mjs); the editor-specific mappings are in [`src/`](src).

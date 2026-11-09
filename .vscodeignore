@@ -1,6 +1,7 @@
 src/**
 dist/**
 zed/**
+terminals/**
 scripts/**
 images/preview-*.png
 build.mjs

@@ -1,8 +1,8 @@
 import { ui, syntax as s, accents, ansi, alpha } from "../palette.mjs";
 
-const st = (color, font_style = "normal", font_weight = "normal") => ({ color, font_style, font_weight });
+// Zed: font_weight là số 100–900 hoặc null (= giữ mặc định). Theme không dùng in đậm — chỉ phân biệt bằng màu và đứng/nghiêng.
+const st = (color, font_style = "normal", font_weight = null) => ({ color, font_style, font_weight });
 const italic = (color) => st(color, "italic");
-const bold = (color) => st(color, "normal", "bold");
 
 const syntaxStyles = {
   // Comment
@@ -47,7 +47,7 @@ const syntaxStyles = {
   "variable.member": st(s.property),
   "variable.parameter": italic(s.parameter),
   parameter: italic(s.parameter),
-  "variable.special": italic(s.special),
+  "variable.special": italic(s.special), // this, self, super
   "variable.builtin": italic(s.special),
   property: st(s.property),
   field: st(s.property),
@@ -96,14 +96,14 @@ const syntaxStyles = {
   "selector.pseudo": st(s.keyword),
 
   // Markdown
-  title: bold(s.func),
+  title: st(s.func),
   emphasis: italic(s.keyword),
-  "emphasis.strong": bold(s.number),
+  "emphasis.strong": st(s.number),
   "text.literal": st(s.string),
   link_text: st(s.keyword),
   link_uri: st(s.property),
-  "markup.heading": bold(s.func),
-  "markup.bold": bold(s.number),
+  "markup.heading": st(s.func),
+  "markup.bold": st(s.number),
   "markup.italic": italic(s.keyword),
   "markup.strikethrough": st(s.comment),
   "markup.link": st(s.keyword),
@@ -111,11 +111,11 @@ const syntaxStyles = {
   "markup.raw": st(s.string),
   "markup.quote": italic(s.commentDoc),
   "markup.list": st(s.number),
-  "text.title": bold(s.func),
+  "text.title": st(s.func),
   "text.uri": st(s.property),
   "text.reference": st(s.keyword),
   "text.emphasis": italic(s.keyword),
-  "text.strong": bold(s.number),
+  "text.strong": st(s.number),
 
   // Diff
   "diff.plus": st(ui.green),
@@ -135,7 +135,6 @@ const status = (name, color, bg) => ({
 const style = {
   background: ui.bg,
   "background.appearance": "opaque",
-  foreground: ui.fg,
   border: ui.borderTide, // Zed dùng màu này cho viền tab (và các viền chính)
   "border.variant": ui.borderSoft,
   "border.focused": ui.focus,
@@ -161,12 +160,12 @@ const style = {
 
   "element.background": ui.bgInput,
   "element.hover": ui.bgHover,
-  "element.selected": ui.bgSelected,
+  "element.selected": ui.listSelected,
   "element.active": ui.bgSelected,
   "element.disabled": ui.bgFloat,
   "ghost_element.background": "#00000000",
   "ghost_element.hover": ui.glow,
-  "ghost_element.selected": ui.bgSelected,
+  "ghost_element.selected": ui.listSelected, // dòng được chọn trong project panel
   "ghost_element.active": ui.bgActive,
   "ghost_element.disabled": ui.bgFloat,
 
@@ -197,6 +196,17 @@ const style = {
   "version_control.conflict": ui.coral,
   "version_control.renamed": ui.accent,
   "version_control.ignored": ui.ignored,
+  // Diff & conflict — cùng giá trị với VS Code (diffEditor.*, merge.*)
+  "version_control.word_added": alpha(ui.green, "1E"),
+  "version_control.word_deleted": alpha(ui.red, "1E"),
+  "version_control.conflict_marker.ours": alpha(ui.green, "1A"),
+  "version_control.conflict_marker.theirs": alpha(ui.accent, "1A"),
+  "editor.diff_hunk.added.background": alpha(ui.green, "14"),
+  "editor.diff_hunk.added.hollow_background": alpha(ui.green, "0A"),
+  "editor.diff_hunk.added.hollow_border": alpha(ui.green, "55"),
+  "editor.diff_hunk.deleted.background": alpha(ui.red, "14"),
+  "editor.diff_hunk.deleted.hollow_background": alpha(ui.red, "0A"),
+  "editor.diff_hunk.deleted.hollow_border": alpha(ui.red, "55"),
 
   "title_bar.background": ui.bgDeep,
   "title_bar.inactive_background": ui.bgDeep,
@@ -207,8 +217,8 @@ const style = {
   "toolbar.background": ui.bg, // cùng nền editor để thanh breadcrumb không thành một dải dày
   "panel.background": ui.bgPanel,
   "panel.focused_border": ui.focus,
-  "panel.indent_guide": ui.indent,
-  "panel.indent_guide_active": ui.indentActive,
+  "panel.indent_guide": ui.treeGuide,
+  "panel.indent_guide_active": ui.treeGuideActive,
   "panel.indent_guide_hover": ui.fgMuted,
   "pane.focused_border": ui.focus,
   "pane_group.border": ui.border,
@@ -224,7 +234,7 @@ const style = {
   "editor.gutter.background": ui.bg,
   "editor.subheader.background": ui.bgFloat,
   "editor.active_line.background": ui.bgLine,
-  "editor.highlighted_line.background": ui.bgHover,
+  "editor.highlighted_line.background": alpha(ui.accent, "12"), // = range highlight VS Code
   "editor.line_number": ui.fgDim,
   "editor.active_line_number": ui.fgActiveLineNr,
   "editor.invisible": ui.invisible,
@@ -232,10 +242,24 @@ const style = {
   "editor.active_wrap_guide": ui.invisible,
   "editor.indent_guide": ui.indent,
   "editor.indent_guide_active": ui.indentActive,
-  "editor.document_highlight.read_background": alpha(ui.accent, "1F"),
-  "editor.document_highlight.write_background": alpha(ui.focus, "2E"),
-  "editor.document_highlight.bracket_background": alpha(ui.bgActive, "99"),
-  "search.match_background": alpha("#4B6B94", "99"),
+  "editor.document_highlight.read_background": alpha(ui.focus, "33"), // = word highlight VS Code
+  "editor.document_highlight.write_background": alpha(ui.focus, "40"),
+  "editor.document_highlight.bracket_background": alpha(ui.accent, "2E"), // Zed không có viền ngoặc → nền xanh mờ
+  "search.match_background": alpha(ui.yellow, "33"), // = find match VS Code (hổ phách)
+  "search.active_match_background": ui.findMatch, // kết quả đang chọn: nâu ember, như VS Code
+  "editor.debugger_active_line.background": alpha(ui.green, "22"),
+  "editor.code_lens.foreground": ui.fgMuted,
+  "editor.hover_line_number": ui.fgSoft,
+  "element.selection_background": alpha(ui.selection, "E6"), // bôi đen trong ô input
+  "drop_target.border": ui.accent,
+  "panel.overlay_background": ui.bgFloat,
+  "panel.overlay_hover": ui.bgHover,
+  "debugger.accent": ui.red, // breakpoint
+  "scrollbar.thumb.active_background": "#ffffff55",
+  "minimap.thumb.background": alpha(ui.accent, "1F"), // = minimapSlider VS Code
+  "minimap.thumb.hover_background": alpha(ui.accent, "2E"),
+  "minimap.thumb.active_background": alpha(ui.accent, "40"),
+  "minimap.thumb.border": "#00000000",
 
   "terminal.background": ui.bg,
   "terminal.ansi.background": ui.bg,
@@ -249,8 +273,9 @@ const style = {
     ]),
   ),
 
-  accents,
-  players: accents.map((c) => ({ cursor: c, background: c, selection: alpha(c, "33") })),
+  accents, // Zed dùng accents để tô ngoặc theo cấp (colorize_brackets)
+  // Người dùng chính (index 0) dùng màu vùng chọn đặc như VS Code; cộng tác viên giữ màu riêng
+  players: accents.map((c, i) => ({ cursor: c, background: c, selection: i === 0 ? alpha(ui.selection, "E6") : alpha(c, "33") })),
   syntax: Object.fromEntries(Object.entries(syntaxStyles).sort(([a], [b]) => a.localeCompare(b))),
 };
 
@@ -267,8 +292,10 @@ export const zedSemanticRules = [
   { token_type: "function", token_modifiers: ["decorator"], foreground_color: s.attribute },
   { token_type: "method", token_modifiers: ["decorator"], foreground_color: s.attribute },
   { token_type: "namespace", foreground_color: s.namespace },
+  // parameter property (`private readonly prisma`) = thuộc tính của class → cùng màu với this.prisma
+  { token_type: "parameter", token_modifiers: ["readonly"], foreground_color: s.property, font_style: "normal" },
   { token_type: "parameter", foreground_color: s.parameter, font_style: "italic" },
-  { token_type: "typeParameter", foreground_color: s.type },
+  { token_type: "typeParameter", foreground_color: s.type, font_style: "italic" }, // = VS Code: generic T nghiêng
   { token_type: "variable", token_modifiers: ["defaultLibrary"], foreground_color: s.special },
   { token_type: "variable", foreground_color: s.variable },
   { token_type: "property", foreground_color: s.property },

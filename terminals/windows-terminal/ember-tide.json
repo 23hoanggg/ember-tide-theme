@@ -1,0 +1,23 @@
+{
+  "name": "Ember Tide",
+  "background": "#171D28",
+  "foreground": "#DCE3EE",
+  "cursorColor": "#70C7FF",
+  "selectionBackground": "#2A4263",
+  "black": "#465166",
+  "red": "#FF7F9F",
+  "green": "#A9D77B",
+  "yellow": "#E8B96F",
+  "blue": "#5CAFEB",
+  "purple": "#D7A0F7",
+  "cyan": "#79CFC8",
+  "white": "#C5D0E0",
+  "brightBlack": "#748197",
+  "brightRed": "#FF9DB4",
+  "brightGreen": "#C0E69E",
+  "brightYellow": "#FFD69A",
+  "brightBlue": "#70C7FF",
+  "brightPurple": "#E3B8FF",
+  "brightCyan": "#A4E2DC",
+  "brightWhite": "#F0F4FA"
+}

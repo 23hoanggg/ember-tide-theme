@@ -16,7 +16,7 @@ Trước mỗi lần phát hành chạy `npm run check`. Lệnh này báo lỗi 
 
 Thay 2 placeholder:
 
-- `GITHUB_USER` → username GitHub của bạn, trong **`package.json`** (3 chỗ) và **`zed/extension.toml`**.
+- ~~`23hoanggg`~~ → đã điền `23hoanggg`.
 - `PUBLISHER_ID` → ID publisher (tạo ở Bước 2), trong **`package.json`**.
 
 > Đổi publisher thì ID extension sẽ thành `<publisher>.ember-tide-theme`. Bản bạn tự cài lúc trước
@@ -28,7 +28,7 @@ Thay 2 placeholder:
 1. Vào <https://github.com/new>, tạo repo **public** tên `ember-tide-theme`. Đừng tick tạo README.
 2. Push lên:
    ```sh
-   git remote add origin https://github.com/GITHUB_USER/ember-tide-theme.git
+   git remote add origin git@github.com:23hoanggg/ember-tide-theme.git
    git push -u origin main
    ```
 
@@ -67,9 +67,9 @@ Zed không có trang upload. Bạn mở một Pull Request vào repo [`zed-indus
 
 1. Fork repo đó về GitHub của bạn, rồi clone bản fork:
    ```sh
-   git clone https://github.com/GITHUB_USER/extensions.git zed-extensions
+   git clone https://github.com/23hoanggg/extensions.git zed-extensions
    cd zed-extensions
-   git submodule add https://github.com/GITHUB_USER/ember-tide-theme.git extensions/ember-tide
+   git submodule add https://github.com/23hoanggg/ember-tide-theme.git extensions/ember-tide
    ```
 2. Thêm vào cuối file `extensions.toml`:
    ```toml

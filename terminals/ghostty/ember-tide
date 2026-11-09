@@ -1,0 +1,23 @@
+# Ember Tide — sinh tự động từ palette.mjs, đừng sửa tay
+background = #171D28
+foreground = #DCE3EE
+cursor-color = #70C7FF
+cursor-text = #171D28
+selection-background = #2A4263
+selection-foreground = #F0F4FA
+palette = 0=#465166
+palette = 1=#FF7F9F
+palette = 2=#A9D77B
+palette = 3=#E8B96F
+palette = 4=#5CAFEB
+palette = 5=#D7A0F7
+palette = 6=#79CFC8
+palette = 7=#C5D0E0
+palette = 8=#748197
+palette = 9=#FF9DB4
+palette = 10=#C0E69E
+palette = 11=#FFD69A
+palette = 12=#70C7FF
+palette = 13=#E3B8FF
+palette = 14=#A4E2DC
+palette = 15=#F0F4FA

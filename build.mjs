@@ -4,6 +4,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { zedTheme, zedSemanticRules } from "./src/zed.mjs";
 import { vscodeTheme } from "./src/vscode.mjs";
+import { terminalFiles } from "./src/terminals.mjs";
+import { dirname } from "node:path";
 
 const write = (path, data) => {
   writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
@@ -19,4 +21,12 @@ write("dist/zed/ember-tide.json", zedTheme);
 write("zed/themes/ember-tide.json", zedTheme); // thư mục extension Zed (để đăng lên Zed Extensions)
 write("dist/zed/semantic_token_rules.json", zedSemanticRules);
 write("zed/semantic_token_rules.json", zedSemanticRules);
+
+// Bảng màu cho terminal (Ptyxis, Windows Terminal, iTerm2, Alacritty, Kitty, Ghostty, WezTerm, Konsole, GNOME Terminal)
+for (const [file, content] of terminalFiles()) {
+  const path = "terminals/" + file;
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, content);
+}
+console.log("✔ terminals/ (" + terminalFiles().length + " terminal)");
 

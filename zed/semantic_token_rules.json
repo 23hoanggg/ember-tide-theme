@@ -1,41 +1,50 @@
 [
   {
     "token_type": "decorator",
-    "foreground_color": "#FF9E64"
+    "foreground_color": "#8EE0B5"
   },
   {
     "token_type": "function",
     "token_modifiers": [
       "decorator"
     ],
-    "foreground_color": "#FF9E64"
+    "foreground_color": "#8EE0B5"
   },
   {
     "token_type": "method",
     "token_modifiers": [
       "decorator"
     ],
-    "foreground_color": "#FF9E64"
+    "foreground_color": "#8EE0B5"
   },
   {
     "token_type": "namespace",
-    "foreground_color": "#EBD39B"
+    "foreground_color": "#BDAA67"
   },
   {
     "token_type": "parameter",
-    "foreground_color": "#F2B880",
+    "token_modifiers": [
+      "readonly"
+    ],
+    "foreground_color": "#72D4C9",
+    "font_style": "normal"
+  },
+  {
+    "token_type": "parameter",
+    "foreground_color": "#FF8689",
     "font_style": "italic"
   },
   {
     "token_type": "typeParameter",
-    "foreground_color": "#F2CC78"
+    "foreground_color": "#F2CC78",
+    "font_style": "italic"
   },
   {
     "token_type": "variable",
     "token_modifiers": [
       "defaultLibrary"
     ],
-    "foreground_color": "#F08C86"
+    "foreground_color": "#8AB3FF"
   },
   {
     "token_type": "variable",

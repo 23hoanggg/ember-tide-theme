@@ -11,12 +11,12 @@
   "icon": "images/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GITHUB_USER/ember-tide-theme"
+    "url": "https://github.com/23hoanggg/ember-tide-theme"
   },
   "bugs": {
-    "url": "https://github.com/GITHUB_USER/ember-tide-theme/issues"
+    "url": "https://github.com/23hoanggg/ember-tide-theme/issues"
   },
-  "homepage": "https://github.com/GITHUB_USER/ember-tide-theme#readme",
+  "homepage": "https://github.com/23hoanggg/ember-tide-theme#readme",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -32,7 +32,8 @@
     "warm",
     "blue",
     "zed",
-    "night"
+    "night",
+    "terminal"
   ],
   "galleryBanner": {
     "color": "#111721",
@@ -56,6 +57,7 @@
     "install:all": "node install.mjs",
     "check": "node scripts/check-release.mjs",
     "publish:vscode": "npm run check && npx --yes @vscode/vsce publish --no-dependencies",
-    "publish:ovsx": "npm run check && npx --yes ovsx publish --no-dependencies"
+    "publish:ovsx": "npm run check && npx --yes ovsx publish --no-dependencies",
+    "install:terminal": "node install.mjs terminal"
   }
 }

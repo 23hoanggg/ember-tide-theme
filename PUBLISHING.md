@@ -17,7 +17,7 @@ Trước mỗi lần phát hành chạy `npm run check`. Lệnh này báo lỗi 
 Thay 2 placeholder:
 
 - ~~`23hoanggg`~~ → đã điền `23hoanggg`.
-- `whytho-hh` → ID publisher (tạo ở Bước 2), trong **`package.json`**.
+- `whythohh` → ID publisher (tạo ở Bước 2), trong **`package.json`**.
 
 > Đổi publisher thì ID extension sẽ thành `<publisher>.ember-tide-theme`. Bản bạn tự cài lúc trước
 > (`hoang.ember-tide-theme`) là một extension khác. Hãy gỡ nó đi sau khi cài bản từ Marketplace:
@@ -37,7 +37,7 @@ Repo phải là public, vì Marketplace lấy ảnh preview trong README từ Gi
 ## Bước 2 — VS Code Marketplace
 
 1. **Tạo publisher:** vào <https://marketplace.visualstudio.com/manage>, đăng nhập bằng tài khoản Microsoft → *Create publisher*.
-   *ID* là chuỗi viết thường, không dấu, ví dụ `hoang-dev`, và không đổi được về sau. Điền ID này vào `whytho-hh`.
+   *ID* là chuỗi viết thường, không dấu, ví dụ `hoang-dev`, và không đổi được về sau. Điền ID này vào `whythohh`.
 2. **Tạo Personal Access Token (PAT):**
    - Vào <https://dev.azure.com>, tạo một organization bất kỳ nếu chưa có.
    - Vào *User settings* (góc trên phải) → *Personal access tokens* → *New Token*.
@@ -45,7 +45,7 @@ Repo phải là public, vì Marketplace lấy ảnh preview trong README từ Gi
    - Copy token và cất kỹ, vì nó chỉ hiện một lần.
 3. **Đăng nhập và phát hành:**
    ```sh
-   npx @vscode/vsce login whytho-hh   # dán PAT khi được hỏi
+   npx @vscode/vsce login whythohh   # dán PAT khi được hỏi
    npm run publish:vscode
    ```
 4. Chờ khoảng 5–10 phút để Marketplace duyệt tự động, rồi tìm "Ember Tide" trong VS Code.
@@ -57,7 +57,7 @@ Repo phải là public, vì Marketplace lấy ảnh preview trong README từ Gi
 3. Vào *Settings → Access Tokens* → *Generate New Token*.
 4. Phát hành:
    ```sh
-   npx ovsx create-namespace whytho-hh -p <OPEN_VSX_TOKEN>   # chỉ lần đầu
+   npx ovsx create-namespace whythohh -p <OPEN_VSX_TOKEN>   # chỉ lần đầu
    npm run publish:ovsx -- -p <OPEN_VSX_TOKEN>
    ```
 

@@ -2,6 +2,7 @@ src/**
 dist/**
 zed/**
 terminals/**
+extras/**
 scripts/**
 images/preview-*.png
 build.mjs

@@ -54,7 +54,7 @@ if (want("zed")) {
   mkdirSync(dir, { recursive: true });
   copyFileSync(join("zed", "themes", "ember-tide.json"), join(dir, "ember-tide.json"));
   console.log(`✔ đã cài theme Zed: ${join(dir, "ember-tide.json")}`);
-  console.log("ℹ Màu semantic (LSP) cho Zed: dán zed/semantic_token_rules.json vào settings.json → global_lsp_settings.semantic_token_rules (xem README)");
+  console.log("ℹ Màu semantic (LSP) cho Zed: dán extras/zed-semantic-token-rules.json vào settings.json → global_lsp_settings.semantic_token_rules (xem README)");
 }
 
 if (want("terminal")) {

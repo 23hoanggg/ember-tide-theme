@@ -48,7 +48,7 @@ Open the command palette → `zed: extensions` → search **“Ember Tide”** �
 #### Optional: matching semantic colors in Zed
 
 Zed applies language-server colors through settings rather than themes. To get the same semantic colors as in VS Code,
-add the rules from [`zed/semantic_token_rules.json`](zed/semantic_token_rules.json) to your `settings.json`:
+add the rules from [`extras/zed-semantic-token-rules.json`](extras/zed-semantic-token-rules.json) to your `settings.json`:
 
 ```jsonc
 {

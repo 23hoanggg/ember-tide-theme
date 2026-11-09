@@ -63,28 +63,27 @@ Repo phải là public, vì Marketplace lấy ảnh preview trong README từ Gi
 
 ## Bước 4 — Zed Extensions
 
-Zed không có trang upload. Bạn mở một Pull Request vào repo [`zed-industries/extensions`](https://github.com/zed-industries/extensions):
+Zed không có trang upload: bạn mở một Pull Request vào [`zed-industries/extensions`](https://github.com/zed-industries/extensions).
+Quy định chính (https://zed.dev/docs/extensions/publishing/prerequisites): ID kết thúc bằng `-theme`, extension chỉ chứa file
+Zed dùng (`zed/` = `extension.toml` + `themes/` + `LICENSE`), license nằm **trong** `zed/`, submodule dùng URL **HTTPS**,
+mỗi PR chỉ một extension, trả lời review trong 3 tuần.
 
-1. Fork repo đó về GitHub của bạn, rồi clone bản fork:
+0. **Thử trong Zed trước** (bắt buộc): Command Palette → `zed: install dev extension` → chọn thư mục `zed/` của repo này.
+1. Fork https://github.com/zed-industries/extensions về tài khoản cá nhân (không phải organization), rồi:
    ```sh
-   git clone https://github.com/23hoanggg/extensions.git zed-extensions
+   git clone --depth 1 git@github.com:23hoanggg/extensions.git zed-extensions   # không cần tải 1500+ submodule khác
    cd zed-extensions
-   git submodule add https://github.com/23hoanggg/ember-tide-theme.git extensions/ember-tide
+   git submodule add https://github.com/23hoanggg/ember-tide-theme.git extensions/ember-tide-theme
    ```
-2. Thêm vào cuối file `extensions.toml`:
+2. Thêm vào `extensions.toml` (đúng vị trí theo thứ tự chữ cái — hoặc chạy `pnpm install && pnpm sort-extensions`):
    ```toml
-   [ember-tide]
-   submodule = "extensions/ember-tide"
+   [ember-tide-theme]
+   submodule = "extensions/ember-tide-theme"
    path = "zed"
    version = "1.0.0"
    ```
-   `path = "zed"` báo cho Zed biết extension nằm trong thư mục `zed/` của repo, gồm `extension.toml`, `themes/` và `LICENSE`.
-3. Sắp xếp file theo yêu cầu của repo (cần cài `pnpm`), rồi commit và push:
-   ```sh
-   pnpm install && pnpm sort-extensions
-   git add . && git commit -m "Add Ember Tide theme" && git push
-   ```
-4. Mở Pull Request từ bản fork. Đội Zed review, thường vài ngày. Merge xong là theme hiện trong `zed: extensions`.
+3. Commit, push lên fork, rồi mở PR "Add Ember Tide theme" vào `zed-industries/extensions:main`.
+4. Merge xong là theme hiện trong `zed: extensions`. Khi đó xoá file cài tay `~/.config/zed/themes/ember-tide.json`.
 
 ---
 
@@ -94,6 +93,6 @@ Zed không có trang upload. Bạn mở một Pull Request vào repo [`zed-indus
 2. Tăng phiên bản ở **cả** `package.json` và `zed/extension.toml` (vd `1.0.0` → `1.1.0`), rồi thêm mục `## 1.1.0` vào `CHANGELOG.md`.
 3. `npm run check` → commit → `git push`.
 4. `npm run publish:vscode` và `npm run publish:ovsx -- -p <token>`.
-5. Zed: trong bản fork `zed-extensions`, chạy `git submodule update --remote extensions/ember-tide`, sửa `version` trong `extensions.toml`, rồi mở PR mới.
+5. Zed: trong bản fork `zed-extensions`, chạy `git submodule update --remote extensions/ember-tide-theme`, sửa `version` trong `extensions.toml` cho khớp `zed/extension.toml`, rồi mở PR mới.
 
 Quy ước phiên bản: chỉnh màu nhỏ thì tăng số cuối (`1.0.1`), thêm hoặc đổi nhiều màu thì tăng số giữa (`1.1.0`).

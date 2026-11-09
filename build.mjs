@@ -19,8 +19,9 @@ mkdirSync("zed/themes", { recursive: true });
 write("themes/ember-tide-color-theme.json", vscodeTheme);
 write("dist/zed/ember-tide.json", zedTheme);
 write("zed/themes/ember-tide.json", zedTheme); // thư mục extension Zed (để đăng lên Zed Extensions)
-write("dist/zed/semantic_token_rules.json", zedSemanticRules);
-write("zed/semantic_token_rules.json", zedSemanticRules);
+mkdirSync("extras", { recursive: true });
+// Rule semantic token cho settings.json của Zed — để NGOÀI zed/ (Zed extension chỉ được chứa file Zed dùng)
+write("extras/zed-semantic-token-rules.json", zedSemanticRules);
 
 // Bảng màu cho terminal (Ptyxis, Windows Terminal, iTerm2, Alacritty, Kitty, Ghostty, WezTerm, Konsole, GNOME Terminal)
 for (const [file, content] of terminalFiles()) {

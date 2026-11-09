@@ -17,7 +17,7 @@ if (zedVersion !== pkg.version) errors.push(`Phiên bản lệch: package.json $
 const changelog = readFileSync("CHANGELOG.md", "utf8");
 if (!changelog.includes(`## ${pkg.version}`)) errors.push(`CHANGELOG.md chưa có mục ## ${pkg.version}`);
 
-for (const f of [pkg.icon, "LICENSE", "zed/LICENSE", "themes/ember-tide-color-theme.json", "zed/themes/ember-tide.json", "terminals/README.md", "terminals/ptyxis/ember-tide.palette", "terminals/windows-terminal/ember-tide.json"]) {
+for (const f of [pkg.icon, "LICENSE", "zed/LICENSE", "themes/ember-tide-color-theme.json", "zed/themes/ember-tide.json", "extras/zed-semantic-token-rules.json", "terminals/README.md", "terminals/ptyxis/ember-tide.palette", "terminals/windows-terminal/ember-tide.json"]) {
   if (!existsSync(f)) errors.push(`Thiếu file ${f}`);
 }
 

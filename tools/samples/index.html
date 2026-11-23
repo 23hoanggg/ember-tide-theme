@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ember Tide &mdash; Sample &amp; Demo</title>
+  <link rel="stylesheet" href="./styles.css">
+  <!-- Inline styles for the hero only -->
+  <style>
+    :root { --accent: #ff9f5e; }
+    .hero > h1:hover { color: var(--accent); margin: 0 auto 1.5rem; }
+  </style>
+</head>
+<body class="page page--home" id="top">
+  <header class="site-header">
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/docs?tab=install&amp;lang=en" target="_blank" rel="noopener">Docs</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Warm &amp; cool, <em>never</em> harsh</h1>
+      <p>Open a file and <strong>read</strong> it for hours.</p>
+      <img src="images/preview.png" alt="Editor preview" width="640" height="400" loading="lazy">
+    </section>
+
+    <form action="/subscribe" method="post" novalidate>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      <select name="plan">
+        <option value="free" selected>Free</option>
+        <option value="pro" disabled>Pro</option>
+      </select>
+      <button type="submit" onclick="track('subscribe')">Subscribe</button>
+    </form>
+
+    <table>
+      <thead><tr><th scope="col">Role</th><th scope="col">Color</th></tr></thead>
+      <tbody><tr><td>Keyword</td><td><code>#D29BFF</code></td></tr></tbody>
+    </table>
+  </main>
+
+  <template id="row-template"><tr><td class="name"></td></tr></template>
+  <script type="module">
+    import { init } from "./app.js";
+    const count = 3;
+    document.querySelectorAll(".hero").forEach((el) => el.classList.add(`ready-${count}`));
+    init({ debug: false, retries: 0x2 });
+  </script>
+</body>
+</html>

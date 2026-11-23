@@ -1,0 +1,13 @@
+# .env
+[["# Local environment — do not commit real secrets","#8B94A2",1]]
+[["NODE_ENV","#FFAA92",0],["=","#8CBECB",0],["development","#ACE08F",0]]
+[["PORT","#FFAA92",0],["=","#8CBECB",0],["8080","#ACE08F",0]]
+[["DEBUG","#FFAA92",0],["=","#8CBECB",0],["true","#ACE08F",0]]
+[["API_URL","#FFAA92",0],["=","#8CBECB",0],["\"https://api.example.com/v1\"","#ACE08F",0]]
+[["API_KEY","#FFAA92",0],["=","#8CBECB",0],["'sk-test-0000000000'","#ACE08F",0]]
+[["DATABASE_URL","#FFAA92",0],["=","#8CBECB",0],["postgres://app:app@localhost:5432/app","#ACE08F",0]]
+[["GREETING","#FFAA92",0],["=","#8CBECB",0],["\"Hello","#ACE08F",0],["\\n","#F2CC78",0],["world\"","#ACE08F",0]]
+[["LOG_DIR","#FFAA92",0],["=","#8CBECB",0],["${","#D29BFF",0],["HOME","#FFAA92",0],["}","#D29BFF",0],["/logs/$NODE_ENV","#ACE08F",0]]
+[["export ","#D29BFF",0],["RETRIES","#FFAA92",0],["=","#8CBECB",0],["3","#ACE08F",0]]
+[["EMPTY","#FFAA92",0],["=","#8CBECB",0]]
+[["RATIO","#FFAA92",0],["=","#8CBECB",0],["1.5 ","#ACE08F",0],["# inline comment","#8B94A2",1]]

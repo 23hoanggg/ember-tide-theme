@@ -1,0 +1,48 @@
+// VS Code settings for this workspace
+{
+  /* Editor */
+  "editor.fontFamily": "JetBrains Mono, monospace",
+  "editor.fontSize": 14,
+  "editor.lineHeight": 1.6,
+  "editor.formatOnSave": true,
+  "editor.rulers": [80, 120],
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": ["comment", "string.comment"],
+        "settings": { "fontStyle": "italic", "foreground": "#8B94A2" }
+      }
+    ]
+  },
+  "workbench.colorTheme": "Ember Tide",
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "dist/": false
+  },
+  "search.maxResults": null,
+  "terminal.integrated.env.linux": {
+    "PATH": "${env:HOME}/.local/bin:${env:PATH}",
+    "GREETING": "hello\tworld\né"
+  },
+  "telemetry.level": "off",
+  "window.zoomLevel": -0.5,
+  "http.proxyStrictSSL": false,
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Run tests",
+        "args": ["--test", "test/**/*.test.mjs"],
+        "port": 9229,
+        "timeout": 1e4,
+      },
+    ],
+  },
+}

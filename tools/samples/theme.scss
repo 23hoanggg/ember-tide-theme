@@ -1,0 +1,63 @@
+// theme.scss — design tokens and mixins.
+@use "sass:math";
+@use "sass:map";
+@import "reset";
+
+$base-size: 16px !default;
+$colors: (
+  "ember": #ff9f5e,
+  "tide": #70c7ff,
+  "night": rgba(17, 23, 33, 0.9),
+);
+$breakpoints: (sm: 640px, md: 960px, lg: 1280px);
+
+/// Converts px to rem.
+/// @param {Number} $px - size in pixels
+/// @return {Number}
+@function rem($px, $base: $base-size) {
+  @if math.unit($px) != "px" {
+    @error "Expected px, got #{$px}";
+  }
+  @return math.div($px, $base) * 1rem;
+}
+
+@mixin respond($bp) {
+  $width: map.get($breakpoints, $bp);
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+%card-base {
+  border-radius: rem(8px);
+  padding: rem(16px) rem(24px);
+}
+
+.card {
+  @extend %card-base;
+  background: map.get($colors, "night");
+  border: 1px solid rgba(#fff, 0.08);
+
+  &__title {
+    font-size: rem(20px);
+    color: map.get($colors, "ember");
+  }
+
+  &:hover:not(.is-disabled) {
+    transform: translateY(-2px);
+  }
+
+  @include respond(md) {
+    padding: rem(32px);
+  }
+}
+
+@each $name, $color in $colors {
+  .text-#{$name} {
+    color: $color !important;
+  }
+}
+
+@for $i from 1 through 3 {
+  .mt-#{$i} { margin-top: $i * 0.25rem; }
+}

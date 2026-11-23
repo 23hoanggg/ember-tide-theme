@@ -10,7 +10,7 @@ const here = path.dirname(new URL(import.meta.url).pathname);
 await onig.loadWASM(fs.readFileSync(path.join(here, "node_modules/vscode-oniguruma/release/onig.wasm")).buffer);
 
 const dirs = ["/usr/share/code/resources/app/extensions", path.join(os.homedir(), ".vscode/extensions")].filter(fs.existsSync);
-const scopeToFile = {}, langToScope = {}, extToScope = {};
+const scopeToFile = {}, langToScope = {}, extToScope = {}, nameToScope = {};
 for (const d of dirs)
   for (const e of fs.readdirSync(d)) {
     let p;
@@ -21,10 +21,21 @@ for (const d of dirs)
       scopeToFile[g.scopeName] ??= path.join(d, e, g.path);
       if (g.language && (!langToScope[g.language] || /embedded/.test(langToScope[g.language]))) langToScope[g.language] = g.scopeName;
     }
-    for (const l of c.languages || []) for (const x of l.extensions || []) (extToScope[x.toLowerCase()] ??= () => langToScope[l.id]);
+    for (const l of c.languages || []) {
+      for (const x of l.extensions || []) (extToScope[x.toLowerCase()] ??= () => langToScope[l.id]);
+      for (const n of l.filenames || []) (nameToScope[n] ??= () => langToScope[l.id]);
+    }
   }
 
-export async function tokenize(theme, file) {
+// Scope gốc (vd "source.go") cho một file: theo tên file (Dockerfile, Makefile, .env) rồi theo đuôi.
+export function scopeFor(file) {
+  const base = path.basename(file);
+  return nameToScope[base]?.() ?? extToScope[path.extname(file).toLowerCase()]?.() ?? extToScope[base.toLowerCase()]?.() ?? null;
+}
+export const hasGrammar = (scope) => !!scope && !!scopeToFile[scope];
+
+// opts.scope: ép scope gốc; opts.scopes: thêm phần tử thứ 4 = danh sách scope (từ ngoài vào trong) của run đó.
+export async function tokenize(theme, file, opts = {}) {
   const settings = [
     { settings: { foreground: theme.colors["editor.foreground"], background: theme.colors["editor.background"] } },
     ...theme.tokenColors.map((r) => ({ scope: r.scope, settings: r.settings })),
@@ -35,13 +46,26 @@ export async function tokenize(theme, file) {
   });
   reg.setTheme({ name: "t", settings });
   const cmap = reg.getColorMap();
-  const g = await reg.loadGrammar(extToScope[path.extname(file)]?.());
+  const scope = opts.scope ?? scopeFor(file);
+  const g = scope && (await reg.loadGrammar(scope));
+  if (!g) throw new Error(`no grammar for ${file} (scope ${scope})`);
   let st = tm.INITIAL;
   return fs.readFileSync(file, "utf8").replace(/\n$/, "").split("\n").map((line) => {
     const r = g.tokenizeLine2(line, st);
-    st = r.ruleStack;
     const t = r.tokens, out = [];
     for (let i = 0; i < t.length; i += 2) out.push([line.slice(t[i], i + 2 < t.length ? t[i + 2] : line.length), cmap[(t[i + 1] >>> 15) & 0x1ff], (t[i + 1] >>> 11) & 0xf]);
+    if (opts.scopes) {
+      // Tách run màu theo token scope (token scope luôn nằm gọn trong một run màu).
+      const sc = g.tokenizeLine(line, st).tokens, det = [];
+      let ci = 0;
+      for (const k of sc) {
+        while (ci + 2 < t.length && t[ci + 2] <= k.startIndex) ci += 2;
+        det.push([line.slice(k.startIndex, k.endIndex), cmap[(t[ci + 1] >>> 15) & 0x1ff], (t[ci + 1] >>> 11) & 0xf, k.scopes]);
+      }
+      st = r.ruleStack;
+      return det;
+    }
+    st = r.ruleStack;
     return out;
   });
 }

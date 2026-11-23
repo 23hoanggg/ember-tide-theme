@@ -1,0 +1,70 @@
+# GitHub Actions workflow
+name: CI
+on:
+  push:
+    branches: [main, "release/**"]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      debug:
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: 20
+  CACHE_KEY: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  RETRIES: 0x3
+  RATIO: 1.5e-3
+  EMPTY: ~
+  QUOTED: 'it''s fine'
+  ESCAPED: "tab\there\n"
+
+defaults: &defaults
+  runs-on: ubuntu-latest
+  timeout-minutes: 15
+
+jobs:
+  test:
+    <<: *defaults
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20, 22]
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - name: Test
+        run: |
+          npm test
+          npm run check -- --strict
+        env:
+          CI: true
+      - name: Notes
+        if: ${{ failure() && github.event_name == 'push' }}
+        run: >
+          echo "folded text
+          continues here"
+
+  release:
+    <<: *defaults
+    needs: [test]
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - !!str 42
+      - date: 2026-11-23
+        when: 2026-11-23T10:00:00Z
+        enabled: yes
+        count: null
+---
+# second document
+anchors:
+  base: &base { a: 1, b: [x, y] }
+  derived: *base

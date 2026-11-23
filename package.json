@@ -60,6 +60,7 @@
     "publish:ovsx": "npm test && npm run check && npx --yes ovsx publish --no-dependencies",
     "install:terminal": "node install.mjs terminal",
     "test": "node --test \"test/**/*.test.mjs\"",
+    "snapshot:update": "node tools/snapshot.mjs --update",
     "install:local": "node install.mjs local"
   }
 }

@@ -17,7 +17,45 @@ export function thresholds(P) {
     codeOnLine: light ? 4.5 : 5.9, // ... trên dòng con trỏ
     comment: 4.5, // comment trên nền & dòng con trỏ
     roleDistance: 10, // ΔE2000 tối thiểu giữa hai vai trò cú pháp
+    // Mù màu (CVD): chỉ bản phát hành bắt buộc đạt; biến thể cục bộ vẫn được đo và in ra nhưng không làm trượt (advisory)
+    cvdEnforced: Boolean(P.publish),
   };
+}
+
+// ---------------------------------------------------------------------------
+// Mù màu (CVD) — nguồn: private/tools/research/color/cvd-gate.mjs (Machado 2009, mức 1.0, ΔE2000 sau mô phỏng)
+// ---------------------------------------------------------------------------
+const CVD_M = {
+  deutan: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.01182, 0.04294, 0.968881]],
+  protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
+  tritan: [[1.255528, -0.076749, -0.178779], [-0.078411, 0.930809, 0.147602], [0.004733, 0.691367, 0.3039]],
+};
+export function cvdSim(hex, type) {
+  const lin = (v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+  const delin = (v) => (v <= 0.0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055);
+  const c = [1, 3, 5].map((i) => lin(parseInt(hex.slice(i, i + 2), 16) / 255));
+  return "#" + CVD_M[type].map((r) => Math.round(Math.min(1, Math.max(0, delin(r[0] * c[0] + r[1] * c[1] + r[2] * c[2]))) * 255).toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+export const CVD_ROLES = ["keyword", "func", "property", "type", "typeBuiltin", "namespace", "variable", "parameter", "special", "tag", "attribute", "number"];
+export const CVD_CORE = [
+  ["keyword", "func"], ["keyword", "type"], ["keyword", "variable"], ["keyword", "property"],
+  ["func", "property"], ["func", "type"], ["func", "variable"], ["func", "typeBuiltin"], ["func", "namespace"],
+  ["type", "variable"], ["type", "typeBuiltin"], ["property", "variable"], ["namespace", "variable"],
+];
+export const CVD_MIN = { deutan: 6, protan: 6, tritan: 3 };
+export function cvdChecks(P) {
+  const s = P.syntax, out = [];
+  const core = new Set(CVD_CORE.map(([a, b]) => a + "|" + b));
+  for (let i = 0; i < CVD_ROLES.length; i++)
+    for (let j = i + 1; j < CVD_ROLES.length; j++) {
+      const a = CVD_ROLES[i], b = CVD_ROLES[j];
+      const isCore = core.has(a + "|" + b) || core.has(b + "|" + a);
+      for (const t of ["deutan", "protan", "tritan"]) {
+        const value = de2000(cvdSim(s[a], t), cvdSim(s[b], t)), min = isCore ? CVD_MIN[t] : 0;
+        out.push({ group: isCore ? "mù màu (CVD)" : "CVD (tham khảo)", name: `${t}: ${a} ↔ ${b}`, value, min, unit: " ΔE", ok: value >= min - 1e-9 });
+      }
+    }
+  return out;
 }
 
 export function report(P) {
@@ -48,6 +86,7 @@ export function report(P) {
   add("tách màu", `cặp gần nhất: ${minPair[1]} ↔ ${minPair[2]}`, minPair[0], th.roleDistance, " ΔE");
   add("tách màu", "chữ thường ↔ variable", de2000(ui.fg, s.variable), 10, " ΔE");
   add("tách màu", "chữ thường ↔ namespace", de2000(ui.fg, s.namespace), 10, " ΔE");
+  for (const c of cvdChecks(P)) checks.push(th.cvdEnforced || c.min === 0 ? c : { ...c, advisory: true });
 
   // 3. Chữ giao diện
   add("giao diện", "chữ thường trên nền", contrast(ui.fg, ui.bg), 7);
@@ -117,7 +156,7 @@ export function report(P) {
     add("terminal", "ANSI white (bản sáng: vẫn phải thấy được)", contrast(ansi.white, ui.bg), 2.5);
     add("terminal", "ANSI brightWhite (bản sáng)", contrast(ansi.brightWhite, ui.bg), 1.5);
   }
-  return { variant: P.id, checks, failed: checks.filter((c) => !c.ok) };
+  return { variant: P.id, checks, failed: checks.filter((c) => !c.ok && !c.advisory), advisories: checks.filter((c) => !c.ok && c.advisory) };
 }
 
 // CLI:  node scripts/palette-report.mjs [id biến thể] [--all]   (thoát mã 1 nếu có chỉ số trượt)
@@ -133,9 +172,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   for (const P of variants.filter((v) => !want || v.id === want)) {
     const r = report(P);
     failedTotal += r.failed.length;
-    console.log(`\n=== ${P.name} (${P.type}) — ${r.checks.length - r.failed.length}/${r.checks.length} đạt`);
-    for (const c of all ? r.checks : r.failed)
-      console.log(`  ${c.ok ? "✔" : "✘"} [${c.group}] ${c.name}: ${c.value.toFixed(2)}${c.unit} (cần ≥ ${c.min})`);
+    const adv = r.advisories.length ? ` (+${r.advisories.length} cảnh báo CVD, không tính trượt vì không phát hành)` : "";
+    console.log(`\n=== ${P.name} (${P.type}) — ${r.checks.length - r.failed.length - r.advisories.length}/${r.checks.length} đạt${adv}`);
+    for (const c of all ? r.checks : [...r.failed, ...r.advisories])
+      console.log(`  ${c.ok ? "✔" : c.advisory ? "⚠" : "✘"} [${c.group}] ${c.name}: ${c.value.toFixed(2)}${c.unit} (cần ≥ ${c.min})`);
   }
   if (failedTotal) process.exitCode = 1;
 }

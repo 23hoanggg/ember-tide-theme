@@ -2,6 +2,27 @@
 
 ## 1.2.0 (unreleased)
 
+- **Colorblind-checked palette.** Functions are a lighter sky blue (`#70C7FF` → `#94D6FF`) so they stay apart from
+  keywords, properties and built-in types under deuteranopia/protanopia. `npm test` now simulates color-vision deficiency
+  and requires the roles that sit side by side (keyword, function, property, type, variable, namespace…) to stay
+  ≥ ΔE2000 6 apart. UI accent, bracket and terminal colors are unchanged.
+- **Same meaning, same color across languages** (TextMate):
+  - Markdown: list item text is plain again (the whole item was orange); only the bullet/number is colored.
+  - C/C++: `#define` bodies and `#ifdef` arguments are no longer violet; macro names are mint like Rust macros.
+    `uint8_t`, `std::size_t` are built-in types (were violet); overloaded `operator()` is a function; `[[nodiscard]]` is mint.
+  - Go: the `type` keyword is violet (was lavender) and `error`, `byte`, `rune` are built-in types (`error` was violet).
+  - Java: `String[]` is a type (was violet); doc tags and the ternary `? :` follow the shared styles.
+  - String interpolation: only the delimiters (`${ }`, `{ }`, `#{ }`, `$`) take the keyword color, the expression keeps its
+    own colors — Python f-string variables are no longer gold, C# `{ }` and SCSS `#{ }` match JS. Rust format placeholders
+    (`"{n:.2}"`, `{:?}`) use the escape color like `%s`.
+  - Decorators/attributes are mint everywhere: Swift `@MainActor`, PHP `#[Attribute]`, PowerShell `[CmdletBinding()]`,
+    C++ `[[nodiscard]]`, Lua `::label::`. (C# `[Serializable]` stays gold: its grammar gives no attribute scope.)
+  - Doc-comment tags (`@param`, `@brief`, `---@field`…) are violet italic in every language.
+  - Fields/properties: Lua `self.items`, JS private `#field`, TS type-literal members, Swift `.count`, C# events use
+    the property color; C# local declarations use the variable color; Ruby `@@class_var` matches `@ivar`; Ruby hash keys agree.
+  - Rust `Some`/`None` and PHP `PHP_EOL` are orange like other constants; Swift `import Foundation` is a namespace;
+    regex anchors `^ $` are pink; JS BigInt suffix `n` and CSS keyframe offsets (`from`, `50%`, `to`) are orange like numbers.
+  - Python built-in exceptions (`Exception`, `ValueError`) are lavender like `int`/`str`, so TextMate and Pylance agree.
 - **Semantic highlighting matches the syntax colors.** With a language server running, these tokens no longer switch
   to a different color than the theme gives them without one:
   - Rust: `true`/`false` and `const`/`static` items are orange like other constants (were purple / coral), `Self` is

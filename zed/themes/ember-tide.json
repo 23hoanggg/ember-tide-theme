@@ -371,12 +371,12 @@
             "font_weight": null
           },
           "function": {
-            "color": "#70C7FF",
+            "color": "#94D6FF",
             "font_style": "normal",
             "font_weight": null
           },
           "function.builtin": {
-            "color": "#70C7FF",
+            "color": "#94D6FF",
             "font_style": "normal",
             "font_weight": null
           },
@@ -396,7 +396,7 @@
             "font_weight": null
           },
           "function.method": {
-            "color": "#70C7FF",
+            "color": "#94D6FF",
             "font_style": "normal",
             "font_weight": null
           },
@@ -466,7 +466,7 @@
             "font_weight": null
           },
           "markup.heading": {
-            "color": "#70C7FF",
+            "color": "#94D6FF",
             "font_style": "normal",
             "font_weight": null
           },
@@ -506,7 +506,7 @@
             "font_weight": null
           },
           "method": {
-            "color": "#70C7FF",
+            "color": "#94D6FF",
             "font_style": "normal",
             "font_weight": null
           },
@@ -711,7 +711,7 @@
             "font_weight": null
           },
           "text.title": {
-            "color": "#70C7FF",
+            "color": "#94D6FF",
             "font_style": "normal",
             "font_weight": null
           },
@@ -721,7 +721,7 @@
             "font_weight": null
           },
           "title": {
-            "color": "#70C7FF",
+            "color": "#94D6FF",
             "font_style": "normal",
             "font_weight": null
           },

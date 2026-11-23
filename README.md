@@ -8,14 +8,17 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 
 ## Highlights
 
-- **Readable first** — every syntax color reaches at least **7:1** contrast on the editor background (≥ 7.3:1) and
+- **Readable first** — every syntax color reaches at least **7:1** contrast on the editor background (≥ 7.2:1) and
   ≥ 5.9:1 on the highlighted line; comments stay ≥ 4.5:1 on both.
 - **Distinct roles** — no two syntax roles are closer than ΔE2000 10, so keywords, types, parameters and values never blur together.
+- **Colorblind-checked** — simulated for deuteranopia and protanopia (Machado 2009, full severity), the roles that sit
+  side by side all the time (keyword, function, property, type, variable, namespace…) stay ≥ ΔE2000 6 apart
+  (tritanopia ≥ 3); parameters and `this`/`self` also differ by italics.
 - **Consistent across 35+ languages** — TypeScript/TSX, JavaScript, Python, Go, Rust, C/C++, C#, Java, PHP, Ruby, Lua, Swift, Dart,
   R, Shell, PowerShell, SQL, HTML, CSS/SCSS, Markdown, JSON, YAML, TOML, INI, `.env`, Dockerfile, Makefile, Prisma, Protobuf and more.
 - **Semantic highlighting** matched to the TextMate colors, so nothing jumps when the language server loads.
 - **Calm UI, clear states** — an ember line marks the active tab; selection, search matches, symbol occurrences and hover each get their own hue.
-- **Tested** — `npm test` runs 121+ contrast/separation checks (palette plus the built theme, with translucent colors
+- **Tested** — `npm test` runs 160+ contrast, separation and color-blindness checks (palette plus the built theme, with translucent colors
   blended onto their real backgrounds), checks the generated files, and pins the published colors.
 
 ## Palette
@@ -23,7 +26,7 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 | Role | Color | |
 |---|---|---|
 | Keyword | `#D29BFF` | violet |
-| Function / method | `#70C7FF` | sky blue |
+| Function / method | `#94D6FF` | sky blue |
 | Property / field | `#5ED7CB` | teal |
 | Type / class | `#F2CC78` | gold |
 | Built-in type (`string`, `int`…) | `#B3B1FF` | lavender |

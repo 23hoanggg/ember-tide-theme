@@ -19,8 +19,9 @@ const keysOf = (o) => Object.keys(o).sort();
 // Mã băm màu bản Dark. Chỉ cập nhật khi CỐ Ý đổi màu bản Dark.
 // v1.1.0 (2026-11-23): nền bớt ngả xanh (chroma ×0.45), chữ/xám trung tính hơn, variable & property rực hơn — theo yêu cầu chủ dự án.
 // 1.2.0: semantic tokens per language server match TextMate; set VS Code keys that defaulted to hard-coded Dark+ colors.
+// 1.2.0 round 2: func #70C7FF → #94D6FF (colorblind separation), cross-language tokenColors fixes (see CHANGELOG).
 // Băm trên JSON đã chuẩn hoá chữ hoa hex, để đổi hoa/thường không làm test đỏ.
-const DARK_VSCODE_SHA256 = "4ad2b44b845f590e1debaa646101bba49185c55a33fac333c8cb6376a9530144";
+const DARK_VSCODE_SHA256 = "e8db4bbea7311ec9e14ea5c87428225bed50a3411ebf86d986481b8e906250c9";
 const norm = (o) => JSON.stringify(o).replace(/#[0-9a-fA-F]{6,8}/g, (m) => m.toUpperCase());
 const sha = (s) => createHash("sha256").update(s).digest("hex");
 
@@ -76,6 +77,14 @@ for (const P of variants) {
     assert.equal(r.failed.length, 0, `${r.failed.length}/${r.checks.length} chỉ số trượt:\n${msg}`);
   });
 }
+
+test("Mù màu (CVD): bản phát hành bắt buộc đạt; biến thể cục bộ chỉ cảnh báo", () => {
+  const r = report(dark);
+  const core = r.checks.filter((c) => c.group === "mù màu (CVD)");
+  assert.ok(core.length >= 39, "thiếu kiểm tra CVD");
+  assert.deepEqual(core.filter((c) => !c.ok).map((c) => c.name), []);
+  for (const P of localVariants) assert.ok(report(P).checks.filter((c) => c.group === "mù màu (CVD)").every((c) => c.ok || c.advisory));
+});
 
 test("VS Code: mọi biến thể hợp lệ; extension phát hành chỉ có Dark, biến thể cục bộ chỉ ở extension riêng", () => {
   const base = keysOf(vscodeThemes[0].theme.colors);
@@ -256,7 +265,7 @@ test("Phiên bản khớp giữa package.json và zed/extension.toml", () => {
 
 // Mã băm theme Zed Dark (1.1.0: thêm style function.decorator/function.macro/type.definition/type.parameter cho rule semantic mặc định của Zed)
 // 1.2.0: string.regexp/string.doc/keyword.modifier, capture fallbacks (function.special, tag.component…), vim.* keys.
-const DARK_ZED_SHA256 = "a31bb2695a86f4f593e713628371e9b3cca966a82f01d47d6651f6acba8624ee";
+const DARK_ZED_SHA256 = "410c4c9459e850bb78c96e076ccab2a36d042cd4c42f1de42af987e0ccc193a7";
 test("Zed: bản Dark giữ nguyên màu đã ghim (v1.2.0)", () => {
   assert.equal(sha(norm(zedTheme.themes[0])), DARK_ZED_SHA256, "theme Zed Dark đã thay đổi — nếu cố ý, cập nhật DARK_ZED_SHA256");
 });

@@ -686,34 +686,43 @@ const tokenColors = [
   rule("Keyword operator dạng chữ", ["keyword.operator.new", "keyword.operator.expression", "keyword.operator.logical.python", "keyword.operator.word", "keyword.operator.sizeof", "keyword.operator.instanceof", "keyword.operator.typeof", "keyword.operator.delete", "keyword.operator.in", "keyword.operator.of", "keyword.operator.void", "keyword.operator.wordlike", "keyword.operator.alignof", "keyword.operator.cast"], s.keyword),
   rule("Operator", ["keyword.operator", "punctuation.separator.key-value", "punctuation.accessor.optional", "keyword.operator.type.annotation", "keyword.operator.spread", "keyword.operator.rest"], s.operator),
   rule("Arrow", ["storage.type.function.arrow"], s.keyword),
+  rule("Keyword (grammar exceptions)", ["keyword.type.go", "storage.type.template.argument.typename", "storage.type.template.argument.class"], s.keyword, ""),
+  rule("Word-like operators", ["keyword.control.ternary", "keyword.accessor.dollar.r"], s.operator),
+  // Doc-comment tags (@param, @brief, ---@param…): one style in every language — keyword violet, italic like the comment
+  rule("Doc comment tag", ["comment keyword", "comment storage.type", "comment storage.type.annotation.lua", "comment.block.documentation keyword", "comment.line.documentation keyword"], s.keyword, "italic"),
 
-  rule("Function", ["entity.name.function", "support.function", "meta.function-call.generic", "variable.function", "meta.function-call entity.name.function", "entity.name.function.member"], s.func),
+  rule("Function", ["entity.name.function", "support.function", "meta.function-call.generic", "variable.function", "meta.function-call entity.name.function", "entity.name.function.member", "entity.name.operator"], s.func),
   rule("Constructor / class name", ["entity.name.type.class", "entity.name.class", "entity.other.inherited-class", "support.class", "new.expr entity.name.type"], s.type),
-  rule("Type", ["entity.name.type", "support.type", "entity.name.type.interface", "entity.name.type.alias", "entity.name.type.enum", "meta.type.annotation entity.name.type", "storage.type.cs", "storage.type.java", "storage.type.generic"], s.type),
-  rule("Type builtin", ["support.type.primitive", "support.type.builtin", "keyword.type", "storage.type.primitive", "storage.type.built-in", "storage.type.numeric.go", "storage.type.string.go", "storage.type.boolean.go", "support.type.python"], s.typeBuiltin),
+  rule("Type", ["entity.name.type", "support.type", "entity.name.type.interface", "entity.name.type.alias", "entity.name.type.enum", "meta.type.annotation entity.name.type", "storage.type.cs", "storage.type.java", "storage.type.object.array.java", "storage.type.generic"], s.type),
+  rule("Type builtin", ["support.type.primitive", "support.type.builtin", "keyword.type", "storage.type.primitive", "storage.type.built-in", "storage.type.numeric.go", "storage.type.string.go", "storage.type.boolean.go", "storage.type.error.go", "storage.type.byte.go", "storage.type.rune.go", "storage.type.uintptr.go", "support.type.python", "support.type.exception.python", "storage.type.integral", "storage.type.template.argument"], s.typeBuiltin),
   // Chỉ khai báo generic (T, K) — KHÔNG dùng meta.type.parameters vì TS grammar gắn scope đó cho cả type argument (Promise<User>)
   rule("Type parameter", ["entity.name.type.parameter"], s.type, "italic"),
-  rule("Namespace / module", ["entity.name.namespace", "entity.name.type.namespace", "entity.name.type.module", "entity.name.package", "storage.modifier.import", "storage.modifier.package", "support.other.namespace", "entity.name.scope-resolution"], s.namespace),
+  rule("Namespace / module", ["entity.name.namespace", "entity.name.type.namespace", "entity.name.type.module", "entity.name.package", "storage.modifier.import", "storage.modifier.package", "support.other.namespace", "entity.name.scope-resolution", "meta.import.swift entity.name.type"], s.namespace),
 
-  rule("Variable", ["variable", "variable.other", "variable.other.readwrite", "meta.definition.variable entity.name"], s.variable),
+  rule("Variable", ["variable", "variable.other", "variable.other.readwrite", "meta.definition.variable entity.name", "entity.name.variable.local.cs"], s.variable),
   rule("Constant variable", ["variable.other.constant", "entity.name.constant"], s.number),
   rule("Parameter", ["variable.parameter", "meta.parameters variable", "entity.name.variable.parameter"], s.parameter, "italic"),
   rule("this / self / super", ["variable.language", "variable.language.this", "variable.language.self", "variable.language.super", "variable.parameter.function.language.special.self.python", "variable.parameter.function.language.special.cls.python"], s.special, "italic"),
-  rule("Property", ["variable.other.property", "variable.other.object.property", "support.variable.property", "meta.property-name", "entity.name.variable.field", "variable.other.member", "entity.name.variable.property", "meta.object-literal.key", "support.type.property-name"], s.property),
+  rule("Property", ["variable.other.property", "variable.other.object.property", "support.variable.property", "meta.property-name", "entity.name.variable.field", "variable.other.member", "entity.name.variable.property", "meta.object-literal.key", "support.type.property-name", "variable.object.property", "entity.other.attribute.lua", "support.variable.swift", "entity.name.variable.event.cs"], s.property),
   rule("Builtin object", ["support.variable", "support.constant", "variable.other.object.builtin", "support.class.builtin"], s.special),
 
   rule("Number & constant", ["constant.numeric", "constant.language", "constant.character", "constant.other", "support.constant.math", "keyword.other.unit", "constant.other.color"], s.number),
-  rule("Enum member", ["variable.other.enummember", "entity.name.variable.enum-member", "constant.other.enum"], s.number),
+  rule("Enum member", ["variable.other.enummember", "entity.name.variable.enum-member", "constant.other.enum", "entity.name.type.option.rust", "support.constant.core.php", "entity.other.keyframe-offset", "storage.type.numeric.bigint"], s.number),
 
   rule("String", ["string", "string.quoted", "string.template", "punctuation.definition.string"], s.string),
   rule("Escape", ["constant.character.escape", "constant.other.placeholder", "constant.character.format.placeholder"], s.escape),
-  rule("Regex", ["string.regexp", "constant.other.character-class.regexp", "keyword.operator.quantifier.regexp"], s.regex),
-  rule("Template expression", ["punctuation.definition.template-expression", "punctuation.section.embedded", "punctuation.section.interpolation"], s.keyword),
+  rule("Regex", ["string.regexp", "constant.other.character-class.regexp", "keyword.operator.quantifier.regexp", "keyword.control.anchor.regexp"], s.regex),
+  // String interpolation: only the delimiters (${ }, { }, #{ }, \( ), $( ), $) take the keyword color; the expression
+  // inside keeps its own token colors. Format placeholders (Rust "{n:.2}", like %s) use the escape color instead.
+  rule("Template expression", ["punctuation.definition.template-expression", "punctuation.section.embedded", "punctuation.section.interpolation", "punctuation.definition.interpolation", "constant.character.format.placeholder.other.python", "string.interpolated meta.embedded.expression.dart"], s.keyword),
+  rule("Format placeholder", ["meta.interpolation.rust", "punctuation.definition.interpolation.rust"], s.escape),
   rule("Template expression content", ["meta.template.expression", "meta.embedded"], ui.fg),
 
-  rule("Decorator / attribute", ["meta.decorator", "punctuation.decorator", "meta.decorator entity.name.function", "entity.name.function.decorator", "meta.attribute.rust", "meta.annotation", "storage.type.annotation", "punctuation.definition.annotation", "entity.name.function.macro", "support.function.macro"], s.attribute),
+  rule("Decorator / attribute", ["meta.decorator", "punctuation.decorator", "meta.decorator entity.name.function", "entity.name.function.decorator", "meta.attribute.rust", "meta.annotation", "storage.type.annotation", "punctuation.definition.annotation", "entity.name.function.macro", "support.function.macro", "storage.modifier.attribute.swift", "support.other.attribute", "meta.attribute.php", "support.attribute.builtin.php", "support.function.attribute.powershell", "string.tag.lua"], s.attribute),
   rule("Label", ["entity.name.label", "entity.name.goto-label"], s.attribute),
-  rule("Preprocessor", ["meta.preprocessor", "keyword.control.directive", "punctuation.definition.directive"], s.keyword),
+  // Not `meta.preprocessor`: it spans the whole #define body / #ifdef argument (those identifiers were painted violet)
+  rule("Preprocessor", ["keyword.control.directive", "punctuation.definition.directive"], s.keyword),
+  rule("Preprocessor macro name", ["entity.name.function.preprocessor"], s.attribute), // macro = mint, like Rust println! and semantic `macro`
 
   rule("Punctuation", ["punctuation", "punctuation.separator", "punctuation.terminator", "punctuation.accessor", "meta.brace", "punctuation.definition.parameters", "punctuation.definition.typeparameters"], s.punctuation),
   rule("Bracket", ["punctuation.definition.block", "punctuation.section", "meta.brace.round", "meta.brace.square", "meta.brace.curly", "punctuation.definition.array", "punctuation.definition.dictionary"], s.bracket),
@@ -781,7 +790,6 @@ const tokenColors = [
 
   // --- Python ---
   rule("Python decorator", ["meta.function.decorator.python", "entity.name.function.decorator.python", "punctuation.definition.decorator.python"], s.attribute),
-  rule("Python f-string", ["meta.fstring.python", "constant.character.format.placeholder.other.python"], s.escape),
   rule("Python magic", ["support.function.magic.python", "support.variable.magic.python"], s.special),
 
   rule("Python attribute access", ["meta.member.access.python meta.attribute.python", "meta.attribute.python"], s.property),
@@ -799,8 +807,8 @@ const tokenColors = [
   rule("PHP variable \$", ["punctuation.definition.variable.php"], s.variable),
 
   // --- Ruby ---
-  rule("Ruby symbol", ["constant.language.symbol.ruby", "constant.other.symbol.ruby", "constant.other.symbol.hashkey.ruby", "constant.other.symbol.hashkey.parameter.function.ruby"], s.property),
-  rule("Ruby instance var", ["variable.other.readwrite.instance.ruby", "punctuation.definition.variable.ruby"], s.special),
+  rule("Ruby symbol", ["constant.language.symbol.ruby", "constant.other.symbol.ruby", "constant.other.symbol.hashkey.ruby", "constant.other.symbol.hashkey.parameter.function.ruby", "constant.language.symbol.hashkey.ruby"], s.property),
+  rule("Ruby instance/class var", ["variable.other.readwrite.instance.ruby", "variable.other.readwrite.class.ruby", "punctuation.definition.variable.ruby"], s.special),
 
   // --- INI / .env / properties ---
   rule("INI section", ["entity.name.section.group-title.ini"], s.type, ""),
@@ -822,7 +830,7 @@ const tokenColors = [
   rule("Link text", ["string.other.link.title.markdown", "string.other.link.description.markdown", "meta.link.inline.markdown string.other.link"], s.keyword),
   rule("Link url", ["markup.underline.link", "markup.underline.link.image", "meta.link.reference.def.markdown constant.other.reference.link"], s.property),
   rule("Quote", ["markup.quote", "punctuation.definition.quote.begin.markdown"], s.commentDoc, "italic"),
-  rule("List marker", ["punctuation.definition.list.begin.markdown", "beginning.punctuation.definition.list.markdown", "markup.list.unnumbered", "markup.list.numbered"], s.number),
+  rule("List marker", ["punctuation.definition.list.begin.markdown", "beginning.punctuation.definition.list.markdown"], s.number), // only the bullet: markup.list.* spans the whole item text
   rule("Separator", ["meta.separator.markdown"], s.comment),
 
   // --- Log (*.log, Output panel) ---

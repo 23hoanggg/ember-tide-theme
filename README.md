@@ -47,11 +47,12 @@ Search **“Ember Tide”** in the Extensions view, then pick it with
 
 Open the command palette → `zed: extensions` → search **“Ember Tide”** → Install, then select it with `theme selector: toggle`.
 
-#### Optional: semantic token rule for Zed
+#### Optional: semantic token rules for Zed
 
-Zed already maps language-server tokens to theme styles. One extra rule makes TypeScript parameter properties
-(`constructor(private readonly db: Db)`) use the property color, matching `this.db`. It references a theme *style*
-rather than a hex color — add it to your `settings.json`
+Zed already maps language-server tokens to theme styles. Three extra rules match VS Code more closely: TypeScript
+parameter properties (`constructor(private readonly db: Db)`) use the property color, matching `this.db`; Rust built-in
+types (`i32`, `str`) use the built-in type color; and Rust format specifiers (`{}`, `{:?}`) use the escape color. They
+reference theme *styles* rather than hex colors — add them to your `settings.json`
 (also in [`extras/zed-semantic-token-rules.json`](extras/zed-semantic-token-rules.json)):
 
 ```jsonc
@@ -59,13 +60,15 @@ rather than a hex color — add it to your `settings.json`
   "semantic_tokens": "combined",
   "global_lsp_settings": {
     "semantic_token_rules": [
-      { "token_type": "parameter", "token_modifiers": ["readonly"], "style": ["property"] }
+      { "token_type": "parameter", "token_modifiers": ["readonly"], "style": ["property"] },
+      { "token_type": "builtinType", "style": ["type.builtin"] },
+      { "token_type": "formatSpecifier", "style": ["string.escape"] }
     ]
   }
 }
 ```
 
-> **Upgrading from 1.0.0?** The old rules hard-coded hex colors. Replace them with the single rule above — Zed's built-in
+> **Upgrading from 1.0.0?** The old rules hard-coded hex colors. Replace them with the rules above — Zed's built-in
 > rules already take decorator, namespace, parameter… colors from the theme.
 
 ### Terminal

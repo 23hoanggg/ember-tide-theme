@@ -147,6 +147,24 @@
         "minimap.thumb.hover_background": "#70C7FF2E",
         "minimap.thumb.active_background": "#70C7FF40",
         "minimap.thumb.border": "#00000000",
+        "vim.normal.background": "#70C7FF",
+        "vim.normal.foreground": "#14171B",
+        "vim.insert.background": "#A9D77B",
+        "vim.insert.foreground": "#14171B",
+        "vim.replace.background": "#FF7F9F",
+        "vim.replace.foreground": "#14171B",
+        "vim.visual.background": "#D29BFF",
+        "vim.visual.foreground": "#14171B",
+        "vim.visual_line.background": "#D29BFF",
+        "vim.visual_line.foreground": "#14171B",
+        "vim.visual_block.background": "#D29BFF",
+        "vim.visual_block.foreground": "#14171B",
+        "vim.helix_normal.background": "#70C7FF",
+        "vim.helix_normal.foreground": "#14171B",
+        "vim.helix_select.background": "#D29BFF",
+        "vim.helix_select.foreground": "#14171B",
+        "vim.yank.background": "#E8B96F33",
+        "vim.helix_jump_label.foreground": "#E99A82",
         "terminal.background": "#1A1D22",
         "terminal.ansi.background": "#1A1D22",
         "terminal.foreground": "#DFE3E8",
@@ -243,6 +261,11 @@
             "font_weight": null
           },
           "comment.doc": {
+            "color": "#99A3B0",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "comment.documentation": {
             "color": "#99A3B0",
             "font_style": "italic",
             "font_weight": null
@@ -362,6 +385,11 @@
             "font_style": "normal",
             "font_weight": null
           },
+          "function.kwargs": {
+            "color": "#FF8689",
+            "font_style": "italic",
+            "font_weight": null
+          },
           "function.macro": {
             "color": "#8EE0B5",
             "font_style": "normal",
@@ -369,6 +397,11 @@
           },
           "function.method": {
             "color": "#70C7FF",
+            "font_style": "normal",
+            "font_weight": null
+          },
+          "function.special": {
+            "color": "#8EE0B5",
             "font_style": "normal",
             "font_weight": null
           },
@@ -388,6 +421,11 @@
             "font_weight": null
           },
           "keyword.control": {
+            "color": "#D29BFF",
+            "font_style": "normal",
+            "font_weight": null
+          },
+          "keyword.modifier": {
             "color": "#D29BFF",
             "font_style": "normal",
             "font_weight": null
@@ -472,6 +510,11 @@
             "font_style": "normal",
             "font_weight": null
           },
+          "modifier": {
+            "color": "#D29BFF",
+            "font_style": "normal",
+            "font_weight": null
+          },
           "module": {
             "color": "#BDAA67",
             "font_style": "normal",
@@ -484,6 +527,11 @@
           },
           "number": {
             "color": "#FF9F5E",
+            "font_style": "normal",
+            "font_weight": null
+          },
+          "number.quantifier": {
+            "color": "#F7AEE6",
             "font_style": "normal",
             "font_weight": null
           },
@@ -572,7 +620,17 @@
             "font_style": "normal",
             "font_weight": null
           },
+          "strikethrough": {
+            "color": "#8B94A2",
+            "font_style": "normal",
+            "font_weight": null
+          },
           "string": {
+            "color": "#ACE08F",
+            "font_style": "normal",
+            "font_weight": null
+          },
+          "string.doc": {
             "color": "#ACE08F",
             "font_style": "normal",
             "font_weight": null
@@ -583,6 +641,11 @@
             "font_weight": null
           },
           "string.regex": {
+            "color": "#F7AEE6",
+            "font_style": "normal",
+            "font_weight": null
+          },
+          "string.regexp": {
             "color": "#F7AEE6",
             "font_style": "normal",
             "font_weight": null
@@ -610,6 +673,11 @@
           "tag.attribute": {
             "color": "#8EE0B5",
             "font_style": "italic",
+            "font_weight": null
+          },
+          "tag.component": {
+            "color": "#F2CC78",
+            "font_style": "normal",
             "font_weight": null
           },
           "tag.delimiter": {
@@ -669,6 +737,11 @@
           },
           "type.class": {
             "color": "#F2CC78",
+            "font_style": "normal",
+            "font_weight": null
+          },
+          "type.class.builtin": {
+            "color": "#B3B1FF",
             "font_style": "normal",
             "font_weight": null
           },

@@ -18,8 +18,9 @@ const keysOf = (o) => Object.keys(o).sort();
 
 // Mã băm màu bản Dark. Chỉ cập nhật khi CỐ Ý đổi màu bản Dark.
 // v1.1.0 (2026-11-23): nền bớt ngả xanh (chroma ×0.45), chữ/xám trung tính hơn, variable & property rực hơn — theo yêu cầu chủ dự án.
+// 1.2.0: semantic tokens per language server match TextMate; set VS Code keys that defaulted to hard-coded Dark+ colors.
 // Băm trên JSON đã chuẩn hoá chữ hoa hex, để đổi hoa/thường không làm test đỏ.
-const DARK_VSCODE_SHA256 = "81f0bf7f30ee62ea39ec26a9ed25da16f1f85cc87a2930866934fbf567c19ca7";
+const DARK_VSCODE_SHA256 = "4ad2b44b845f590e1debaa646101bba49185c55a33fac333c8cb6376a9530144";
 const norm = (o) => JSON.stringify(o).replace(/#[0-9a-fA-F]{6,8}/g, (m) => m.toUpperCase());
 const sha = (s) => createHash("sha256").update(s).digest("hex");
 
@@ -125,10 +126,55 @@ test("VS Code: mọi key màu UI tồn tại trong VS Code đã cài (bỏ qua n
   assert.deepEqual(unknown, []);
 });
 
-test("VS Code: bản Dark giữ nguyên màu đã ghim (v1.1.0)", (t) => {
+test("VS Code: bản Dark giữ nguyên màu đã ghim (v1.2.0)", (t) => {
   const h = sha(norm(vscodeThemes[0].theme));
   if (DARK_VSCODE_SHA256 === "PENDING") return t.skip(`chưa ghim mã băm; giá trị hiện tại: ${h}`);
   assert.equal(h, DARK_VSCODE_SHA256, "màu bản Dark đã thay đổi — nếu cố ý, cập nhật DARK_VSCODE_SHA256");
+});
+
+// Semantic token của từng language server phải ra cùng màu với rule TextMate của chính theme cho cùng cấu trúc.
+// (VS Code khớp cả theo superType: thiếu rule riêng thì rule rộng keyword/type/variable/method "nuốt" mất kiểu con.)
+const SEMANTIC_ROLES = {
+  boolean: ["number"], // Rust true/false — constant.language.bool.rust
+  selfTypeKeyword: ["special", true], // Rust Self
+  const: ["number"], // Rust const — constant.other.caps.rust
+  static: ["number"], // Rust static
+  formatSpecifier: ["escape"], // Rust {} {:?}
+  constant: ["number"], // C# const, Python None/True (builtinConstant)
+  delegate: ["type"], // C# delegate — entity.name.type.delegate.cs
+  event: ["property"],
+  annotation: ["attribute"], // Java @Override — storage.type.annotation.java
+  annotationMember: ["property"],
+  "variable.readonly.defaultLibrary:go": ["number"], // Go true/false/nil/iota — constant.language.go
+  "string.format": ["escape"], // Go %s %d
+  "class.builtin": ["typeBuiltin"], // Python int/str — support.type.python
+  "class.defaultLibrary:python": ["typeBuiltin"],
+  "class.defaultLibrary": ["type"], // TS Promise/Map — support.class
+  concept: ["type"], // C++ concept
+  macro: ["attribute"],
+  "variable.readonly": ["variable"], // TS const: cố ý giữ màu biến
+  "variable.defaultLibrary": ["special"], // TS console/window — support.variable
+  builtinType: ["typeBuiltin"],
+  lifetime: ["attribute", true],
+  parameter: ["parameter", true],
+};
+for (const { P, theme } of vscodeThemes) {
+  test(`[${P.id}] VS Code: semantic token ghim đúng vai trò màu (khớp TextMate)`, () => {
+    const stc = theme.semanticTokenColors;
+    for (const [sel, [role, italic]] of Object.entries(SEMANTIC_ROLES)) {
+      const r = stc[sel];
+      assert.ok(r, `thiếu semanticTokenColors["${sel}"]`);
+      const fg = typeof r === "string" ? r : r.foreground;
+      assert.equal(fg, P.syntax[role], `${sel} phải là syntax.${role}`);
+      if (italic) assert.equal(r.italic, true, `${sel} phải nghiêng`);
+      assert.ok(typeof r === "string" || !r.bold, `${sel}: không dùng chữ đậm`);
+    }
+  });
+}
+
+test("package.json: galleryBanner.color = ui.bgDeep của bản Dark", () => {
+  const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+  assert.equal(pkg.galleryBanner.color.toUpperCase(), dark.ui.bgDeep.toUpperCase());
 });
 
 test("Zed: file phát hành chỉ có Dark, biến thể cục bộ ở file riêng; đúng appearance và kiểu dữ liệu", () => {
@@ -150,6 +196,24 @@ test("Zed: file phát hành chỉ có Dark, biến thể cục bộ ở file ri�
       assert.ok(v.font_weight === null || Number.isInteger(v.font_weight), `${th.name}: syntax.${k}.font_weight phải là số hoặc null`);
       assert.ok(["normal", "italic"].includes(v.font_style), `${th.name}: syntax.${k}.font_style`);
     }
+  }
+});
+
+// Zed tra style của rule semantic theo TÊN CHÍNH XÁC, và capture tree-sitter rơi về tiền tố dài nhất → ghim các style dễ sai màu
+const ZED_ROLES = {
+  "string.regexp": "regex", "string.doc": "string", "keyword.modifier": "keyword", "comment.documentation": "commentDoc",
+  "function.special": "attribute", "tag.component": "type", "function.kwargs": "parameter", "type.class.builtin": "typeBuiltin",
+  "number.quantifier": "regex", strikethrough: "comment",
+};
+const VIM_MODES = ["normal", "insert", "replace", "visual", "visual_line", "visual_block", "helix_normal", "helix_select"];
+test("Zed: style semantic/capture đúng vai trò màu và đủ 18 key vim.*", () => {
+  for (const th of [...zedTheme.themes, ...zedLocalTheme.themes]) {
+    const P = variants.find((v) => v.name === th.name);
+    for (const [k, role] of Object.entries(ZED_ROLES)) assert.equal(th.style.syntax[k]?.color, P.syntax[role], `${th.name}: syntax.${k}`);
+    const vimKeys = Object.keys(th.style).filter((k) => k.startsWith("vim."));
+    assert.equal(vimKeys.length, 18, `${th.name}: vim.* keys`);
+    for (const m of VIM_MODES) for (const part of ["background", "foreground"]) assert.ok(`vim.${m}.${part}` in th.style, `${th.name}: vim.${m}.${part}`);
+    assert.notEqual(th.style["vim.normal.background"], th.style["vim.insert.background"]);
   }
 });
 
@@ -191,8 +255,9 @@ test("Phiên bản khớp giữa package.json và zed/extension.toml", () => {
 });
 
 // Mã băm theme Zed Dark (1.1.0: thêm style function.decorator/function.macro/type.definition/type.parameter cho rule semantic mặc định của Zed)
-const DARK_ZED_SHA256 = "d6a9b306b572dffb7f1409724c02db33aee029ac87ce7ee05668a29333de9b4f";
-test("Zed: bản Dark giữ nguyên màu đã ghim (v1.1.0)", () => {
+// 1.2.0: string.regexp/string.doc/keyword.modifier, capture fallbacks (function.special, tag.component…), vim.* keys.
+const DARK_ZED_SHA256 = "a31bb2695a86f4f593e713628371e9b3cca966a82f01d47d6651f6acba8624ee";
+test("Zed: bản Dark giữ nguyên màu đã ghim (v1.2.0)", () => {
   assert.equal(sha(norm(zedTheme.themes[0])), DARK_ZED_SHA256, "theme Zed Dark đã thay đổi — nếu cố ý, cập nhật DARK_ZED_SHA256");
 });
 

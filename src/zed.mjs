@@ -11,6 +11,7 @@ const syntaxStyles = {
   // Comment
   comment: italic(s.comment),
   "comment.doc": italic(s.commentDoc),
+  "comment.documentation": italic(s.commentDoc), // Haskell; semantic comment+documentation
   hint: italic(s.comment),
   predictive: italic(s.ghost),
 
@@ -25,11 +26,15 @@ const syntaxStyles = {
   exception: st(s.keyword),
   storageclass: st(s.keyword),
   define: st(s.keyword),
+  "keyword.modifier": st(s.keyword), // semantic `modifier` (clangd override/final, Java) — exact-name lookup
+  modifier: st(s.keyword), // Elixir
 
   // Hàm
   function: st(s.func),
   "function.method": st(s.func),
   "function.builtin": st(s.func),
+  "function.special": st(s.attribute), // Rust println!, C #define F() — as macro in VS Code
+  "function.kwargs": italic(s.parameter), // Python f(x=1) — variable.parameter.function-call
   method: st(s.func),
   constructor: st(s.type),
   macro: st(s.attribute),
@@ -45,6 +50,7 @@ const syntaxStyles = {
   "type.class": st(s.type),
   "type.interface": st(s.type),
   "type.builtin": st(s.typeBuiltin),
+  "type.class.builtin": st(s.typeBuiltin), // Python int, str — support.type.python
   "type.primitive": st(s.typeBuiltin),
   enum: st(s.type),
   concept: st(s.type),
@@ -78,6 +84,9 @@ const syntaxStyles = {
   "string.escape": st(s.escape),
   escape: st(s.escape),
   "string.regex": st(s.regex),
+  "string.regexp": st(s.regex), // Swift; semantic `regexp` (exact-name lookup)
+  "string.doc": st(s.string), // semantic string+documentation (docstrings)
+  "number.quantifier": st(s.regex), // regex quantifiers
   "string.special": st(s.property),
   "string.special.symbol": st(s.property),
   symbol: st(s.property),
@@ -98,6 +107,7 @@ const syntaxStyles = {
   // Tag / HTML / CSS
   tag: st(s.tag),
   "tag.attribute": italic(s.attribute),
+  "tag.component": st(s.type), // JSX/TSX, Astro, Svelte, Vue components — support.class.component
   "tag.delimiter": st(s.punctuation),
   "tag.doctype": st(s.keyword),
   attribute: st(s.attribute),
@@ -115,6 +125,7 @@ const syntaxStyles = {
   "markup.bold": st(s.number),
   "markup.italic": italic(s.keyword),
   "markup.strikethrough": st(s.comment),
+  strikethrough: st(s.comment), // markdown-inline ~~text~~
   "markup.link": st(s.keyword),
   "markup.link.url": st(s.property),
   "markup.raw": st(s.string),
@@ -140,6 +151,8 @@ const status = (name, color, bg) => ({
   [`${name}.background`]: bg,
   [`${name}.border`]: alpha(color, "55"),
 });
+
+const vim = (mode, color) => ({ [`vim.${mode}.background`]: color, [`vim.${mode}.foreground`]: ui.onBadge ?? ui.bgDeep });
 
 const style = {
   background: ui.bg,
@@ -270,6 +283,18 @@ const style = {
   "minimap.thumb.active_background": alpha(ui.accent, "40"),
   "minimap.thumb.border": "#00000000",
 
+  // Vim / Helix mode indicator in the status bar
+  ...vim("normal", ui.accent),
+  ...vim("insert", ui.green),
+  ...vim("replace", ui.red),
+  ...vim("visual", s.keyword),
+  ...vim("visual_line", s.keyword),
+  ...vim("visual_block", s.keyword),
+  ...vim("helix_normal", ui.accent),
+  ...vim("helix_select", s.keyword),
+  "vim.yank.background": alpha(ui.yellow, "33"), // = search match (amber)
+  "vim.helix_jump_label.foreground": ui.coral,
+
   "terminal.background": ui.bg,
   "terminal.ansi.background": ui.bg,
   "terminal.foreground": ui.fg,
@@ -312,4 +337,8 @@ export const zedLocalTheme = {
 export const zedSemanticRules = [
   // `private readonly prisma` (parameter property) = thuộc tính của class → tô như property, khớp this.prisma
   { token_type: "parameter", token_modifiers: ["readonly"], style: ["property"] },
+  // rust-analyzer: i32/str/bool → lavender like VS Code (Zed default maps builtinType to plain `type`)
+  { token_type: "builtinType", style: ["type.builtin"] },
+  // rust-analyzer: {} {:?} in format! → escape color like VS Code (Zed default: string.special)
+  { token_type: "formatSpecifier", style: ["string.escape"] },
 ];

@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.2.0 (unreleased)
+
+- **Semantic highlighting matches the syntax colors.** With a language server running, these tokens no longer switch
+  to a different color than the theme gives them without one:
+  - Rust: `true`/`false` and `const`/`static` items are orange like other constants (were purple / coral), `Self` is
+    blue italic like `self`, and format specifiers (`{}`, `{:?}`) use the escape color.
+  - Java: annotations (`@Override`) are mint like other attributes (were yellow).
+  - C#: delegates are yellow types (were blue), `const` fields are orange, events use the property color.
+  - Go: `true`, `false`, `nil`, `iota` are orange (were blue-violet); `%s`/`%d` in format strings use the escape color.
+  - Python (Pylance): built-in types `int`, `str`, `list`… are lavender (were yellow); `None`/`True` stay orange.
+  - C++: concepts (`std::integral`) are yellow types.
+- **Zed:**
+  - Rust macros (`println!`) and C function-like macros are mint like in VS Code (were blue); JSX/TSX, Astro, Svelte and
+    Vue components are yellow (were pink); Python keyword arguments are coral italic; Python `int`/`str` are lavender.
+  - Regex tokens from language servers are pink (were string green); docstrings and modifiers such as `override`/`final`
+    from language servers are now colored (were left plain); doc comments and `~~strikethrough~~` are styled.
+  - Vim and Helix mode colors in the status bar: normal blue, insert green, visual violet, replace red; yank flash is amber.
+  - Two more optional semantic rules (Rust built-in types, format specifiers) — see the README.
+- **VS Code UI:** keys that still used VS Code's built-in Dark+ colors now follow the palette: source control graph
+  (base/remote refs, hover additions/deletions), Chat/Agents progress icon and thinking shimmer, IME composition underline,
+  offline status bar item, debug value-changed highlight, moved-code borders in diffs, extension rating stars, Welcome titles.
+- Test coverage highlights and Next Edit Suggestions get clearly visible green/red tints (they were derived from the faint
+  diff colors and almost invisible).
+- Marketplace banner color matches the current background.
+
 ## 1.1.0
 
 - **Brighter, livelier look.** The background and UI grays are far less blue (background chroma halved: `#171D28` → `#1A1D22`),

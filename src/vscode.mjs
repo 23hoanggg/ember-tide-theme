@@ -620,6 +620,36 @@ const colors = {
   "chat.mcpCompatibilityWarningForeground": ui.yellow,
   "extensionIcon.privateForeground": ui.fgMuted,
 
+  // Keys whose VS Code default is a hard-coded Dark+ color (would ignore the palette)
+  "scmGraph.historyItemRefColor": ui.accent,
+  "scmGraph.historyItemRemoteRefColor": accents[1],
+  "scmGraph.historyItemBaseRefColor": ui.ember,
+  "scmGraph.historyItemHoverAdditionsForeground": ui.green,
+  "scmGraph.historyItemHoverDeletionsForeground": ui.red,
+  "chat.workingProgressStableIconForeground": ui.accent,
+  "chat.workingProgressInsidersIconForeground": ui.focus,
+  "chat.thinkingShimmer": ui.fgBright,
+  "editor.compositionBorder": ui.accent, // IME composition underline (Telex/IBus, CJK input)
+  "statusBarItem.offlineBackground": ui.bgRed,
+  "statusBarItem.offlineForeground": ui.red,
+  "debugView.valueChangedHighlight": alpha(ui.accent, "55"),
+  "debugView.stateLabelBackground": ui.bgSelected,
+  "diffEditor.moveActive.border": ui.ember,
+  "diffEditor.move.border": alpha(ui.fgMuted, "99"),
+  "testing.iconUnset": ui.fgMuted,
+  "extensionIcon.starForeground": ui.yellow,
+  "walkthrough.stepTitle.foreground": ui.fgBright,
+  // Test coverage and Next Edit Suggestions derive from the (faint) diff colors × 0.2–0.8 → nearly invisible
+  "testing.coveredBackground": alpha(ui.green, "1A"),
+  "testing.uncoveredBackground": alpha(ui.red, "1A"),
+  "testing.coveredGutterBackground": alpha(ui.green, "55"),
+  "testing.uncoveredGutterBackground": alpha(ui.red, "55"),
+  "inlineEdit.originalBackground": alpha(ui.red, "1A"),
+  "inlineEdit.modifiedBackground": alpha(ui.green, "1A"),
+  "inlineEdit.originalChangedTextBackground": alpha(ui.red, "33"),
+  "inlineEdit.modifiedChangedTextBackground": alpha(ui.green, "33"),
+  "inlineEdit.gutterIndicator.primaryBackground": alpha(ui.accent, "40"),
+
   // Extension Error Lens (bạn đang dùng)
   // Không tô cả dòng (tạo các khối màu khi lỗi thay đổi) — chỉ tô nền nhẹ sau phần chữ báo lỗi
   "errorLens.errorBackground": T,
@@ -879,6 +909,31 @@ const semanticTokenColors = {
   lifetime: { foreground: s.attribute, italic: true },
   keyword: s.keyword,
   "*.deprecated": { strikethrough: true },
+
+  // Language-server specific types. A broad rule above (keyword, type, variable, method) would otherwise
+  // swallow these sub-types (VS Code matches by superType) and paint them differently from the TextMate
+  // color the theme gives the same construct. Each value mirrors the TextMate rule noted on the right.
+  // Rust (rust-analyzer)
+  boolean: s.number, // true/false (<keyword) — constant.language.bool.rust
+  selfTypeKeyword: { foreground: s.special, italic: true }, // Self (<keyword) — same family as self
+  const: s.number, // compile-time constant (<variable) — constant.other.caps.rust
+  static: s.number, // static item (<variable) — SCREAMING_CASE, constant.other.caps.rust
+  formatSpecifier: s.escape, // {} {:?} in format! — like the %s placeholder in other languages
+  // C# (Roslyn) + Python (Pylance builtinConstant <constant: None/True/False)
+  constant: s.number, // variable.other.constant / constant.language.python
+  delegate: s.type, // (<method) — entity.name.type.delegate.cs
+  event: s.property, // event member
+  // Java (jdt.ls)
+  annotation: s.attribute, // @Override (<type) — storage.type.annotation.java
+  annotationMember: s.property,
+  // Go (gopls): predeclared true/false/nil/iota arrive as variable.readonly.defaultLibrary
+  "variable.readonly.defaultLibrary:go": s.number, // constant.language.go
+  "string.format": s.escape, // %s %d in fmt strings (gopls `format` modifier) — constant.other.placeholder
+  // Python (Pylance): int/str/list carry the `builtin` modifier — support.type.python
+  "class.builtin": s.typeBuiltin,
+  "class.defaultLibrary:python": s.typeBuiltin,
+  // C/C++ (clangd)
+  concept: s.type, // template <std::integral T>
 };
 
 return {

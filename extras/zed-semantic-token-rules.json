@@ -7,5 +7,17 @@
     "style": [
       "property"
     ]
+  },
+  {
+    "token_type": "builtinType",
+    "style": [
+      "type.builtin"
+    ]
+  },
+  {
+    "token_type": "formatSpecifier",
+    "style": [
+      "string.escape"
+    ]
   }
 ]

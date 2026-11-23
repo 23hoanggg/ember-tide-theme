@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0 (unreleased)
+## 1.2.0
 
 - **Colorblind checks.** `npm test` now simulates color-vision deficiency (deuteranopia/protanopia/tritanopia) and
   requires the roles that sit side by side (property, type, variable, namespace…) to stay ≥ ΔE2000 6 apart. Function

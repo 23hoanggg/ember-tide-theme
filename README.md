@@ -11,9 +11,10 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 - **Readable first** — every syntax color reaches at least **7:1** contrast on the editor background (≥ 7.2:1) and
   ≥ 5.9:1 on the highlighted line; comments stay ≥ 4.5:1 on both.
 - **Distinct roles** — no two syntax roles are closer than ΔE2000 10, so keywords, types, parameters and values never blur together.
-- **Colorblind-checked** — simulated for deuteranopia and protanopia (Machado 2009, full severity), the roles that sit
-  side by side all the time (keyword, function, property, type, variable, namespace…) stay ≥ ΔE2000 6 apart
-  (tritanopia ≥ 3); parameters and `this`/`self` also differ by italics.
+- **Colorblind-checked** — simulated for deuteranopia and protanopia (Machado 2009, full severity): the roles that sit
+  side by side (property, type, variable, namespace…) stay ≥ ΔE2000 6 apart (tritanopia ≥ 3). Known exception: with
+  red–green deficiency, function blue sits close to keyword violet and built-in-type lavender — kept to preserve the
+  vivid sky blue. Parameters and `this`/`self` also differ by italics.
 - **Consistent across 35+ languages** — TypeScript/TSX, JavaScript, Python, Go, Rust, C/C++, C#, Java, PHP, Ruby, Lua, Swift, Dart,
   R, Shell, PowerShell, SQL, HTML, CSS/SCSS, Markdown, JSON, YAML, TOML, INI, `.env`, Dockerfile, Makefile, Prisma, Protobuf and more.
 - **Semantic highlighting** matched to the TextMate colors, so nothing jumps when the language server loads.
@@ -26,7 +27,7 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 | Role | Color | |
 |---|---|---|
 | Keyword | `#D29BFF` | violet |
-| Function / method | `#94D6FF` | sky blue |
+| Function / method | `#70C7FF` | sky blue |
 | Property / field | `#5ED7CB` | teal |
 | Type / class | `#F2CC78` | gold |
 | Built-in type (`string`, `int`…) | `#B3B1FF` | lavender |

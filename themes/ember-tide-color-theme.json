@@ -465,9 +465,9 @@
     "symbolIcon.numberForeground": "#FF9F5E",
     "symbolIcon.booleanForeground": "#FF9F5E",
     "symbolIcon.nullForeground": "#FF9F5E",
-    "symbolIcon.functionForeground": "#94D6FF",
-    "symbolIcon.methodForeground": "#94D6FF",
-    "symbolIcon.constructorForeground": "#94D6FF",
+    "symbolIcon.functionForeground": "#70C7FF",
+    "symbolIcon.methodForeground": "#70C7FF",
+    "symbolIcon.constructorForeground": "#70C7FF",
     "symbolIcon.fieldForeground": "#5ED7CB",
     "symbolIcon.propertyForeground": "#5ED7CB",
     "symbolIcon.keyForeground": "#5ED7CB",
@@ -762,7 +762,7 @@
         "entity.name.operator"
       ],
       "settings": {
-        "foreground": "#94D6FF"
+        "foreground": "#70C7FF"
       }
     },
     {
@@ -1267,7 +1267,7 @@
         "source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"
       ],
       "settings": {
-        "foreground": "#94D6FF"
+        "foreground": "#70C7FF"
       }
     },
     {
@@ -1407,7 +1407,7 @@
         "support.function.functional.prisma"
       ],
       "settings": {
-        "foreground": "#94D6FF"
+        "foreground": "#70C7FF"
       }
     },
     {
@@ -1475,7 +1475,7 @@
         "source.proto entity.name.function"
       ],
       "settings": {
-        "foreground": "#94D6FF"
+        "foreground": "#70C7FF"
       }
     },
     {
@@ -1585,7 +1585,7 @@
         "support.function.builtin.shell"
       ],
       "settings": {
-        "foreground": "#94D6FF"
+        "foreground": "#70C7FF"
       }
     },
     {
@@ -1761,7 +1761,7 @@
         "markup.heading entity.name"
       ],
       "settings": {
-        "foreground": "#94D6FF",
+        "foreground": "#70C7FF",
         "fontStyle": ""
       }
     },
@@ -1991,7 +1991,7 @@
         "keyword.rainbow2"
       ],
       "settings": {
-        "foreground": "#94D6FF",
+        "foreground": "#70C7FF",
         "fontStyle": ""
       }
     },
@@ -2099,7 +2099,7 @@
         "entity.name.section.latex"
       ],
       "settings": {
-        "foreground": "#94D6FF",
+        "foreground": "#70C7FF",
         "fontStyle": ""
       }
     },
@@ -2161,7 +2161,7 @@
         "punctuation.definition.range.diff"
       ],
       "settings": {
-        "foreground": "#94D6FF"
+        "foreground": "#70C7FF"
       }
     },
     {
@@ -2201,9 +2201,9 @@
     "type.defaultLibrary": "#B3B1FF",
     "builtinType": "#B3B1FF",
     "enumMember": "#FF9F5E",
-    "function": "#94D6FF",
-    "method": "#94D6FF",
-    "function.defaultLibrary": "#94D6FF",
+    "function": "#70C7FF",
+    "method": "#70C7FF",
+    "function.defaultLibrary": "#70C7FF",
     "macro": "#8EE0B5",
     "decorator": "#8EE0B5",
     "function.decorator": "#8EE0B5",

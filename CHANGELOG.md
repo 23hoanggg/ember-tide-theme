@@ -2,10 +2,10 @@
 
 ## 1.2.0 (unreleased)
 
-- **Colorblind-checked palette.** Functions are a lighter sky blue (`#70C7FF` → `#94D6FF`) so they stay apart from
-  keywords, properties and built-in types under deuteranopia/protanopia. `npm test` now simulates color-vision deficiency
-  and requires the roles that sit side by side (keyword, function, property, type, variable, namespace…) to stay
-  ≥ ΔE2000 6 apart. UI accent, bracket and terminal colors are unchanged.
+- **Colorblind checks.** `npm test` now simulates color-vision deficiency (deuteranopia/protanopia/tritanopia) and
+  requires the roles that sit side by side (property, type, variable, namespace…) to stay ≥ ΔE2000 6 apart. Function
+  blue vs keyword violet / built-in-type lavender is reported as a known exception under red–green deficiency: making
+  functions pass needs a lighter, paler blue, and the vivid sky blue was kept. No syntax color changed for this.
 - **Same meaning, same color across languages** (TextMate):
   - Markdown: list item text is plain again (the whole item was orange); only the bullet/number is colored.
   - C/C++: `#define` bodies and `#ifdef` arguments are no longer violet; macro names are mint like Rust macros.

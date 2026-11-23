@@ -66,7 +66,7 @@ export const syntax = {
   commentDoc: "#99A3B0",
 
   keyword: "#D29BFF", // tím
-  func: "#94D6FF", // xanh trời — sáng hơn ui.accent để tách khỏi property/keyword khi mù màu đỏ–lục (CVD)
+  func: "#70C7FF", // xanh trời rực — chủ dự án chọn giữ (2026-11-23); với mù màu đỏ–lục gần keyword/typeBuiltin (xem CVD_ADVISORY)
   property: "#5ED7CB", // xanh ngọc
   type: "#F2CC78", // vàng
   typeBuiltin: "#B3B1FF", // tím lavender — string, number, bool…

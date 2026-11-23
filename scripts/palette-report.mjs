@@ -43,6 +43,9 @@ export const CVD_CORE = [
   ["type", "variable"], ["type", "typeBuiltin"], ["property", "variable"], ["namespace", "variable"],
 ];
 export const CVD_MIN = { deutan: 6, protan: 6, tritan: 3 };
+// Ngoại lệ đã biết (chủ dự án chọn giữ func xanh trời rực, 2026-11-23): chỉ cảnh báo, không bắt buộc.
+// Muốn tách các cặp này phải làm func nhạt/sáng hơn (gamut sRGB) — đã thử #94D6FF, chủ dự án thấy mờ.
+export const CVD_ADVISORY = new Set(["deutan:keyword|func", "deutan:func|typeBuiltin", "protan:func|typeBuiltin"]);
 export function cvdChecks(P) {
   const s = P.syntax, out = [];
   const core = new Set(CVD_CORE.map(([a, b]) => a + "|" + b));
@@ -51,8 +54,9 @@ export function cvdChecks(P) {
       const a = CVD_ROLES[i], b = CVD_ROLES[j];
       const isCore = core.has(a + "|" + b) || core.has(b + "|" + a);
       for (const t of ["deutan", "protan", "tritan"]) {
-        const value = de2000(cvdSim(s[a], t), cvdSim(s[b], t)), min = isCore ? CVD_MIN[t] : 0;
-        out.push({ group: isCore ? "mù màu (CVD)" : "CVD (tham khảo)", name: `${t}: ${a} ↔ ${b}`, value, min, unit: " ΔE", ok: value >= min - 1e-9 });
+        const known = CVD_ADVISORY.has(`${t}:${a}|${b}`) || CVD_ADVISORY.has(`${t}:${b}|${a}`);
+        const value = de2000(cvdSim(s[a], t), cvdSim(s[b], t)), min = isCore && !known ? CVD_MIN[t] : 0;
+        out.push({ group: isCore && !known ? "mù màu (CVD)" : "CVD (tham khảo)", name: `${t}: ${a} ↔ ${b}`, value, min, unit: " ΔE", ok: value >= min - 1e-9 });
       }
     }
   return out;

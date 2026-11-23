@@ -7,6 +7,8 @@
   blue vs keyword violet / built-in-type lavender is reported as a known exception under red–green deficiency: making
   functions pass needs a lighter, paler blue, and the vivid sky blue was kept. No syntax color changed for this.
 - **Same meaning, same color across languages** (TextMate):
+  - JavaScript/TypeScript: `const` bindings are coral like other variables (they were orange until the language server
+    loaded). In Zed, UPPER_CASE constants stay orange.
   - Markdown: list item text is plain again (the whole item was orange); only the bullet/number is colored.
   - C/C++: `#define` bodies and `#ifdef` arguments are no longer violet; macro names are mint like Rust macros.
     `uint8_t`, `std::size_t` are built-in types (were violet); overloaded `operator()` is a function; `[[nodiscard]]` is mint.

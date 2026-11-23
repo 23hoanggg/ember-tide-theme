@@ -21,7 +21,7 @@ const keysOf = (o) => Object.keys(o).sort();
 // 1.2.0: semantic tokens per language server match TextMate; set VS Code keys that defaulted to hard-coded Dark+ colors.
 // 1.2.0: cross-language tokenColors fixes, semantic/UI keys (see CHANGELOG); func kept #70C7FF.
 // Băm trên JSON đã chuẩn hoá chữ hoa hex, để đổi hoa/thường không làm test đỏ.
-const DARK_VSCODE_SHA256 = "97f74684a1ae6b985b5f014c4d1835de2087ef3e3c546cf764e18a8dba59b444";
+const DARK_VSCODE_SHA256 = "9bc374c70cf9d9206faa9156d37b5436a456ce4d9f50f258c3dffa35b3ee76dc";
 const norm = (o) => JSON.stringify(o).replace(/#[0-9a-fA-F]{6,8}/g, (m) => m.toUpperCase());
 const sha = (s) => createHash("sha256").update(s).digest("hex");
 
@@ -290,5 +290,17 @@ test("README: bảng màu khớp bản phát hành và không nhắc biến th�
   for (const k of ["keyword", "func", "property", "type", "typeBuiltin", "namespace", "number", "attribute", "string", "variable", "parameter", "special", "comment"]) {
     const row = readme.split("\n").find((l) => l.startsWith("| ") && publicVariants.every((P) => l.includes("`" + P.syntax[k] + "`")));
     assert.ok(row, `README thiếu dòng bảng màu cho ${k}`);
+  }
+});
+
+// JS/TS: `const` (TextMate variable.other.constant.ts/js) phải cùng màu với semantic variable.readonly → không nhảy màu khi LS nạp
+test("JS/TS: const cùng màu biến ở TextMate và semantic", () => {
+  const th = vscodeThemes[0].theme;
+  const sem = th.semanticTokenColors["variable.readonly"];
+  for (const sc of ["variable.other.constant.ts", "variable.other.constant.tsx", "variable.other.constant.js", "variable.other.constant.jsx"]) {
+    const r = th.tokenColors.find((x) => [].concat(x.scope).includes(sc));
+    assert.ok(r, `thiếu rule ${sc}`);
+    assert.equal(r.settings.foreground.toUpperCase(), (sem.foreground ?? sem).toUpperCase(), sc);
+    assert.equal(r.settings.foreground.toUpperCase(), dark.syntax.variable.toUpperCase(), sc);
   }
 });

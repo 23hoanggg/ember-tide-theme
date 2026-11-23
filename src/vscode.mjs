@@ -703,6 +703,10 @@ const tokenColors = [
 
   rule("Variable", ["variable", "variable.other", "variable.other.readwrite", "meta.definition.variable entity.name", "entity.name.variable.local.cs"], s.variable),
   rule("Constant variable", ["variable.other.constant", "entity.name.constant"], s.number),
+  // JS/TS `const` bindings are ordinary variables (coral), same as the TypeScript semantic token `variable.readonly`
+  // (it cannot tell UPPER_CASE apart) — so nothing changes color when the language server loads. Zed's tree-sitter
+  // still marks UPPER_CASE identifiers as constants (orange).
+  rule("JS/TS const binding", ["variable.other.constant.ts", "variable.other.constant.tsx", "variable.other.constant.js", "variable.other.constant.jsx"], s.variable),
   rule("Parameter", ["variable.parameter", "meta.parameters variable", "entity.name.variable.parameter"], s.parameter, "italic"),
   rule("this / self / super", ["variable.language", "variable.language.this", "variable.language.self", "variable.language.super", "variable.parameter.function.language.special.self.python", "variable.parameter.function.language.special.cls.python"], s.special, "italic"),
   rule("Property", ["variable.other.property", "variable.other.object.property", "support.variable.property", "meta.property-name", "entity.name.variable.field", "variable.other.member", "entity.name.variable.property", "meta.object-literal.key", "support.type.property-name", "variable.object.property", "entity.other.attribute.lua", "support.variable.swift", "entity.name.variable.event.cs"], s.property),

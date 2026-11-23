@@ -871,6 +871,18 @@
       }
     },
     {
+      "name": "JS/TS const binding",
+      "scope": [
+        "variable.other.constant.ts",
+        "variable.other.constant.tsx",
+        "variable.other.constant.js",
+        "variable.other.constant.jsx"
+      ],
+      "settings": {
+        "foreground": "#FFAA92"
+      }
+    },
+    {
       "name": "Parameter",
       "scope": [
         "variable.parameter",

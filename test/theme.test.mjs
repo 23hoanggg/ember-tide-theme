@@ -274,11 +274,20 @@ test("Zed: bản Dark giữ nguyên màu đã ghim (v1.2.0)", () => {
 
 // Gói VSIX chỉ được chứa đúng các file cần cho người dùng (không lộ ghi chú nội bộ, test, bảng màu nguồn)
 test("VSIX: .vscodeignore chỉ để lọt đúng các file cần thiết", async () => {
-  const { execSync } = await import("node:child_process");
-  const files = execSync("git ls-files", { encoding: "utf8" }).trim().split("\n");
   const toRe = (g) => new RegExp("^" + g.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*\*/g, "\u0000").replace(/\*/g, "[^/]*").replace(/\u0000/g, ".*") + "$");
   const ignore = readFileSync(".vscodeignore", "utf8").split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#")).map(toRe);
-  const included = [...new Set(files)].filter((f) => !ignore.some((re) => re.test(f)) && !f.startsWith(".")).sort();
+  // Quét file THẬT trên đĩa (vsce đóng gói cả file không theo dõi bởi git, vd private/, dist/) — không dùng git ls-files
+  const ignored = (f) => ignore.some((re) => re.test(f));
+  const files = [];
+  const walk = (dir) => {
+    for (const e of readdirSync(dir || ".", { withFileTypes: true })) {
+      const f = dir ? `${dir}/${e.name}` : e.name;
+      if (e.name === ".git" || e.name === "node_modules") continue; // vsce luôn bỏ .git; node_modules loại bởi --no-dependencies + .vscodeignore
+      if (e.isDirectory()) { if (!ignored(f + "/x")) walk(f); } else if (!ignored(f)) files.push(f);
+    }
+  };
+  walk("");
+  const included = files.filter((f) => !f.startsWith(".")).sort();
   const expected = ["CHANGELOG.md", "LICENSE", "README.md", "images/icon.png", "package.json", "themes/ember-tide-color-theme.json"];
   assert.deepEqual(included, expected);
 });

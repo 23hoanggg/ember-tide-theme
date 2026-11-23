@@ -690,6 +690,8 @@ const tokenColors = [
   rule("Word-like operators", ["keyword.control.ternary", "keyword.accessor.dollar.r"], s.operator),
   // Doc-comment tags (@param, @brief, ---@param…): one style in every language — keyword violet, italic like the comment
   rule("Doc comment tag", ["comment keyword", "comment storage.type", "comment storage.type.annotation.lua", "comment.block.documentation keyword", "comment.line.documentation keyword"], s.keyword, "italic"),
+  // PowerShell comment-based help (.SYNOPSIS, .PARAMETER) and #Requires — grammar scopes them as operators/keywords inside a comment
+  rule("PowerShell doc tag", ["comment keyword.operator.documentation", "comment constant.string.documentation", "meta.requires.powershell keyword", "meta.requires.powershell keyword.control.requires", "meta.requires.powershell keyword.other"], s.keyword, "italic"),
 
   rule("Function", ["entity.name.function", "support.function", "meta.function-call.generic", "variable.function", "meta.function-call entity.name.function", "entity.name.function.member", "entity.name.operator"], s.func),
   rule("Constructor / class name", ["entity.name.type.class", "entity.name.class", "entity.other.inherited-class", "support.class", "new.expr entity.name.type"], s.type),

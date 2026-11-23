@@ -21,7 +21,7 @@ const keysOf = (o) => Object.keys(o).sort();
 // 1.2.0: semantic tokens per language server match TextMate; set VS Code keys that defaulted to hard-coded Dark+ colors.
 // 1.2.0 round 2: func #70C7FF → #94D6FF (colorblind separation), cross-language tokenColors fixes (see CHANGELOG).
 // Băm trên JSON đã chuẩn hoá chữ hoa hex, để đổi hoa/thường không làm test đỏ.
-const DARK_VSCODE_SHA256 = "e8db4bbea7311ec9e14ea5c87428225bed50a3411ebf86d986481b8e906250c9";
+const DARK_VSCODE_SHA256 = "c4e33a8ab0e3998c6db8e783745123d1c32706be6e3aa9bf2c0061c8d5504496";
 const norm = (o) => JSON.stringify(o).replace(/#[0-9a-fA-F]{6,8}/g, (m) => m.toUpperCase());
 const sha = (s) => createHash("sha256").update(s).digest("hex");
 

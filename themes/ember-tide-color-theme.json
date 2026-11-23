@@ -737,6 +737,20 @@
       }
     },
     {
+      "name": "PowerShell doc tag",
+      "scope": [
+        "comment keyword.operator.documentation",
+        "comment constant.string.documentation",
+        "meta.requires.powershell keyword",
+        "meta.requires.powershell keyword.control.requires",
+        "meta.requires.powershell keyword.other"
+      ],
+      "settings": {
+        "foreground": "#D29BFF",
+        "fontStyle": "italic"
+      }
+    },
+    {
       "name": "Function",
       "scope": [
         "entity.name.function",

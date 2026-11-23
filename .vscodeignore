@@ -12,3 +12,7 @@ PUBLISHING.md
 .gitignore
 node_modules/**
 *.vsix
+docs/**
+palettes/**
+test/**
+tools/**

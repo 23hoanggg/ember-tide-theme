@@ -1,9 +1,12 @@
-import { ui, syntax as s, accents, ansi, alpha } from "../palette.mjs";
+import { alpha, publicVariants, localVariants } from "../palette.mjs";
 
 // Zed: font_weight là số 100–900 hoặc null (= giữ mặc định). Theme không dùng in đậm — chỉ phân biệt bằng màu và đứng/nghiêng.
 const st = (color, font_style = "normal", font_weight = null) => ({ color, font_style, font_weight });
 const italic = (color) => st(color, "italic");
 
+// Sinh style Zed cho một biến thể
+export function zedStyleFor(P) {
+const { ui, syntax: s, accents, ansi } = P;
 const syntaxStyles = {
   // Comment
   comment: italic(s.comment),
@@ -30,6 +33,12 @@ const syntaxStyles = {
   method: st(s.func),
   constructor: st(s.type),
   macro: st(s.attribute),
+  // Style mà bộ rule semantic mặc định của Zed tìm tới (thiếu thì Zed rơi về style dự phòng)
+  "function.macro": st(s.attribute),
+  "function.decorator": st(s.attribute),
+  "type.definition": st(s.type),
+  "type.parameter": italic(s.type), // generic T — nghiêng như VS Code
+  "type.parameter.definition": italic(s.type),
 
   // Kiểu dữ liệu
   type: st(s.type),
@@ -197,14 +206,14 @@ const style = {
   "version_control.renamed": ui.accent,
   "version_control.ignored": ui.ignored,
   // Diff & conflict — cùng giá trị với VS Code (diffEditor.*, merge.*)
-  "version_control.word_added": alpha(ui.green, "1E"),
-  "version_control.word_deleted": alpha(ui.red, "1E"),
+  "version_control.word_added": ui.diffAddedText ?? alpha(ui.green, "1E"),
+  "version_control.word_deleted": ui.diffRemovedText ?? alpha(ui.red, "1E"),
   "version_control.conflict_marker.ours": alpha(ui.green, "1A"),
   "version_control.conflict_marker.theirs": alpha(ui.accent, "1A"),
-  "editor.diff_hunk.added.background": alpha(ui.green, "14"),
+  "editor.diff_hunk.added.background": ui.diffAddedLine ?? alpha(ui.green, "14"),
   "editor.diff_hunk.added.hollow_background": alpha(ui.green, "0A"),
   "editor.diff_hunk.added.hollow_border": alpha(ui.green, "55"),
-  "editor.diff_hunk.deleted.background": alpha(ui.red, "14"),
+  "editor.diff_hunk.deleted.background": ui.diffRemovedLine ?? alpha(ui.red, "14"),
   "editor.diff_hunk.deleted.hollow_background": alpha(ui.red, "0A"),
   "editor.diff_hunk.deleted.hollow_border": alpha(ui.red, "55"),
 
@@ -223,8 +232,8 @@ const style = {
   "pane.focused_border": ui.focus,
   "pane_group.border": ui.border,
 
-  "scrollbar.thumb.background": "#ffffff22",
-  "scrollbar.thumb.hover_background": "#ffffff44",
+  "scrollbar.thumb.background": alpha(ui.overlay, "22"),
+  "scrollbar.thumb.hover_background": alpha(ui.overlay, "44"),
   "scrollbar.thumb.border": "#00000000",
   "scrollbar.track.background": "#00000000",
   "scrollbar.track.border": "#00000000",
@@ -255,7 +264,7 @@ const style = {
   "panel.overlay_background": ui.bgFloat,
   "panel.overlay_hover": ui.bgHover,
   "debugger.accent": ui.red, // breakpoint
-  "scrollbar.thumb.active_background": "#ffffff55",
+  "scrollbar.thumb.active_background": alpha(ui.overlay, "55"),
   "minimap.thumb.background": alpha(ui.accent, "1F"), // = minimapSlider VS Code
   "minimap.thumb.hover_background": alpha(ui.accent, "2E"),
   "minimap.thumb.active_background": alpha(ui.accent, "40"),
@@ -279,27 +288,28 @@ const style = {
   syntax: Object.fromEntries(Object.entries(syntaxStyles).sort(([a], [b]) => a.localeCompare(b))),
 };
 
+return style;
+}
+
 export const zedTheme = {
   $schema: "https://zed.dev/schema/themes/v0.2.0.json",
   name: "Ember Tide",
   author: "Hoang",
-  themes: [{ name: "Ember Tide", appearance: "dark", style }],
+  themes: publicVariants.map((P) => ({ name: P.name, appearance: P.type, style: zedStyleFor(P) })),
+};
+
+// Chỉ dùng trên máy: biến thể cục bộ, cài vào ~/.config/zed/themes (tách khỏi extension phát hành)
+export const zedLocalTheme = {
+  $schema: "https://zed.dev/schema/themes/v0.2.0.json",
+  name: "Ember Tide (local variants)",
+  author: "Hoang",
+  themes: localVariants.map((P) => ({ name: P.name, appearance: P.type, style: zedStyleFor(P) })),
 };
 
 // Rule semantic token cho settings.json của Zed — giữ đồng bộ với theme
+// Rule semantic cho settings.json của Zed — trỏ tới style của theme (không ghi mã màu) nên đúng với mọi biến thể.
+// Các token khác (parameter, decorator, namespace…) Zed đã tự ánh xạ sang style theme qua bộ rule mặc định.
 export const zedSemanticRules = [
-  { token_type: "decorator", foreground_color: s.attribute },
-  { token_type: "function", token_modifiers: ["decorator"], foreground_color: s.attribute },
-  { token_type: "method", token_modifiers: ["decorator"], foreground_color: s.attribute },
-  { token_type: "namespace", foreground_color: s.namespace },
-  // parameter property (`private readonly prisma`) = thuộc tính của class → cùng màu với this.prisma
-  { token_type: "parameter", token_modifiers: ["readonly"], foreground_color: s.property, font_style: "normal" },
-  { token_type: "parameter", foreground_color: s.parameter, font_style: "italic" },
-  { token_type: "typeParameter", foreground_color: s.type, font_style: "italic" }, // = VS Code: generic T nghiêng
-  { token_type: "variable", token_modifiers: ["defaultLibrary"], foreground_color: s.special },
-  { token_type: "variable", foreground_color: s.variable },
-  { token_type: "property", foreground_color: s.property },
-  { token_type: "field", foreground_color: s.property },
-  { token_type: "function", foreground_color: s.func },
-  { token_type: "method", foreground_color: s.func },
+  // `private readonly prisma` (parameter property) = thuộc tính của class → tô như property, khớp this.prisma
+  { token_type: "parameter", token_modifiers: ["readonly"], style: ["property"] },
 ];

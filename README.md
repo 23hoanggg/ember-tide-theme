@@ -1,6 +1,6 @@
 # Ember Tide
 
-A warm–cool dark theme for **VS Code**, **Zed** and **your terminal**: a night-blue canvas, ember coral and amber for the things you
+A warm–cool dark theme for **VS Code**, **Zed** and **your terminal**: a deep night canvas, ember coral and amber for the things you
 write, tide blue and teal for the things you call. Both editors are generated from a single palette, so they look the same.
 
 ![Ember Tide — TypeScript](images/preview-typescript.png)
@@ -8,13 +8,15 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 
 ## Highlights
 
-- **Readable first** — every syntax color reaches at least 7:1 contrast on the editor background (comments ≥ 4.5:1, even on the highlighted line),
-  and primary UI text passes WCAG AA.
-- **Consistent roles** across languages — checked against 35+ grammars: TypeScript/TSX, JavaScript, Python, Go, Rust,
-  C/C++, C#, Java, PHP, Ruby, Lua, Swift, Dart, R, Shell, PowerShell, SQL, HTML, CSS/SCSS, Markdown, JSON, YAML, TOML,
-  INI, `.env`, Dockerfile, Makefile, Prisma, Protobuf and more.
-- **Semantic highlighting** tuned to match the TextMate colors, so nothing jumps when the language server loads.
-- **Subtle UI** — an ember line marks the active tab, quiet tide-blue borders everywhere else.
+- **Readable first** — every syntax color reaches at least **7:1** contrast on the editor background (≥ 7.3:1) and
+  ≥ 5.9:1 on the highlighted line; comments stay ≥ 4.5:1 on both.
+- **Distinct roles** — no two syntax roles are closer than ΔE2000 10, so keywords, types, parameters and values never blur together.
+- **Consistent across 35+ languages** — TypeScript/TSX, JavaScript, Python, Go, Rust, C/C++, C#, Java, PHP, Ruby, Lua, Swift, Dart,
+  R, Shell, PowerShell, SQL, HTML, CSS/SCSS, Markdown, JSON, YAML, TOML, INI, `.env`, Dockerfile, Makefile, Prisma, Protobuf and more.
+- **Semantic highlighting** matched to the TextMate colors, so nothing jumps when the language server loads.
+- **Calm UI, clear states** — an ember line marks the active tab; selection, search matches, symbol occurrences and hover each get their own hue.
+- **Tested** — `npm test` runs 121+ contrast/separation checks (palette plus the built theme, with translucent colors
+  blended onto their real backgrounds), checks the generated files, and pins the published colors.
 
 ## Palette
 
@@ -22,17 +24,17 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 |---|---|---|
 | Keyword | `#D29BFF` | violet |
 | Function / method | `#70C7FF` | sky blue |
-| Property / field | `#72D4C9` | teal |
+| Property / field | `#5ED7CB` | teal |
 | Type / class | `#F2CC78` | gold |
 | Built-in type (`string`, `int`…) | `#B3B1FF` | lavender |
 | Namespace / module | `#BDAA67` | olive gold |
 | Number / constant / boolean | `#FF9F5E` | orange |
 | Decorator / attribute | `#8EE0B5` | mint |
 | String | `#ACE08F` | green |
-| Variable | `#EDA898` | coral |
-| Parameter | `#FF8689` *italic* | coral red |
-| `this` / `self` | `#8AB3FF` *italic* | periwinkle |
-| Comment | `#8694AC` *italic* | slate |
+| Variable | `#FFAA92` | coral |
+| Parameter *(italic)* | `#FF8689` | coral red |
+| `this` / `self` *(italic)* | `#8AB3FF` | periwinkle |
+| Comment *(italic)* | `#8B94A2` | slate |
 
 ## Install
 
@@ -45,19 +47,26 @@ Search **“Ember Tide”** in the Extensions view, then pick it with
 
 Open the command palette → `zed: extensions` → search **“Ember Tide”** → Install, then select it with `theme selector: toggle`.
 
-#### Optional: matching semantic colors in Zed
+#### Optional: semantic token rule for Zed
 
-Zed applies language-server colors through settings rather than themes. To get the same semantic colors as in VS Code,
-add the rules from [`extras/zed-semantic-token-rules.json`](extras/zed-semantic-token-rules.json) to your `settings.json`:
+Zed already maps language-server tokens to theme styles. One extra rule makes TypeScript parameter properties
+(`constructor(private readonly db: Db)`) use the property color, matching `this.db`. It references a theme *style*
+rather than a hex color — add it to your `settings.json`
+(also in [`extras/zed-semantic-token-rules.json`](extras/zed-semantic-token-rules.json)):
 
 ```jsonc
 {
   "semantic_tokens": "combined",
   "global_lsp_settings": {
-    "semantic_token_rules": [ /* paste the rules here */ ]
+    "semantic_token_rules": [
+      { "token_type": "parameter", "token_modifiers": ["readonly"], "style": ["property"] }
+    ]
   }
 }
 ```
+
+> **Upgrading from 1.0.0?** The old rules hard-coded hex colors. Replace them with the single rule above — Zed's built-in
+> rules already take decorator, namespace, parameter… colors from the theme.
 
 ### Terminal
 
@@ -82,13 +91,15 @@ The screenshots use [JetBrains Mono](https://www.jetbrains.com/lp/mono/) at 15px
 Requires Node.js 18+. Works on Linux, macOS and Windows.
 
 ```sh
-npm run build           # generate themes/ (VS Code), zed/ (Zed) and terminals/ from palette.mjs
+npm run build           # generate themes/ (VS Code), zed/ (Zed) and terminals/ from palettes/*.mjs
+npm test                # contrast/separation rules on every built variant, output checks
 npm run install:vscode  # package the .vsix and install it into VS Code / VSCodium / Cursor / Windsurf
 npm run build:zed       # copy the theme into Zed's themes folder
 npm run install:all     # VS Code + Zed + Ptyxis palette (Linux)
 ```
 
-All colors live in [`palette.mjs`](palette.mjs); the editor-specific mappings are in [`src/`](src).
+Colors live in [`palettes/dark.mjs`](palettes/dark.mjs); the editor-specific mappings are in [`src/`](src).
+`node scripts/palette-report.mjs dark --all` prints every quality check.
 
 ## License
 

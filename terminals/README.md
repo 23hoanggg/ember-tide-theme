@@ -1,7 +1,7 @@
 # Ember Tide for terminals
 
 Same background, text, cursor, selection and 16 ANSI colors as the integrated terminal in VS Code and Zed.
-Files in this folder are generated from [`palette.mjs`](../palette.mjs) by `npm run build` — don't edit them by hand.
+Files in this folder are generated from [`palettes/`](../palettes) by `npm run build` — don't edit them by hand.
 
 | Terminal | OS | File | How to install |
 |---|---|---|---|

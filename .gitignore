@@ -1,3 +1,7 @@
 node_modules/
 dist/
 *.vsix
+tools/node_modules/
+
+# Biến thể & tài liệu nội bộ — repo git riêng, không bao giờ vào repo công khai
+private/

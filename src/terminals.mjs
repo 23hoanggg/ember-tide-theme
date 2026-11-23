@@ -1,7 +1,13 @@
 // Bảng màu Ember Tide cho các terminal — cùng màu với terminal tích hợp trong VS Code và Zed.
-import { ui, ansi } from "../palette.mjs";
+import { publicVariants } from "../palette.mjs";
 
-const NAME = "Ember Tide";
+// Sinh bảng màu terminal cho một biến thể
+export function terminalFilesFor(P) {
+const { ui, ansi } = P;
+const NAME = P.name;
+// hậu tố tên file: "" (Dark), "-<id>" cho biến thể khác
+const sfx = P.id === "dark" ? "" : "-" + P.id;
+const Sfx = P.id === "dark" ? "" : P.id[0].toUpperCase() + P.id.slice(1);
 const t = {
   background: ui.bg,
   foreground: ui.fg,
@@ -123,14 +129,17 @@ echo "✔ Đã áp ${NAME} cho profile GNOME Terminal mặc định"
 };
 
 // [đường dẫn trong thư mục terminals/, nội dung]
-export const terminalFiles = () => [
-  ["ptyxis/ember-tide.palette", ptyxis()],
-  ["windows-terminal/ember-tide.json", windowsTerminal()],
-  ["iterm2/Ember Tide.itermcolors", iterm2()],
-  ["alacritty/ember-tide.toml", alacritty()],
-  ["kitty/ember-tide.conf", kitty()],
-  ["ghostty/ember-tide", ghostty()],
-  ["wezterm/ember-tide.toml", wezterm()],
-  ["konsole/EmberTide.colorscheme", konsole()],
-  ["gnome-terminal/ember-tide.sh", gnomeTerminal()],
+return [
+  [`ptyxis/ember-tide${sfx}.palette`, ptyxis()],
+  [`windows-terminal/ember-tide${sfx}.json`, windowsTerminal()],
+  [`iterm2/Ember Tide${Sfx ? " " + Sfx : ""}.itermcolors`, iterm2()],
+  [`alacritty/ember-tide${sfx}.toml`, alacritty()],
+  [`kitty/ember-tide${sfx}.conf`, kitty()],
+  [`ghostty/ember-tide${sfx}`, ghostty()],
+  [`wezterm/ember-tide${sfx}.toml`, wezterm()],
+  [`konsole/EmberTide${Sfx}.colorscheme`, konsole()],
+  [`gnome-terminal/ember-tide${sfx}.sh`, gnomeTerminal()],
 ];
+}
+
+export const terminalFiles = (list = publicVariants) => list.flatMap((P) => terminalFilesFor(P));

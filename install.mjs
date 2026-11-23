@@ -3,14 +3,21 @@
 //   node install.mjs vscode          -> VS Code (và VSCodium / Cursor / Windsurf nếu có)
 //   node install.mjs zed             -> Zed
 //   node install.mjs terminal        -> bảng màu Ptyxis (Linux); các terminal khác xem terminals/README.md
+//   node install.mjs local           -> CHỈ MÁY NÀY: biến thể trong private/ (VS Code extension riêng + Zed + Ptyxis)
 import { execSync } from "node:child_process";
-import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { homedir, platform, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const run = (cmd, opts = {}) => execSync(cmd, { stdio: "inherit", shell: true, ...opts });
 const targets = process.argv.slice(2);
-const want = (name) => targets.length === 0 || targets.includes(name);
+// Không truyền gì = cài bản công khai (vscode, zed, terminal). "local" phải gọi đích danh.
+const want = (name) => (targets.length === 0 && name !== "local") || targets.includes(name);
+const zedThemesDir = () =>
+  platform() === "win32"
+    ? join(process.env.APPDATA ?? join(homedir(), "AppData", "Roaming"), "Zed", "themes")
+    : join(process.env.XDG_CONFIG_HOME ?? join(homedir(), ".config"), "zed", "themes");
+const ptyxisDir = () => join(process.env.XDG_DATA_HOME ?? join(homedir(), ".local", "share"), "org.gnome.Ptyxis", "palettes");
 const has = (cli) => {
   try {
     execSync(`${cli} --version`, { stdio: "ignore", shell: true });
@@ -47,10 +54,7 @@ if (want("vscode")) {
 }
 
 if (want("zed")) {
-  const dir =
-    platform() === "win32"
-      ? join(process.env.APPDATA ?? join(homedir(), "AppData", "Roaming"), "Zed", "themes")
-      : join(process.env.XDG_CONFIG_HOME ?? join(homedir(), ".config"), "zed", "themes");
+  const dir = zedThemesDir();
   mkdirSync(dir, { recursive: true });
   copyFileSync(join("zed", "themes", "ember-tide.json"), join(dir, "ember-tide.json"));
   console.log(`✔ đã cài theme Zed: ${join(dir, "ember-tide.json")}`);
@@ -59,11 +63,37 @@ if (want("zed")) {
 
 if (want("terminal")) {
   if (platform() === "linux") {
-    const data = process.env.XDG_DATA_HOME ?? join(homedir(), ".local", "share");
-    const dir = join(data, "org.gnome.Ptyxis", "palettes");
+    const dir = ptyxisDir();
     mkdirSync(dir, { recursive: true });
     copyFileSync(join("terminals", "ptyxis", "ember-tide.palette"), join(dir, "ember-tide.palette"));
     console.log(`✔ đã cài bảng màu Ptyxis: ${dir} → Ptyxis › Preferences › chọn "Ember Tide"`);
   }
   console.log("ℹ Terminal khác (Windows Terminal, iTerm2, Kitty, Ghostty, Alacritty, WezTerm, Konsole): xem terminals/README.md");
+}
+
+// ---------- CHỈ MÁY NÀY: biến thể không phát hành (private/) ----------
+if (want("local")) {
+  const src = join("dist", "local");
+  const pkg = JSON.parse(readFileSync(join(src, "vscode", "package.json"), "utf8"));
+  // 1) VS Code: extension riêng (hoang.ember-tide-local) — tách khỏi bản Marketplace để Dark vẫn tự cập nhật
+  const vsix = resolve(src, `ember-tide-local-${pkg.version}.vsix`);
+  run(`npx --yes @vscode/vsce package --no-dependencies --allow-missing-repository --no-rewrite-relative-links --out "${vsix}"`, { cwd: join(src, "vscode") });
+  const found = ["code", "code-insiders", "codium", "cursor", "windsurf"].filter(has);
+  if (found.length === 0) console.warn(`⚠ Không thấy lệnh 'code'. Cài tay: Extensions → '...' → Install from VSIX → ${vsix}`);
+  for (const cli of found) run(`${cli} --install-extension "${vsix}" --force`);
+  // 2) Zed: file theme riêng trong thư mục theme người dùng (độc lập với extension Ember Tide)
+  const zdir = zedThemesDir();
+  mkdirSync(zdir, { recursive: true });
+  copyFileSync(join(src, "zed", "ember-tide-local.json"), join(zdir, "ember-tide-local.json"));
+  console.log(`✔ Zed: ${join(zdir, "ember-tide-local.json")}`);
+  // 3) Ptyxis (Linux)
+  if (platform() === "linux") {
+    const pdir = ptyxisDir();
+    mkdirSync(pdir, { recursive: true });
+    const files = readdirSync(join(src, "terminals", "ptyxis")).filter((f) => f.endsWith(".palette"));
+    for (const f of files) copyFileSync(join(src, "terminals", "ptyxis", f), join(pdir, f));
+    console.log(`✔ Ptyxis: ${files.length} bảng màu cục bộ trong ${pdir}`);
+  }
+  console.log(`✔ Đã cài: ${pkg.contributes.themes.map((t) => t.label).join(", ")} — chọn theme: VS Code Ctrl+K Ctrl+T, Zed "theme selector: toggle"`);
+  console.log(`ℹ Terminal khác: file trong ${join(src, "terminals")}`);
 }

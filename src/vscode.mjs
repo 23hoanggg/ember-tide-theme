@@ -1,6 +1,17 @@
-import { ui, syntax as s, accents, ansi, alpha } from "../palette.mjs";
+import { alpha, variants } from "../palette.mjs"; // vscodeThemes gồm mọi biến thể; build.mjs tách công khai / cục bộ
 
 const T = "#00000000";
+
+// Sinh theme VS Code cho một biến thể (P = palette: ui, syntax, accents, ansi, name, type)
+export function vscodeThemeFor(P) {
+const { ui, syntax: s, accents, ansi } = P;
+// Khoá tuỳ chọn cho bản sáng — bản tối không khai báo nên giữ nguyên giá trị cũ
+const textA = ui.textAlpha ?? "CC"; // độ trong của chữ Error Lens/inline value (nền sáng: đặc)
+const shadowA = ui.shadowAlpha ?? "4D"; // bóng đổ popup (nền sáng: nhẹ hơn)
+const diff = {
+  addLine: ui.diffAddedLine ?? alpha(ui.green, "14"), addText: ui.diffAddedText ?? alpha(ui.green, "1E"),
+  delLine: ui.diffRemovedLine ?? alpha(ui.red, "14"), delText: ui.diffRemovedText ?? alpha(ui.red, "1E"),
+};
 
 // ---------------------------------------------------------------------------
 // Màu giao diện (workbench)
@@ -14,7 +25,7 @@ const colors = {
   focusBorder: alpha(ui.focus, "88"),
   contrastBorder: T,
   "widget.border": ui.borderTide, // viền popup nổi: xanh thủy triều như viền tab
-  "widget.shadow": "#0000004D",
+  "widget.shadow": alpha(ui.shadow, shadowA),
   "selection.background": alpha(ui.accent, "40"),
   "icon.foreground": ui.fgSoft,
   "sash.hoverBorder": ui.accent,
@@ -58,7 +69,7 @@ const colors = {
   "activityBar.activeBackground": T,
   "activityBar.border": ui.borderSoft,
   "activityBarBadge.background": ui.accent,
-  "activityBarBadge.foreground": ui.bgDeep,
+  "activityBarBadge.foreground": ui.onBadge ?? ui.bgDeep,
   "activityBarTop.foreground": ui.fg,
   "activityBarTop.inactiveForeground": ui.fgDim,
   "activityBarTop.activeBorder": ui.accent,
@@ -185,7 +196,7 @@ const colors = {
   "editorGhostText.background": T,
   "editorUnnecessaryCode.opacity": "#00000088",
   "editorStickyScroll.background": ui.bg,
-  "editorStickyScroll.shadow": "#0000004D",
+  "editorStickyScroll.shadow": alpha(ui.shadow, shadowA),
   "editorStickyScrollHover.background": ui.bgHover,
   "editorBracketMatch.background": T, // cặp ngoặc khớp: chỉ viền
   "editorBracketMatch.border": alpha(ui.accent, "B3"),
@@ -246,10 +257,10 @@ const colors = {
   "minimapSlider.activeBackground": alpha(ui.accent, "40"),
 
   // Scrollbar
-  "scrollbar.shadow": "#00000033",
-  "scrollbarSlider.background": "#ffffff22",
-  "scrollbarSlider.hoverBackground": "#ffffff33",
-  "scrollbarSlider.activeBackground": "#ffffff44",
+  "scrollbar.shadow": alpha(ui.shadow, "33"),
+  "scrollbarSlider.background": alpha(ui.overlay, "22"),
+  "scrollbarSlider.hoverBackground": alpha(ui.overlay, "33"),
+  "scrollbarSlider.activeBackground": alpha(ui.overlay, "44"),
 
   // Widget nổi: hover, suggest, find, peek
   "editorWidget.background": ui.bgFloat,
@@ -316,10 +327,10 @@ const colors = {
   "checkbox.selectBackground": ui.bgFloat,
   "checkbox.selectBorder": ui.accent,
   "button.background": ui.button,
-  "button.foreground": ui.fgBright,
+  "button.foreground": ui.onAccent ?? ui.fgBright, // chữ trên nền màu đặc
   "button.hoverBackground": ui.buttonHover,
   "button.border": T,
-  "button.separator": alpha(ui.fgBright, "44"),
+  "button.separator": alpha(ui.onAccent ?? ui.fgBright, "44"),
   "button.secondaryBackground": ui.bgSelected,
   "button.secondaryForeground": ui.fg,
   "button.secondaryHoverBackground": ui.bgActive,
@@ -360,12 +371,12 @@ const colors = {
   "statusBar.noFolderBackground": ui.bgDeep,
   "statusBar.noFolderForeground": ui.fgSoft,
   "statusBar.debuggingBackground": ui.findMatch, // nâu ember — cùng họ màu điểm nhấn
-  "statusBar.debuggingForeground": ui.yellow,
+  "statusBar.debuggingForeground": ui.onDebug ?? ui.yellow,
   "statusBar.debuggingBorder": ui.yellow,
   "statusBarItem.hoverBackground": ui.bgHover,
   "statusBarItem.activeBackground": ui.bgSelected,
   "statusBarItem.remoteBackground": ui.button,
-  "statusBarItem.remoteForeground": ui.fgBright,
+  "statusBarItem.remoteForeground": ui.onAccent ?? ui.fgBright,
   "statusBarItem.remoteHoverBackground": ui.buttonHover,
   "statusBarItem.prominentBackground": ui.bgSelected,
   "statusBarItem.prominentHoverBackground": ui.bgActive,
@@ -405,15 +416,15 @@ const colors = {
   "scmGraph.foreground5": accents[4],
 
   // Diff & merge
-  "diffEditor.insertedTextBackground": alpha(ui.green, "1E"),
-  "diffEditor.removedTextBackground": alpha(ui.red, "1E"),
-  "diffEditor.insertedLineBackground": alpha(ui.green, "14"),
-  "diffEditor.removedLineBackground": alpha(ui.red, "14"),
+  "diffEditor.insertedTextBackground": diff.addText,
+  "diffEditor.removedTextBackground": diff.delText,
+  "diffEditor.insertedLineBackground": diff.addLine,
+  "diffEditor.removedLineBackground": diff.delLine,
   "diffEditor.diagonalFill": ui.border,
   "diffEditorGutter.insertedLineBackground": alpha(ui.green, "26"),
   "diffEditorGutter.removedLineBackground": alpha(ui.red, "26"),
   "merge.currentHeaderBackground": alpha(ui.green, "55"),
-  "merge.currentContentBackground": alpha(ui.green, "1A"),
+  "merge.currentContentBackground": ui.diffAddedLine ?? alpha(ui.green, "1A"),
   "merge.incomingHeaderBackground": alpha(ui.accent, "55"),
   "merge.incomingContentBackground": alpha(ui.accent, "1A"),
   "merge.commonHeaderBackground": alpha(ui.fgMuted, "55"),
@@ -551,24 +562,24 @@ const colors = {
   "debugView.exceptionLabelForeground": ui.red,
   "debugExceptionWidget.background": ui.bgRed,
   "debugExceptionWidget.border": alpha(ui.red, "66"),
-  "editor.inlineValuesForeground": alpha(ui.fgMuted, "CC"),
+  "editor.inlineValuesForeground": alpha(ui.fgMuted, textA),
   "editor.inlineValuesBackground": alpha(ui.yellow, "14"),
 
   // Badge cảnh báo/lỗi trên activity bar
   "activityWarningBadge.background": ui.yellow,
-  "activityWarningBadge.foreground": ui.bgDeep,
+  "activityWarningBadge.foreground": ui.onBadge ?? ui.bgDeep,
   "activityErrorBadge.background": ui.red,
-  "activityErrorBadge.foreground": ui.bgDeep,
+  "activityErrorBadge.foreground": ui.onBadge ?? ui.bgDeep,
 
   // Diff nâng cao: vùng code không đổi (thu gọn), xem nhiều file thay đổi, merge 3 chiều
   "diffEditor.unchangedRegionBackground": ui.bgPanel,
   "diffEditor.unchangedRegionForeground": ui.fgMuted,
   "diffEditor.unchangedCodeBackground": alpha(ui.bgActive, "29"),
-  "diffEditor.unchangedRegionShadow": "#0000004D",
+  "diffEditor.unchangedRegionShadow": alpha(ui.shadow, shadowA),
   "multiDiffEditor.headerBackground": ui.bgFloat,
   "multiDiffEditor.background": ui.bg,
   "multiDiffEditor.border": ui.border,
-  "mergeEditor.change.background": alpha(ui.green, "1A"),
+  "mergeEditor.change.background": ui.diffAddedLine ?? alpha(ui.green, "1A"),
   "mergeEditor.change.word.background": alpha(ui.green, "33"),
   "mergeEditor.changeBase.background": alpha(ui.red, "1A"),
   "mergeEditor.changeBase.word.background": alpha(ui.red, "33"),
@@ -613,16 +624,16 @@ const colors = {
   // Không tô cả dòng (tạo các khối màu khi lỗi thay đổi) — chỉ tô nền nhẹ sau phần chữ báo lỗi
   "errorLens.errorBackground": T,
   "errorLens.errorMessageBackground": alpha(ui.red, "17"),
-  "errorLens.errorForeground": alpha(ui.red, "CC"),
+  "errorLens.errorForeground": alpha(ui.red, textA),
   "errorLens.warningBackground": T,
   "errorLens.warningMessageBackground": alpha(ui.yellow, "14"),
-  "errorLens.warningForeground": alpha(ui.yellow, "CC"),
+  "errorLens.warningForeground": alpha(ui.yellow, textA),
   "errorLens.infoBackground": T,
   "errorLens.infoMessageBackground": alpha(ui.accent, "12"),
-  "errorLens.infoForeground": alpha(ui.accent, "CC"),
+  "errorLens.infoForeground": alpha(ui.accent, textA),
   "errorLens.hintBackground": T,
   "errorLens.hintMessageBackground": alpha(ui.focus, "12"),
-  "errorLens.hintForeground": alpha(ui.focus, "CC"),
+  "errorLens.hintForeground": alpha(ui.focus, textA),
 };
 
 // ---------------------------------------------------------------------------
@@ -870,12 +881,16 @@ const semanticTokenColors = {
   "*.deprecated": { strikethrough: true },
 };
 
-export const vscodeTheme = {
+return {
   $schema: "vscode://schemas/color-theme",
-  name: "Ember Tide",
-  type: "dark",
+  name: P.name,
+  type: P.type,
   semanticHighlighting: true,
   colors,
   tokenColors,
   semanticTokenColors,
 };
+}
+
+export const vscodeThemes = variants.map((P) => ({ P, theme: vscodeThemeFor(P) }));
+export const vscodeTheme = vscodeThemes[0].theme; // Dark (giữ tương thích)

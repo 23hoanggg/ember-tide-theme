@@ -1,0 +1,10 @@
+{
+  "name": "ember-tide-tools",
+  "private": true,
+  "description": "Dev tools: tokenize samples with real VS Code grammars, render previews, compare themes. Not shipped.",
+  "type": "module",
+  "devDependencies": {
+    "vscode-oniguruma": "2.0.1",
+    "vscode-textmate": "9.2.0"
+  }
+}

@@ -1,8 +1,8 @@
 {
   "name": "ember-tide-theme",
   "displayName": "Ember Tide",
-  "description": "A warm–cool dark theme: night-blue background, ember coral and amber, tide blue and teal. Also available for Zed.",
-  "version": "1.0.0",
+  "description": "A warm–cool dark theme: deep night background, ember coral and amber, tide blue and teal. Also available for Zed and terminals.",
+  "version": "1.1.0",
   "publisher": "whythohh",
   "author": {
     "name": "Hoang"
@@ -25,7 +25,6 @@
   ],
   "keywords": [
     "theme",
-    "dark theme",
     "color theme",
     "ember",
     "tide",
@@ -33,7 +32,8 @@
     "blue",
     "zed",
     "night",
-    "terminal"
+    "terminal",
+    "dark theme"
   ],
   "galleryBanner": {
     "color": "#111721",
@@ -56,8 +56,10 @@
     "install:vscode": "node install.mjs vscode",
     "install:all": "node install.mjs",
     "check": "node scripts/check-release.mjs",
-    "publish:vscode": "npm run check && npx --yes @vscode/vsce publish --no-dependencies",
-    "publish:ovsx": "npm run check && npx --yes ovsx publish --no-dependencies",
-    "install:terminal": "node install.mjs terminal"
+    "publish:vscode": "npm test && npm run check && npx --yes @vscode/vsce publish --no-dependencies",
+    "publish:ovsx": "npm test && npm run check && npx --yes ovsx publish --no-dependencies",
+    "install:terminal": "node install.mjs terminal",
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "install:local": "node install.mjs local"
   }
 }

@@ -1,14 +1,11 @@
 # Changelog
 
-## Unreleased
+## 1.3.0
 
-- Back to the 1.0.0 colors (owner preference). The VS Code theme, the Zed theme, the Zed semantic token rules in
-  `extras/` and the terminal palettes are again exactly what 1.0.0 shipped. All color changes from 1.1.0 and 1.2.0
-  are dropped: the night-blue background returns, variables and properties go back to their 1.0.0 tones, and the
-  1.1.0/1.2.0 semantic-token, cross-language token, UI-key and Zed style/vim additions are no longer in the theme.
-  The neutral occurrence/hover tint that was planned for this release is dropped as well.
-- Zed: the optional semantic token rules in `extras/` use hex colors again, as in 1.0.0.
-- Build and test tooling from 1.1.0/1.2.0 stays (tests now pin the 1.0.0 output).
+- **Back to the original 1.0.0 colors.** 1.2.0 changed many colors at once and did not feel as stable in use, so
+  1.3.0 restores exactly what 1.0.0 shipped: the VS Code theme, the Zed theme, the optional Zed semantic token rules
+  in `extras/` and the terminal palettes. If you liked 1.0.0, nothing changes for you; if you were on 1.2.0, the
+  night-blue background and the original variable/property tones are back.
 
 ## 1.2.0
 

@@ -950,7 +950,6 @@
     {
       "name": "Preprocessor",
       "scope": [
-        "meta.preprocessor",
         "keyword.control.directive",
         "punctuation.definition.directive"
       ],
@@ -1034,7 +1033,8 @@
       "scope": [
         "meta.tag.metadata.doctype",
         "entity.name.tag.doctype",
-        "meta.tag.sgml.doctype"
+        "meta.tag.sgml.doctype",
+        "meta.tag.metadata.doctype entity.name.tag"
       ],
       "settings": {
         "foreground": "#D29BFF"
@@ -1138,24 +1138,6 @@
       }
     },
     {
-      "name": "JSON key cấp 2",
-      "scope": [
-        "source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"
-      ],
-      "settings": {
-        "foreground": "#70C7FF"
-      }
-    },
-    {
-      "name": "JSON key cấp 3",
-      "scope": [
-        "source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"
-      ],
-      "settings": {
-        "foreground": "#F2CC78"
-      }
-    },
-    {
       "name": "YAML key",
       "scope": [
         "entity.name.tag.yaml"
@@ -1214,6 +1196,7 @@
       "scope": [
         "variable.other.env",
         "variable.key.env",
+        "variable.key.dotenv",
         "keyword.other.env"
       ],
       "settings": {
@@ -1246,7 +1229,8 @@
         "entity.name.type.mixin.prisma"
       ],
       "settings": {
-        "foreground": "#F2CC78"
+        "foreground": "#F2CC78",
+        "fontStyle": ""
       }
     },
     {
@@ -1270,8 +1254,7 @@
     {
       "name": "Prisma attribute",
       "scope": [
-        "entity.name.function.attribute.prisma",
-        "punctuation.definition.tag.prisma"
+        "entity.name.function.attribute.prisma"
       ],
       "settings": {
         "foreground": "#8EE0B5"
@@ -1488,11 +1471,10 @@
     {
       "name": "Python f-string",
       "scope": [
-        "meta.fstring.python",
         "constant.character.format.placeholder.other.python"
       ],
       "settings": {
-        "foreground": "#F2CC78"
+        "foreground": "#D29BFF"
       }
     },
     {
@@ -1582,7 +1564,8 @@
         "constant.language.symbol.ruby",
         "constant.other.symbol.ruby",
         "constant.other.symbol.hashkey.ruby",
-        "constant.other.symbol.hashkey.parameter.function.ruby"
+        "constant.other.symbol.hashkey.parameter.function.ruby",
+        "constant.language.symbol.hashkey.ruby"
       ],
       "settings": {
         "foreground": "#72D4C9"
@@ -1733,6 +1716,16 @@
       }
     },
     {
+      "name": "Heading link",
+      "scope": [
+        "markup.heading string.other.link"
+      ],
+      "settings": {
+        "foreground": "#70C7FF",
+        "fontStyle": ""
+      }
+    },
+    {
       "name": "Link url",
       "scope": [
         "markup.underline.link",
@@ -1758,9 +1751,7 @@
       "name": "List marker",
       "scope": [
         "punctuation.definition.list.begin.markdown",
-        "beginning.punctuation.definition.list.markdown",
-        "markup.list.unnumbered",
-        "markup.list.numbered"
+        "beginning.punctuation.definition.list.markdown"
       ],
       "settings": {
         "foreground": "#FF9F5E"
@@ -2051,6 +2042,232 @@
       }
     },
     {
+      "name": "TS/JS const",
+      "scope": [
+        "meta.definition.variable variable.other.constant",
+        "variable.other.constant.ts",
+        "variable.other.constant.tsx",
+        "variable.other.constant.js",
+        "variable.other.constant.js.jsx"
+      ],
+      "settings": {
+        "foreground": "#EDA898"
+      }
+    },
+    {
+      "name": "Macro name",
+      "scope": [
+        "entity.name.function.preprocessor"
+      ],
+      "settings": {
+        "foreground": "#8EE0B5"
+      }
+    },
+    {
+      "name": "Go keyword type",
+      "scope": [
+        "keyword.type.go"
+      ],
+      "settings": {
+        "foreground": "#D29BFF"
+      }
+    },
+    {
+      "name": "Go builtin type",
+      "scope": [
+        "storage.type.error.go",
+        "storage.type.byte.go",
+        "storage.type.rune.go",
+        "storage.type.uintptr.go"
+      ],
+      "settings": {
+        "foreground": "#B3B1FF"
+      }
+    },
+    {
+      "name": "C# local",
+      "scope": [
+        "entity.name.variable.local.cs"
+      ],
+      "settings": {
+        "foreground": "#EDA898"
+      }
+    },
+    {
+      "name": "C# event",
+      "scope": [
+        "entity.name.variable.event.cs"
+      ],
+      "settings": {
+        "foreground": "#72D4C9"
+      }
+    },
+    {
+      "name": "Java array type",
+      "scope": [
+        "storage.type.object.array.java"
+      ],
+      "settings": {
+        "foreground": "#F2CC78"
+      }
+    },
+    {
+      "name": "C++ builtin type",
+      "scope": [
+        "storage.type.integral",
+        "storage.type.template.argument.size_t"
+      ],
+      "settings": {
+        "foreground": "#B3B1FF"
+      }
+    },
+    {
+      "name": "Ternary",
+      "scope": [
+        "keyword.control.ternary.java"
+      ],
+      "settings": {
+        "foreground": "#8CBECB"
+      }
+    },
+    {
+      "name": "Interpolation punctuation",
+      "scope": [
+        "punctuation.definition.interpolation"
+      ],
+      "settings": {
+        "foreground": "#D29BFF"
+      }
+    },
+    {
+      "name": "Attribute (Swift/C++/PHP/PowerShell)",
+      "scope": [
+        "storage.modifier.attribute.swift",
+        "source.cpp entity.other.attribute",
+        "support.attribute.builtin.php",
+        "support.function.attribute.powershell"
+      ],
+      "settings": {
+        "foreground": "#8EE0B5"
+      }
+    },
+    {
+      "name": "Field (Lua/JS/Swift)",
+      "scope": [
+        "entity.other.attribute.lua",
+        "variable.object.property",
+        "support.variable.swift"
+      ],
+      "settings": {
+        "foreground": "#72D4C9"
+      }
+    },
+    {
+      "name": "Ruby class var",
+      "scope": [
+        "variable.other.readwrite.class.ruby"
+      ],
+      "settings": {
+        "foreground": "#8AB3FF",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Doc tag",
+      "scope": [
+        "comment keyword",
+        "comment storage.type",
+        "comment storage.type.annotation.lua",
+        "comment punctuation.definition.block.tag"
+      ],
+      "settings": {
+        "foreground": "#D29BFF",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "PowerShell #Requires option",
+      "scope": [
+        "meta.requires keyword.other"
+      ],
+      "settings": {
+        "foreground": "#D29BFF",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Regex anchor",
+      "scope": [
+        "keyword.control.anchor.regexp"
+      ],
+      "settings": {
+        "foreground": "#F7AEE6"
+      }
+    },
+    {
+      "name": "BigInt suffix",
+      "scope": [
+        "storage.type.numeric.bigint"
+      ],
+      "settings": {
+        "foreground": "#FF9F5E"
+      }
+    },
+    {
+      "name": "Lua label",
+      "scope": [
+        "string.tag.lua"
+      ],
+      "settings": {
+        "foreground": "#8EE0B5"
+      }
+    },
+    {
+      "name": "C++ operator overload",
+      "scope": [
+        "entity.name.operator.cpp"
+      ],
+      "settings": {
+        "foreground": "#70C7FF"
+      }
+    },
+    {
+      "name": "CSS keyframe offset",
+      "scope": [
+        "entity.other.keyframe-offset.css"
+      ],
+      "settings": {
+        "foreground": "#FF9F5E"
+      }
+    },
+    {
+      "name": "PHP core constant",
+      "scope": [
+        "support.constant.core.php"
+      ],
+      "settings": {
+        "foreground": "#FF9F5E"
+      }
+    },
+    {
+      "name": "PowerShell type",
+      "scope": [
+        "storage.type.powershell"
+      ],
+      "settings": {
+        "foreground": "#B3B1FF"
+      }
+    },
+    {
+      "name": "R accessor",
+      "scope": [
+        "keyword.accessor.dollar.r"
+      ],
+      "settings": {
+        "foreground": "#8CBECB"
+      }
+    },
+    {
       "name": "Invalid",
       "scope": [
         "invalid",
@@ -2069,12 +2286,34 @@
         "foreground": "#8996AC",
         "fontStyle": "strikethrough"
       }
+    },
+    {
+      "name": "Commit line too long",
+      "scope": [
+        "invalid.deprecated.line-too-long.git-commit"
+      ],
+      "settings": {
+        "foreground": "#E8B96F",
+        "fontStyle": ""
+      }
+    },
+    {
+      "name": "Commit line far too long",
+      "scope": [
+        "invalid.illegal.line-too-long.git-commit"
+      ],
+      "settings": {
+        "foreground": "#FF7F9F",
+        "fontStyle": ""
+      }
     }
   ],
   "semanticTokenColors": {
     "namespace": "#BDAA67",
     "class": "#F2CC78",
     "class.defaultLibrary": "#F2CC78",
+    "class.builtin": "#B3B1FF",
+    "class.decorator": "#8EE0B5",
     "interface": "#F2CC78",
     "enum": "#F2CC78",
     "struct": "#F2CC78",
@@ -2096,8 +2335,6 @@
     "method.decorator": "#8EE0B5",
     "variable": "#EDA898",
     "variable.readonly": "#EDA898",
-    "variable.defaultLibrary": "#8AB3FF",
-    "variable.readonly.defaultLibrary": "#8AB3FF",
     "parameter": {
       "foreground": "#FF8689",
       "italic": true

@@ -687,7 +687,7 @@ const tokenColors = [
 
   rule("Decorator / attribute", ["meta.decorator", "punctuation.decorator", "meta.decorator entity.name.function", "entity.name.function.decorator", "meta.attribute.rust", "meta.annotation", "storage.type.annotation", "punctuation.definition.annotation", "entity.name.function.macro", "support.function.macro"], s.attribute),
   rule("Label", ["entity.name.label", "entity.name.goto-label"], s.attribute),
-  rule("Preprocessor", ["meta.preprocessor", "keyword.control.directive", "punctuation.definition.directive"], s.keyword),
+  rule("Preprocessor", ["keyword.control.directive", "punctuation.definition.directive"], s.keyword),
 
   rule("Punctuation", ["punctuation", "punctuation.separator", "punctuation.terminator", "punctuation.accessor", "meta.brace", "punctuation.definition.parameters", "punctuation.definition.typeparameters"], s.punctuation),
   rule("Bracket", ["punctuation.definition.block", "punctuation.section", "meta.brace.round", "meta.brace.square", "meta.brace.curly", "punctuation.definition.array", "punctuation.definition.dictionary"], s.bracket),
@@ -697,7 +697,7 @@ const tokenColors = [
   rule("Component tag", ["support.class.component", "entity.name.tag.component"], s.type),
   rule("Tag punctuation", ["punctuation.definition.tag", "punctuation.definition.tag.begin", "punctuation.definition.tag.end"], s.punctuation),
   rule("Tag attribute", ["entity.other.attribute-name"], s.attribute, "italic"),
-  rule("Doctype", ["meta.tag.metadata.doctype", "entity.name.tag.doctype", "meta.tag.sgml.doctype"], s.keyword),
+  rule("Doctype", ["meta.tag.metadata.doctype", "entity.name.tag.doctype", "meta.tag.sgml.doctype", "meta.tag.metadata.doctype entity.name.tag"], s.keyword),
 
   // --- CSS / SCSS ---
   rule("CSS selector", ["entity.other.attribute-name.class.css", "entity.other.attribute-name.class", "entity.other.attribute-name.id"], s.type, ""),
@@ -711,21 +711,19 @@ const tokenColors = [
 
   // --- JSON / YAML / TOML ---
   rule("JSON key", ["support.type.property-name.json", "support.type.property-name.json punctuation"], s.property),
-  rule("JSON key cấp 2", ["source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"], s.func),
-  rule("JSON key cấp 3", ["source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json"], s.type),
   rule("YAML key", ["entity.name.tag.yaml"], s.property),
   rule("YAML anchor", ["entity.name.type.anchor.yaml", "variable.other.alias.yaml", "punctuation.definition.anchor.yaml", "punctuation.definition.alias.yaml"], s.attribute),
   rule("TOML key", ["support.type.property-name.toml", "support.type.property-name.table.toml", "support.type.property-name.array.toml"], s.property),
   rule("TOML table", ["meta.table.toml support.type.property-name.table.toml", "meta.array.table.toml support.type.property-name.array.toml"], s.type),
   rule("TOML date", ["constant.other.time.datetime.offset.toml", "constant.other.time.date.toml", "constant.other.time.datetime.local.toml", "constant.other.time.time.toml"], s.number),
-  rule("Dotenv", ["variable.other.env", "variable.key.env", "keyword.other.env"], s.property),
+  rule("Dotenv", ["variable.other.env", "variable.key.env", "variable.key.dotenv", "keyword.other.env"], s.property),
 
   // --- Prisma ---
   rule("Prisma block keyword", ["storage.type.model.prisma", "storage.type.enum.prisma", "storage.type.config.prisma", "storage.type.type.prisma", "storage.type.namespace.prisma", "storage.modifier.mixin.prisma"], s.keyword),
-  rule("Prisma model/enum name", ["variable.language.relations.prisma", "entity.name.type.model.prisma", "entity.name.type.enum.prisma", "entity.name.type.type.prisma", "entity.name.type.config.prisma", "entity.name.type.alias.prisma", "entity.name.type.mixin.prisma"], s.type),
+  rule("Prisma model/enum name", ["variable.language.relations.prisma", "entity.name.type.model.prisma", "entity.name.type.enum.prisma", "entity.name.type.type.prisma", "entity.name.type.config.prisma", "entity.name.type.alias.prisma", "entity.name.type.mixin.prisma"], s.type, ""),
   rule("Prisma field", ["variable.other.assignment.prisma"], s.property),
   rule("Prisma scalar type", ["support.type.primitive.prisma"], s.typeBuiltin),
-  rule("Prisma attribute", ["entity.name.function.attribute.prisma", "punctuation.definition.tag.prisma"], s.attribute),
+  rule("Prisma attribute", ["entity.name.function.attribute.prisma"], s.attribute),
   rule("Prisma function", ["support.function.functional.prisma"], s.func),
   rule("Prisma named argument", ["variable.parameter.key.prisma"], s.parameter, "italic"),
   rule("Prisma optional/list", ["keyword.operator.optional_type.prisma", "keyword.operator.list_type.prisma"], s.operator),
@@ -755,7 +753,7 @@ const tokenColors = [
 
   // --- Python ---
   rule("Python decorator", ["meta.function.decorator.python", "entity.name.function.decorator.python", "punctuation.definition.decorator.python"], s.attribute),
-  rule("Python f-string", ["meta.fstring.python", "constant.character.format.placeholder.other.python"], s.escape),
+  rule("Python f-string", ["constant.character.format.placeholder.other.python"], s.keyword),
   rule("Python magic", ["support.function.magic.python", "support.variable.magic.python"], s.special),
 
   rule("Python attribute access", ["meta.member.access.python meta.attribute.python", "meta.attribute.python"], s.property),
@@ -773,7 +771,7 @@ const tokenColors = [
   rule("PHP variable \$", ["punctuation.definition.variable.php"], s.variable),
 
   // --- Ruby ---
-  rule("Ruby symbol", ["constant.language.symbol.ruby", "constant.other.symbol.ruby", "constant.other.symbol.hashkey.ruby", "constant.other.symbol.hashkey.parameter.function.ruby"], s.property),
+  rule("Ruby symbol", ["constant.language.symbol.ruby", "constant.other.symbol.ruby", "constant.other.symbol.hashkey.ruby", "constant.other.symbol.hashkey.parameter.function.ruby", "constant.language.symbol.hashkey.ruby"], s.property),
   rule("Ruby instance var", ["variable.other.readwrite.instance.ruby", "punctuation.definition.variable.ruby"], s.special),
 
   // --- INI / .env / properties ---
@@ -794,9 +792,10 @@ const tokenColors = [
   rule("Inline code", ["markup.inline.raw", "markup.fenced_code.block.markdown punctuation.definition", "markup.raw"], s.string),
   rule("Code fence language", ["fenced_code.block.language"], s.attribute),
   rule("Link text", ["string.other.link.title.markdown", "string.other.link.description.markdown", "meta.link.inline.markdown string.other.link"], s.keyword),
+  rule("Heading link", ["markup.heading string.other.link"], s.func, ""),
   rule("Link url", ["markup.underline.link", "markup.underline.link.image", "meta.link.reference.def.markdown constant.other.reference.link"], s.property),
   rule("Quote", ["markup.quote", "punctuation.definition.quote.begin.markdown"], s.commentDoc, "italic"),
-  rule("List marker", ["punctuation.definition.list.begin.markdown", "beginning.punctuation.definition.list.markdown", "markup.list.unnumbered", "markup.list.numbered"], s.number),
+  rule("List marker", ["punctuation.definition.list.begin.markdown", "beginning.punctuation.definition.list.markdown"], s.number),
   rule("Separator", ["meta.separator.markdown"], s.comment),
 
   // --- Log (*.log, Output panel) ---
@@ -837,8 +836,36 @@ const tokenColors = [
   rule("Diff changed", ["markup.changed", "punctuation.definition.changed"], ui.yellow),
   rule("Diff header", ["meta.diff.header", "meta.diff.range", "punctuation.definition.range.diff"], s.func),
 
+  // --- Sửa scope sau QA 1.0.0 (chỉ đổi scope, không đổi bảng màu) ---
+  rule("TS/JS const", ["meta.definition.variable variable.other.constant", "variable.other.constant.ts", "variable.other.constant.tsx", "variable.other.constant.js", "variable.other.constant.js.jsx"], s.variable),
+  rule("Macro name", ["entity.name.function.preprocessor"], s.attribute),
+  rule("Go keyword type", ["keyword.type.go"], s.keyword),
+  rule("Go builtin type", ["storage.type.error.go", "storage.type.byte.go", "storage.type.rune.go", "storage.type.uintptr.go"], s.typeBuiltin),
+  rule("C# local", ["entity.name.variable.local.cs"], s.variable),
+  rule("C# event", ["entity.name.variable.event.cs"], s.property),
+  rule("Java array type", ["storage.type.object.array.java"], s.type),
+  rule("C++ builtin type", ["storage.type.integral", "storage.type.template.argument.size_t"], s.typeBuiltin),
+  rule("Ternary", ["keyword.control.ternary.java"], s.operator),
+  rule("Interpolation punctuation", ["punctuation.definition.interpolation"], s.keyword),
+  rule("Attribute (Swift/C++/PHP/PowerShell)", ["storage.modifier.attribute.swift", "source.cpp entity.other.attribute", "support.attribute.builtin.php", "support.function.attribute.powershell"], s.attribute),
+  rule("Field (Lua/JS/Swift)", ["entity.other.attribute.lua", "variable.object.property", "support.variable.swift"], s.property),
+  rule("Ruby class var", ["variable.other.readwrite.class.ruby"], s.special, "italic"),
+  rule("Doc tag", ["comment keyword", "comment storage.type", "comment storage.type.annotation.lua", "comment punctuation.definition.block.tag"], s.keyword, "italic"),
+  rule("PowerShell #Requires option", ["meta.requires keyword.other"], s.keyword, ""),
+  rule("Regex anchor", ["keyword.control.anchor.regexp"], s.regex),
+  rule("BigInt suffix", ["storage.type.numeric.bigint"], s.number),
+  rule("Lua label", ["string.tag.lua"], s.attribute),
+  rule("C++ operator overload", ["entity.name.operator.cpp"], s.func),
+  rule("CSS keyframe offset", ["entity.other.keyframe-offset.css"], s.number),
+  rule("PHP core constant", ["support.constant.core.php"], s.number),
+  rule("PowerShell type", ["storage.type.powershell"], s.typeBuiltin),
+  rule("R accessor", ["keyword.accessor.dollar.r"], s.operator),
+
   rule("Invalid", ["invalid", "invalid.illegal"], ui.red),
   rule("Deprecated", ["invalid.deprecated"], ui.fgMuted, "strikethrough"),
+  // Commit message dài: cảnh báo bằng màu, không gạch ngang (gạch ngang đọc như "đã xoá")
+  rule("Commit line too long", ["invalid.deprecated.line-too-long.git-commit"], ui.yellow, ""),
+  rule("Commit line far too long", ["invalid.illegal.line-too-long.git-commit"], ui.red, ""),
 ];
 
 // ---------------------------------------------------------------------------
@@ -848,6 +875,8 @@ const semanticTokenColors = {
   namespace: s.namespace,
   class: s.type,
   "class.defaultLibrary": s.type,
+  "class.builtin": s.typeBuiltin,
+  "class.decorator": s.attribute,
   interface: s.type,
   enum: s.type,
   struct: s.type,
@@ -866,8 +895,6 @@ const semanticTokenColors = {
   "method.decorator": s.attribute,
   variable: s.variable,
   "variable.readonly": s.variable,
-  "variable.defaultLibrary": s.special,
-  "variable.readonly.defaultLibrary": s.special,
   parameter: { foreground: s.parameter, italic: true },
   // `private readonly prisma: PrismaService` trong constructor là parameter property (= thuộc tính của class).
   // TS gửi nó là parameter + readonly (tham số thường không thể có readonly) → tô như property cho khớp với this.prisma

@@ -18,11 +18,11 @@ const keysOf = (o) => Object.keys(o).sort();
 
 // Mã băm màu bản Dark. Chỉ cập nhật khi CỐ Ý đổi màu bản Dark.
 // 2026-11-25: chủ dự án chọn quay về đúng màu bản 1.0.0 (Marketplace, build từ commit 546aec5) — bỏ thay đổi màu của 1.1.0/1.2.0.
-// File themes/ember-tide-color-theme.json build ra trùng từng byte với bản 1.0.0 (sha256 thô 1436cd8f…).
+// 1.3.0 = bảng màu 1.0.0 + sửa scope sau QA (private/docs/qa-1.0.0.md). Màu giao diện (colors) vẫn trùng bản 1.0.0, xem test bên dưới.
 // Băm trên JSON đã chuẩn hoá chữ hoa hex, để đổi hoa/thường không làm test đỏ.
-const DARK_VSCODE_SHA256 = "9b821fb89a0db1c7b2f196c404936d6db0a06cc77362a34f7ec848f8b8a0a26a";
-// sha256 của file JSON thô bản 1.0.0 đã phát hành (VSIX) — file build ra phải trùng từng byte
-const DARK_VSCODE_FILE_SHA256 = "1436cd8f02033a852cc6617492f6dc3b6d2df0a1d2488f87672c45830ffd0451";
+const DARK_VSCODE_SHA256 = "6a252a9aced85c49eccf8410412ed8b4afcbe8a93fdcf08214d1ac65e0f0cb8f";
+// sha256 của khối "colors" bản 1.0.0 đã phát hành (commit 546aec5)
+const DARK_VSCODE_COLORS_SHA256 = "9cae5327c2c3cdafe3c193bebfa801cbe0c27e35c5e42ae6f7b52661293070e3";
 const norm = (o) => JSON.stringify(o).replace(/#[0-9a-fA-F]{6,8}/g, (m) => m.toUpperCase());
 const sha = (s) => createHash("sha256").update(s).digest("hex");
 
@@ -140,7 +140,7 @@ test("VS Code: mọi key màu UI tồn tại trong VS Code đã cài (bỏ qua n
 
 test("VS Code: bản Dark giữ nguyên màu đã ghim (v1.0.0)", () => {
   assert.equal(sha(norm(vscodeThemes[0].theme)), DARK_VSCODE_SHA256, "màu bản Dark đã thay đổi — nếu cố ý, cập nhật DARK_VSCODE_SHA256");
-  assert.equal(sha(readFileSync("themes/ember-tide-color-theme.json")), DARK_VSCODE_FILE_SHA256, "file theme khác bản 1.0.0 đã phát hành (chưa build lại?)");
+  assert.equal(sha(JSON.stringify(JSON.parse(readFileSync("themes/ember-tide-color-theme.json", "utf8")).colors)), DARK_VSCODE_COLORS_SHA256, "màu giao diện khác bản 1.0.0 (chưa build lại?)");
 });
 
 test("package.json: galleryBanner.color = ui.bgDeep của bản Dark", () => {

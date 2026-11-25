@@ -2,12 +2,16 @@ import { alpha, variants } from "../palette.mjs"; // vscodeThemes gồm mọi bi
 
 const T = "#00000000";
 
-// Sinh theme VS Code cho một biến thể (P = palette: ui, syntax, accents, ansi, name, type)
+// Sinh theme VS Code cho một biến thể (P = palette: ui, syntax, accents, ansi, name, type).
+// Ember Tide (Dark) dùng đúng các giá trị của bản 1.0.0. Các khoá tuỳ chọn dưới đây chỉ dành cho
+// biến thể cục bộ — bản Dark không khai báo nên kết quả giữ nguyên như 1.0.0.
 export function vscodeThemeFor(P) {
 const { ui, syntax: s, accents, ansi } = P;
-// Khoá tuỳ chọn cho bản sáng — bản tối không khai báo nên giữ nguyên giá trị cũ
-const textA = ui.textAlpha ?? "CC"; // độ trong của chữ Error Lens/inline value (nền sáng: đặc)
-const shadowA = ui.shadowAlpha ?? "4D"; // bóng đổ popup (nền sáng: nhẹ hơn)
+const textA = ui.textAlpha ?? "CC"; // độ trong của chữ Error Lens/inline value
+const shadow = (a) => alpha(ui.shadow ?? "#000000", ui.shadowAlpha ?? a); // bóng đổ popup
+const overlay = ui.overlay ?? "#ffffff"; // màu phủ thanh cuộn
+const onBadge = ui.onBadge ?? ui.bgDeep;
+const onAccent = ui.onAccent ?? ui.fgBright;
 const diff = {
   addLine: ui.diffAddedLine ?? alpha(ui.green, "14"), addText: ui.diffAddedText ?? alpha(ui.green, "1E"),
   delLine: ui.diffRemovedLine ?? alpha(ui.red, "14"), delText: ui.diffRemovedText ?? alpha(ui.red, "1E"),
@@ -25,7 +29,7 @@ const colors = {
   focusBorder: alpha(ui.focus, "88"),
   contrastBorder: T,
   "widget.border": ui.borderTide, // viền popup nổi: xanh thủy triều như viền tab
-  "widget.shadow": alpha(ui.shadow, shadowA),
+  "widget.shadow": shadow("4D"),
   "selection.background": alpha(ui.accent, "40"),
   "icon.foreground": ui.fgSoft,
   "sash.hoverBorder": ui.accent,
@@ -69,7 +73,7 @@ const colors = {
   "activityBar.activeBackground": T,
   "activityBar.border": ui.borderSoft,
   "activityBarBadge.background": ui.accent,
-  "activityBarBadge.foreground": ui.onBadge ?? ui.bgDeep,
+  "activityBarBadge.foreground": onBadge,
   "activityBarTop.foreground": ui.fg,
   "activityBarTop.inactiveForeground": ui.fgDim,
   "activityBarTop.activeBorder": ui.accent,
@@ -166,13 +170,11 @@ const colors = {
   "editor.inactiveSelectionBackground": alpha(ui.selectionInactive, "CC"),
   "editor.selectionHighlightBackground": T, // các chỗ trùng chữ: chỉ viền, không tô — không lẫn với vùng chọn
   "editor.selectionHighlightBorder": alpha(ui.accent, "66"),
-  // Các lớp tô tạm (cùng biến, hover, linked editing): xám trung tính, cùng tông nền — không tạo mảng màu lạ trong code.
-  // Màu riêng (ngọc) chỉ còn trên thanh cuộn/minimap. Chỉ vùng bôi đen là xanh.
-  "editor.wordHighlightBackground": alpha(ui.overlay, "14"), // chỗ khác dùng cùng biến
+  "editor.wordHighlightBackground": alpha(ui.focus, "33"), // chỗ khác dùng cùng biến: ngọc mờ
   "editor.wordHighlightBorder": T,
-  "editor.wordHighlightStrongBackground": alpha(ui.overlay, "1F"), // chỗ ghi vào biến: đậm hơn một chút, không viền
+  "editor.wordHighlightStrongBackground": alpha(ui.focus, "45"), // chỗ ghi vào biến: ngọc đậm hơn một chút, không viền
   "editor.wordHighlightStrongBorder": T,
-  "editor.wordHighlightTextBackground": alpha(ui.overlay, "0F"),
+  "editor.wordHighlightTextBackground": alpha(ui.focus, "1F"),
   "editor.wordHighlightTextBorder": T,
   "editor.findMatchBackground": ui.findMatch,
   "editor.findMatchBorder": ui.ember,
@@ -180,8 +182,8 @@ const colors = {
   "editor.findMatchHighlightBorder": alpha(ui.yellow, "40"),
   "editor.findRangeHighlightBackground": alpha(ui.accent, "0D"), // cùng tông xanh với nền, không tạo khối màu lạ
   "editor.rangeHighlightBackground": alpha(ui.accent, "12"),
-  "editor.hoverHighlightBackground": alpha(ui.overlay, "0F"), // xám rất nhạt: chỉ báo vùng đang hover, không đổi sắc nền
-  "editor.linkedEditingBackground": alpha(ui.overlay, "14"),
+  "editor.hoverHighlightBackground": alpha(s.typeBuiltin, "29"), // lavender: khác sắc với bôi đen (xanh) và cùng biến (ngọc)
+  "editor.linkedEditingBackground": alpha(ui.focus, "1F"),
   "editor.foldBackground": alpha(ui.bgActive, "33"),
   "editor.foldPlaceholderForeground": ui.fgMuted,
   "editorLink.activeForeground": ui.accent,
@@ -198,7 +200,7 @@ const colors = {
   "editorGhostText.background": T,
   "editorUnnecessaryCode.opacity": "#00000088",
   "editorStickyScroll.background": ui.bg,
-  "editorStickyScroll.shadow": alpha(ui.shadow, shadowA),
+  "editorStickyScroll.shadow": shadow("4D"),
   "editorStickyScrollHover.background": ui.bgHover,
   "editorBracketMatch.background": T, // cặp ngoặc khớp: chỉ viền
   "editorBracketMatch.border": alpha(ui.accent, "B3"),
@@ -259,10 +261,10 @@ const colors = {
   "minimapSlider.activeBackground": alpha(ui.accent, "40"),
 
   // Scrollbar
-  "scrollbar.shadow": alpha(ui.shadow, "33"),
-  "scrollbarSlider.background": alpha(ui.overlay, "22"),
-  "scrollbarSlider.hoverBackground": alpha(ui.overlay, "33"),
-  "scrollbarSlider.activeBackground": alpha(ui.overlay, "44"),
+  "scrollbar.shadow": alpha(ui.shadow ?? "#000000", "33"),
+  "scrollbarSlider.background": alpha(overlay, "22"),
+  "scrollbarSlider.hoverBackground": alpha(overlay, "33"),
+  "scrollbarSlider.activeBackground": alpha(overlay, "44"),
 
   // Widget nổi: hover, suggest, find, peek
   "editorWidget.background": ui.bgFloat,
@@ -329,10 +331,10 @@ const colors = {
   "checkbox.selectBackground": ui.bgFloat,
   "checkbox.selectBorder": ui.accent,
   "button.background": ui.button,
-  "button.foreground": ui.onAccent ?? ui.fgBright, // chữ trên nền màu đặc
+  "button.foreground": onAccent,
   "button.hoverBackground": ui.buttonHover,
   "button.border": T,
-  "button.separator": alpha(ui.onAccent ?? ui.fgBright, "44"),
+  "button.separator": alpha(onAccent, "44"),
   "button.secondaryBackground": ui.bgSelected,
   "button.secondaryForeground": ui.fg,
   "button.secondaryHoverBackground": ui.bgActive,
@@ -378,7 +380,7 @@ const colors = {
   "statusBarItem.hoverBackground": ui.bgHover,
   "statusBarItem.activeBackground": ui.bgSelected,
   "statusBarItem.remoteBackground": ui.button,
-  "statusBarItem.remoteForeground": ui.onAccent ?? ui.fgBright,
+  "statusBarItem.remoteForeground": onAccent,
   "statusBarItem.remoteHoverBackground": ui.buttonHover,
   "statusBarItem.prominentBackground": ui.bgSelected,
   "statusBarItem.prominentHoverBackground": ui.bgActive,
@@ -569,15 +571,15 @@ const colors = {
 
   // Badge cảnh báo/lỗi trên activity bar
   "activityWarningBadge.background": ui.yellow,
-  "activityWarningBadge.foreground": ui.onBadge ?? ui.bgDeep,
+  "activityWarningBadge.foreground": onBadge,
   "activityErrorBadge.background": ui.red,
-  "activityErrorBadge.foreground": ui.onBadge ?? ui.bgDeep,
+  "activityErrorBadge.foreground": onBadge,
 
   // Diff nâng cao: vùng code không đổi (thu gọn), xem nhiều file thay đổi, merge 3 chiều
   "diffEditor.unchangedRegionBackground": ui.bgPanel,
   "diffEditor.unchangedRegionForeground": ui.fgMuted,
   "diffEditor.unchangedCodeBackground": alpha(ui.bgActive, "29"),
-  "diffEditor.unchangedRegionShadow": alpha(ui.shadow, shadowA),
+  "diffEditor.unchangedRegionShadow": shadow("4D"),
   "multiDiffEditor.headerBackground": ui.bgFloat,
   "multiDiffEditor.background": ui.bg,
   "multiDiffEditor.border": ui.border,
@@ -622,36 +624,6 @@ const colors = {
   "chat.mcpCompatibilityWarningForeground": ui.yellow,
   "extensionIcon.privateForeground": ui.fgMuted,
 
-  // Keys whose VS Code default is a hard-coded Dark+ color (would ignore the palette)
-  "scmGraph.historyItemRefColor": ui.accent,
-  "scmGraph.historyItemRemoteRefColor": accents[1],
-  "scmGraph.historyItemBaseRefColor": ui.ember,
-  "scmGraph.historyItemHoverAdditionsForeground": ui.green,
-  "scmGraph.historyItemHoverDeletionsForeground": ui.red,
-  "chat.workingProgressStableIconForeground": ui.accent,
-  "chat.workingProgressInsidersIconForeground": ui.focus,
-  "chat.thinkingShimmer": ui.fgBright,
-  "editor.compositionBorder": ui.accent, // IME composition underline (Telex/IBus, CJK input)
-  "statusBarItem.offlineBackground": ui.bgRed,
-  "statusBarItem.offlineForeground": ui.red,
-  "debugView.valueChangedHighlight": alpha(ui.accent, "55"),
-  "debugView.stateLabelBackground": ui.bgSelected,
-  "diffEditor.moveActive.border": ui.ember,
-  "diffEditor.move.border": alpha(ui.fgMuted, "99"),
-  "testing.iconUnset": ui.fgMuted,
-  "extensionIcon.starForeground": ui.yellow,
-  "walkthrough.stepTitle.foreground": ui.fgBright,
-  // Test coverage and Next Edit Suggestions derive from the (faint) diff colors × 0.2–0.8 → nearly invisible
-  "testing.coveredBackground": alpha(ui.green, "1A"),
-  "testing.uncoveredBackground": alpha(ui.red, "1A"),
-  "testing.coveredGutterBackground": alpha(ui.green, "55"),
-  "testing.uncoveredGutterBackground": alpha(ui.red, "55"),
-  "inlineEdit.originalBackground": alpha(ui.red, "1A"),
-  "inlineEdit.modifiedBackground": alpha(ui.green, "1A"),
-  "inlineEdit.originalChangedTextBackground": alpha(ui.red, "33"),
-  "inlineEdit.modifiedChangedTextBackground": alpha(ui.green, "33"),
-  "inlineEdit.gutterIndicator.primaryBackground": alpha(ui.accent, "40"),
-
   // Extension Error Lens (bạn đang dùng)
   // Không tô cả dòng (tạo các khối màu khi lỗi thay đổi) — chỉ tô nền nhẹ sau phần chữ báo lỗi
   "errorLens.errorBackground": T,
@@ -688,49 +660,34 @@ const tokenColors = [
   rule("Keyword operator dạng chữ", ["keyword.operator.new", "keyword.operator.expression", "keyword.operator.logical.python", "keyword.operator.word", "keyword.operator.sizeof", "keyword.operator.instanceof", "keyword.operator.typeof", "keyword.operator.delete", "keyword.operator.in", "keyword.operator.of", "keyword.operator.void", "keyword.operator.wordlike", "keyword.operator.alignof", "keyword.operator.cast"], s.keyword),
   rule("Operator", ["keyword.operator", "punctuation.separator.key-value", "punctuation.accessor.optional", "keyword.operator.type.annotation", "keyword.operator.spread", "keyword.operator.rest"], s.operator),
   rule("Arrow", ["storage.type.function.arrow"], s.keyword),
-  rule("Keyword (grammar exceptions)", ["keyword.type.go", "storage.type.template.argument.typename", "storage.type.template.argument.class"], s.keyword, ""),
-  rule("Word-like operators", ["keyword.control.ternary", "keyword.accessor.dollar.r"], s.operator),
-  // Doc-comment tags (@param, @brief, ---@param…): one style in every language — keyword violet, italic like the comment
-  rule("Doc comment tag", ["comment keyword", "comment storage.type", "comment storage.type.annotation.lua", "comment.block.documentation keyword", "comment.line.documentation keyword"], s.keyword, "italic"),
-  // PowerShell comment-based help (.SYNOPSIS, .PARAMETER) and #Requires — grammar scopes them as operators/keywords inside a comment
-  rule("PowerShell doc tag", ["comment keyword.operator.documentation", "comment constant.string.documentation", "meta.requires.powershell keyword", "meta.requires.powershell keyword.control.requires", "meta.requires.powershell keyword.other"], s.keyword, "italic"),
 
-  rule("Function", ["entity.name.function", "support.function", "meta.function-call.generic", "variable.function", "meta.function-call entity.name.function", "entity.name.function.member", "entity.name.operator"], s.func),
+  rule("Function", ["entity.name.function", "support.function", "meta.function-call.generic", "variable.function", "meta.function-call entity.name.function", "entity.name.function.member"], s.func),
   rule("Constructor / class name", ["entity.name.type.class", "entity.name.class", "entity.other.inherited-class", "support.class", "new.expr entity.name.type"], s.type),
-  rule("Type", ["entity.name.type", "support.type", "entity.name.type.interface", "entity.name.type.alias", "entity.name.type.enum", "meta.type.annotation entity.name.type", "storage.type.cs", "storage.type.java", "storage.type.object.array.java", "storage.type.generic"], s.type),
-  rule("Type builtin", ["support.type.primitive", "support.type.builtin", "keyword.type", "storage.type.primitive", "storage.type.built-in", "storage.type.numeric.go", "storage.type.string.go", "storage.type.boolean.go", "storage.type.error.go", "storage.type.byte.go", "storage.type.rune.go", "storage.type.uintptr.go", "support.type.python", "support.type.exception.python", "storage.type.integral", "storage.type.template.argument"], s.typeBuiltin),
+  rule("Type", ["entity.name.type", "support.type", "entity.name.type.interface", "entity.name.type.alias", "entity.name.type.enum", "meta.type.annotation entity.name.type", "storage.type.cs", "storage.type.java", "storage.type.generic"], s.type),
+  rule("Type builtin", ["support.type.primitive", "support.type.builtin", "keyword.type", "storage.type.primitive", "storage.type.built-in", "storage.type.numeric.go", "storage.type.string.go", "storage.type.boolean.go", "support.type.python"], s.typeBuiltin),
   // Chỉ khai báo generic (T, K) — KHÔNG dùng meta.type.parameters vì TS grammar gắn scope đó cho cả type argument (Promise<User>)
   rule("Type parameter", ["entity.name.type.parameter"], s.type, "italic"),
-  rule("Namespace / module", ["entity.name.namespace", "entity.name.type.namespace", "entity.name.type.module", "entity.name.package", "storage.modifier.import", "storage.modifier.package", "support.other.namespace", "entity.name.scope-resolution", "meta.import.swift entity.name.type"], s.namespace),
+  rule("Namespace / module", ["entity.name.namespace", "entity.name.type.namespace", "entity.name.type.module", "entity.name.package", "storage.modifier.import", "storage.modifier.package", "support.other.namespace", "entity.name.scope-resolution"], s.namespace),
 
-  rule("Variable", ["variable", "variable.other", "variable.other.readwrite", "meta.definition.variable entity.name", "entity.name.variable.local.cs"], s.variable),
+  rule("Variable", ["variable", "variable.other", "variable.other.readwrite", "meta.definition.variable entity.name"], s.variable),
   rule("Constant variable", ["variable.other.constant", "entity.name.constant"], s.number),
-  // JS/TS `const` bindings are ordinary variables (coral), same as the TypeScript semantic token `variable.readonly`
-  // (it cannot tell UPPER_CASE apart) — so nothing changes color when the language server loads. Zed's tree-sitter
-  // still marks UPPER_CASE identifiers as constants (orange).
-  rule("JS/TS const binding", ["variable.other.constant.ts", "variable.other.constant.tsx", "variable.other.constant.js", "variable.other.constant.jsx"], s.variable),
   rule("Parameter", ["variable.parameter", "meta.parameters variable", "entity.name.variable.parameter"], s.parameter, "italic"),
   rule("this / self / super", ["variable.language", "variable.language.this", "variable.language.self", "variable.language.super", "variable.parameter.function.language.special.self.python", "variable.parameter.function.language.special.cls.python"], s.special, "italic"),
-  rule("Property", ["variable.other.property", "variable.other.object.property", "support.variable.property", "meta.property-name", "entity.name.variable.field", "variable.other.member", "entity.name.variable.property", "meta.object-literal.key", "support.type.property-name", "variable.object.property", "entity.other.attribute.lua", "support.variable.swift", "entity.name.variable.event.cs"], s.property),
+  rule("Property", ["variable.other.property", "variable.other.object.property", "support.variable.property", "meta.property-name", "entity.name.variable.field", "variable.other.member", "entity.name.variable.property", "meta.object-literal.key", "support.type.property-name"], s.property),
   rule("Builtin object", ["support.variable", "support.constant", "variable.other.object.builtin", "support.class.builtin"], s.special),
 
   rule("Number & constant", ["constant.numeric", "constant.language", "constant.character", "constant.other", "support.constant.math", "keyword.other.unit", "constant.other.color"], s.number),
-  rule("Enum member", ["variable.other.enummember", "entity.name.variable.enum-member", "constant.other.enum", "entity.name.type.option.rust", "support.constant.core.php", "entity.other.keyframe-offset", "storage.type.numeric.bigint"], s.number),
+  rule("Enum member", ["variable.other.enummember", "entity.name.variable.enum-member", "constant.other.enum"], s.number),
 
   rule("String", ["string", "string.quoted", "string.template", "punctuation.definition.string"], s.string),
   rule("Escape", ["constant.character.escape", "constant.other.placeholder", "constant.character.format.placeholder"], s.escape),
-  rule("Regex", ["string.regexp", "constant.other.character-class.regexp", "keyword.operator.quantifier.regexp", "keyword.control.anchor.regexp"], s.regex),
-  // String interpolation: only the delimiters (${ }, { }, #{ }, \( ), $( ), $) take the keyword color; the expression
-  // inside keeps its own token colors. Format placeholders (Rust "{n:.2}", like %s) use the escape color instead.
-  rule("Template expression", ["punctuation.definition.template-expression", "punctuation.section.embedded", "punctuation.section.interpolation", "punctuation.definition.interpolation", "constant.character.format.placeholder.other.python", "string.interpolated meta.embedded.expression.dart"], s.keyword),
-  rule("Format placeholder", ["meta.interpolation.rust", "punctuation.definition.interpolation.rust"], s.escape),
+  rule("Regex", ["string.regexp", "constant.other.character-class.regexp", "keyword.operator.quantifier.regexp"], s.regex),
+  rule("Template expression", ["punctuation.definition.template-expression", "punctuation.section.embedded", "punctuation.section.interpolation"], s.keyword),
   rule("Template expression content", ["meta.template.expression", "meta.embedded"], ui.fg),
 
-  rule("Decorator / attribute", ["meta.decorator", "punctuation.decorator", "meta.decorator entity.name.function", "entity.name.function.decorator", "meta.attribute.rust", "meta.annotation", "storage.type.annotation", "punctuation.definition.annotation", "entity.name.function.macro", "support.function.macro", "storage.modifier.attribute.swift", "support.other.attribute", "meta.attribute.php", "support.attribute.builtin.php", "support.function.attribute.powershell", "string.tag.lua"], s.attribute),
+  rule("Decorator / attribute", ["meta.decorator", "punctuation.decorator", "meta.decorator entity.name.function", "entity.name.function.decorator", "meta.attribute.rust", "meta.annotation", "storage.type.annotation", "punctuation.definition.annotation", "entity.name.function.macro", "support.function.macro"], s.attribute),
   rule("Label", ["entity.name.label", "entity.name.goto-label"], s.attribute),
-  // Not `meta.preprocessor`: it spans the whole #define body / #ifdef argument (those identifiers were painted violet)
-  rule("Preprocessor", ["keyword.control.directive", "punctuation.definition.directive"], s.keyword),
-  rule("Preprocessor macro name", ["entity.name.function.preprocessor"], s.attribute), // macro = mint, like Rust println! and semantic `macro`
+  rule("Preprocessor", ["meta.preprocessor", "keyword.control.directive", "punctuation.definition.directive"], s.keyword),
 
   rule("Punctuation", ["punctuation", "punctuation.separator", "punctuation.terminator", "punctuation.accessor", "meta.brace", "punctuation.definition.parameters", "punctuation.definition.typeparameters"], s.punctuation),
   rule("Bracket", ["punctuation.definition.block", "punctuation.section", "meta.brace.round", "meta.brace.square", "meta.brace.curly", "punctuation.definition.array", "punctuation.definition.dictionary"], s.bracket),
@@ -798,6 +755,7 @@ const tokenColors = [
 
   // --- Python ---
   rule("Python decorator", ["meta.function.decorator.python", "entity.name.function.decorator.python", "punctuation.definition.decorator.python"], s.attribute),
+  rule("Python f-string", ["meta.fstring.python", "constant.character.format.placeholder.other.python"], s.escape),
   rule("Python magic", ["support.function.magic.python", "support.variable.magic.python"], s.special),
 
   rule("Python attribute access", ["meta.member.access.python meta.attribute.python", "meta.attribute.python"], s.property),
@@ -815,8 +773,8 @@ const tokenColors = [
   rule("PHP variable \$", ["punctuation.definition.variable.php"], s.variable),
 
   // --- Ruby ---
-  rule("Ruby symbol", ["constant.language.symbol.ruby", "constant.other.symbol.ruby", "constant.other.symbol.hashkey.ruby", "constant.other.symbol.hashkey.parameter.function.ruby", "constant.language.symbol.hashkey.ruby"], s.property),
-  rule("Ruby instance/class var", ["variable.other.readwrite.instance.ruby", "variable.other.readwrite.class.ruby", "punctuation.definition.variable.ruby"], s.special),
+  rule("Ruby symbol", ["constant.language.symbol.ruby", "constant.other.symbol.ruby", "constant.other.symbol.hashkey.ruby", "constant.other.symbol.hashkey.parameter.function.ruby"], s.property),
+  rule("Ruby instance var", ["variable.other.readwrite.instance.ruby", "punctuation.definition.variable.ruby"], s.special),
 
   // --- INI / .env / properties ---
   rule("INI section", ["entity.name.section.group-title.ini"], s.type, ""),
@@ -838,7 +796,7 @@ const tokenColors = [
   rule("Link text", ["string.other.link.title.markdown", "string.other.link.description.markdown", "meta.link.inline.markdown string.other.link"], s.keyword),
   rule("Link url", ["markup.underline.link", "markup.underline.link.image", "meta.link.reference.def.markdown constant.other.reference.link"], s.property),
   rule("Quote", ["markup.quote", "punctuation.definition.quote.begin.markdown"], s.commentDoc, "italic"),
-  rule("List marker", ["punctuation.definition.list.begin.markdown", "beginning.punctuation.definition.list.markdown"], s.number), // only the bullet: markup.list.* spans the whole item text
+  rule("List marker", ["punctuation.definition.list.begin.markdown", "beginning.punctuation.definition.list.markdown", "markup.list.unnumbered", "markup.list.numbered"], s.number),
   rule("Separator", ["meta.separator.markdown"], s.comment),
 
   // --- Log (*.log, Output panel) ---
@@ -925,31 +883,6 @@ const semanticTokenColors = {
   lifetime: { foreground: s.attribute, italic: true },
   keyword: s.keyword,
   "*.deprecated": { strikethrough: true },
-
-  // Language-server specific types. A broad rule above (keyword, type, variable, method) would otherwise
-  // swallow these sub-types (VS Code matches by superType) and paint them differently from the TextMate
-  // color the theme gives the same construct. Each value mirrors the TextMate rule noted on the right.
-  // Rust (rust-analyzer)
-  boolean: s.number, // true/false (<keyword) — constant.language.bool.rust
-  selfTypeKeyword: { foreground: s.special, italic: true }, // Self (<keyword) — same family as self
-  const: s.number, // compile-time constant (<variable) — constant.other.caps.rust
-  static: s.number, // static item (<variable) — SCREAMING_CASE, constant.other.caps.rust
-  formatSpecifier: s.escape, // {} {:?} in format! — like the %s placeholder in other languages
-  // C# (Roslyn) + Python (Pylance builtinConstant <constant: None/True/False)
-  constant: s.number, // variable.other.constant / constant.language.python
-  delegate: s.type, // (<method) — entity.name.type.delegate.cs
-  event: s.property, // event member
-  // Java (jdt.ls)
-  annotation: s.attribute, // @Override (<type) — storage.type.annotation.java
-  annotationMember: s.property,
-  // Go (gopls): predeclared true/false/nil/iota arrive as variable.readonly.defaultLibrary
-  "variable.readonly.defaultLibrary:go": s.number, // constant.language.go
-  "string.format": s.escape, // %s %d in fmt strings (gopls `format` modifier) — constant.other.placeholder
-  // Python (Pylance): int/str/list carry the `builtin` modifier — support.type.python
-  "class.builtin": s.typeBuiltin,
-  "class.defaultLibrary:python": s.typeBuiltin,
-  // C/C++ (clangd)
-  concept: s.type, // template <std::integral T>
 };
 
 return {
@@ -964,4 +897,4 @@ return {
 }
 
 export const vscodeThemes = variants.map((P) => ({ P, theme: vscodeThemeFor(P) }));
-export const vscodeTheme = vscodeThemes[0].theme; // Dark (giữ tương thích)
+export const vscodeTheme = vscodeThemes[0].theme; // Dark

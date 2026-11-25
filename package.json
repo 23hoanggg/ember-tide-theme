@@ -1,7 +1,7 @@
 {
   "name": "ember-tide-theme",
   "displayName": "Ember Tide",
-  "description": "A warm–cool dark theme: deep night background, ember coral and amber, tide blue and teal. Also available for Zed and terminals.",
+  "description": "A warm–cool dark theme: night-blue background, ember coral and amber, tide blue and teal. Also available for Zed and terminals.",
   "version": "1.2.0",
   "publisher": "whythohh",
   "author": {
@@ -36,7 +36,7 @@
     "dark theme"
   ],
   "galleryBanner": {
-    "color": "#14171B",
+    "color": "#111721",
     "theme": "dark"
   },
   "pricing": "Free",

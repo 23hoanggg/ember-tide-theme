@@ -4,22 +4,22 @@ Description=Ember Tide
 Opacity=1
 
 [Background]
-Color=26,29,34
+Color=23,29,40
 
 [BackgroundIntense]
-Color=26,29,34
+Color=23,29,40
 
 [Foreground]
-Color=223,227,232
+Color=220,227,238
 
 [ForegroundIntense]
-Color=242,244,247
+Color=240,244,250
 
 [Color0]
-Color=75,81,92
+Color=70,81,102
 
 [Color0Intense]
-Color=122,129,140
+Color=116,129,151
 
 [Color1]
 Color=255,127,159
@@ -58,7 +58,7 @@ Color=121,207,200
 Color=164,226,220
 
 [Color7]
-Color=202,207,215
+Color=197,208,224
 
 [Color7Intense]
-Color=242,244,247
+Color=240,244,250

@@ -1,17 +1,18 @@
-import { alpha, publicVariants, localVariants } from "../palette.mjs";
+import { alpha, dark, publicVariants, localVariants } from "../palette.mjs";
 
 // Zed: font_weight là số 100–900 hoặc null (= giữ mặc định). Theme không dùng in đậm — chỉ phân biệt bằng màu và đứng/nghiêng.
 const st = (color, font_style = "normal", font_weight = null) => ({ color, font_style, font_weight });
 const italic = (color) => st(color, "italic");
 
-// Sinh style Zed cho một biến thể
+// Sinh style Zed cho một biến thể. Ember Tide (Dark) giữ đúng giá trị bản 1.0.0; các khoá tuỳ chọn
+// (overlay, diff…) chỉ dành cho biến thể cục bộ — bản Dark không khai báo nên kết quả không đổi.
 export function zedStyleFor(P) {
 const { ui, syntax: s, accents, ansi } = P;
+const overlay = ui.overlay ?? "#ffffff";
 const syntaxStyles = {
   // Comment
   comment: italic(s.comment),
   "comment.doc": italic(s.commentDoc),
-  "comment.documentation": italic(s.commentDoc), // Haskell; semantic comment+documentation
   hint: italic(s.comment),
   predictive: italic(s.ghost),
 
@@ -26,31 +27,20 @@ const syntaxStyles = {
   exception: st(s.keyword),
   storageclass: st(s.keyword),
   define: st(s.keyword),
-  "keyword.modifier": st(s.keyword), // semantic `modifier` (clangd override/final, Java) — exact-name lookup
-  modifier: st(s.keyword), // Elixir
 
   // Hàm
   function: st(s.func),
   "function.method": st(s.func),
   "function.builtin": st(s.func),
-  "function.special": st(s.attribute), // Rust println!, C #define F() — as macro in VS Code
-  "function.kwargs": italic(s.parameter), // Python f(x=1) — variable.parameter.function-call
   method: st(s.func),
   constructor: st(s.type),
   macro: st(s.attribute),
-  // Style mà bộ rule semantic mặc định của Zed tìm tới (thiếu thì Zed rơi về style dự phòng)
-  "function.macro": st(s.attribute),
-  "function.decorator": st(s.attribute),
-  "type.definition": st(s.type),
-  "type.parameter": italic(s.type), // generic T — nghiêng như VS Code
-  "type.parameter.definition": italic(s.type),
 
   // Kiểu dữ liệu
   type: st(s.type),
   "type.class": st(s.type),
   "type.interface": st(s.type),
   "type.builtin": st(s.typeBuiltin),
-  "type.class.builtin": st(s.typeBuiltin), // Python int, str — support.type.python
   "type.primitive": st(s.typeBuiltin),
   enum: st(s.type),
   concept: st(s.type),
@@ -84,9 +74,6 @@ const syntaxStyles = {
   "string.escape": st(s.escape),
   escape: st(s.escape),
   "string.regex": st(s.regex),
-  "string.regexp": st(s.regex), // Swift; semantic `regexp` (exact-name lookup)
-  "string.doc": st(s.string), // semantic string+documentation (docstrings)
-  "number.quantifier": st(s.regex), // regex quantifiers
   "string.special": st(s.property),
   "string.special.symbol": st(s.property),
   symbol: st(s.property),
@@ -107,7 +94,6 @@ const syntaxStyles = {
   // Tag / HTML / CSS
   tag: st(s.tag),
   "tag.attribute": italic(s.attribute),
-  "tag.component": st(s.type), // JSX/TSX, Astro, Svelte, Vue components — support.class.component
   "tag.delimiter": st(s.punctuation),
   "tag.doctype": st(s.keyword),
   attribute: st(s.attribute),
@@ -125,7 +111,6 @@ const syntaxStyles = {
   "markup.bold": st(s.number),
   "markup.italic": italic(s.keyword),
   "markup.strikethrough": st(s.comment),
-  strikethrough: st(s.comment), // markdown-inline ~~text~~
   "markup.link": st(s.keyword),
   "markup.link.url": st(s.property),
   "markup.raw": st(s.string),
@@ -151,8 +136,6 @@ const status = (name, color, bg) => ({
   [`${name}.background`]: bg,
   [`${name}.border`]: alpha(color, "55"),
 });
-
-const vim = (mode, color) => ({ [`vim.${mode}.background`]: color, [`vim.${mode}.foreground`]: ui.onBadge ?? ui.bgDeep });
 
 const style = {
   background: ui.bg,
@@ -245,8 +228,8 @@ const style = {
   "pane.focused_border": ui.focus,
   "pane_group.border": ui.border,
 
-  "scrollbar.thumb.background": alpha(ui.overlay, "22"),
-  "scrollbar.thumb.hover_background": alpha(ui.overlay, "44"),
+  "scrollbar.thumb.background": alpha(overlay, "22"),
+  "scrollbar.thumb.hover_background": alpha(overlay, "44"),
   "scrollbar.thumb.border": "#00000000",
   "scrollbar.track.background": "#00000000",
   "scrollbar.track.border": "#00000000",
@@ -264,8 +247,8 @@ const style = {
   "editor.active_wrap_guide": ui.invisible,
   "editor.indent_guide": ui.indent,
   "editor.indent_guide_active": ui.indentActive,
-  "editor.document_highlight.read_background": alpha(ui.overlay, "14"), // = word highlight VS Code (xám trung tính)
-  "editor.document_highlight.write_background": alpha(ui.overlay, "1F"),
+  "editor.document_highlight.read_background": alpha(ui.focus, "33"), // = word highlight VS Code
+  "editor.document_highlight.write_background": alpha(ui.focus, "40"),
   "editor.document_highlight.bracket_background": alpha(ui.accent, "2E"), // Zed không có viền ngoặc → nền xanh mờ
   "search.match_background": alpha(ui.yellow, "33"), // = find match VS Code (hổ phách)
   "search.active_match_background": ui.findMatch, // kết quả đang chọn: nâu ember, như VS Code
@@ -277,23 +260,11 @@ const style = {
   "panel.overlay_background": ui.bgFloat,
   "panel.overlay_hover": ui.bgHover,
   "debugger.accent": ui.red, // breakpoint
-  "scrollbar.thumb.active_background": alpha(ui.overlay, "55"),
+  "scrollbar.thumb.active_background": alpha(overlay, "55"),
   "minimap.thumb.background": alpha(ui.accent, "1F"), // = minimapSlider VS Code
   "minimap.thumb.hover_background": alpha(ui.accent, "2E"),
   "minimap.thumb.active_background": alpha(ui.accent, "40"),
   "minimap.thumb.border": "#00000000",
-
-  // Vim / Helix mode indicator in the status bar
-  ...vim("normal", ui.accent),
-  ...vim("insert", ui.green),
-  ...vim("replace", ui.red),
-  ...vim("visual", s.keyword),
-  ...vim("visual_line", s.keyword),
-  ...vim("visual_block", s.keyword),
-  ...vim("helix_normal", ui.accent),
-  ...vim("helix_select", s.keyword),
-  "vim.yank.background": alpha(ui.yellow, "33"), // = search match (amber)
-  "vim.helix_jump_label.foreground": ui.coral,
 
   "terminal.background": ui.bg,
   "terminal.ansi.background": ui.bg,
@@ -331,14 +302,22 @@ export const zedLocalTheme = {
   themes: localVariants.map((P) => ({ name: P.name, appearance: P.type, style: zedStyleFor(P) })),
 };
 
+const s = dark.syntax; // rule semantic token (extras/) như bản 1.0.0: mã màu của Ember Tide (Dark)
+
 // Rule semantic token cho settings.json của Zed — giữ đồng bộ với theme
-// Rule semantic cho settings.json của Zed — trỏ tới style của theme (không ghi mã màu) nên đúng với mọi biến thể.
-// Các token khác (parameter, decorator, namespace…) Zed đã tự ánh xạ sang style theme qua bộ rule mặc định.
 export const zedSemanticRules = [
-  // `private readonly prisma` (parameter property) = thuộc tính của class → tô như property, khớp this.prisma
-  { token_type: "parameter", token_modifiers: ["readonly"], style: ["property"] },
-  // rust-analyzer: i32/str/bool → lavender like VS Code (Zed default maps builtinType to plain `type`)
-  { token_type: "builtinType", style: ["type.builtin"] },
-  // rust-analyzer: {} {:?} in format! → escape color like VS Code (Zed default: string.special)
-  { token_type: "formatSpecifier", style: ["string.escape"] },
+  { token_type: "decorator", foreground_color: s.attribute },
+  { token_type: "function", token_modifiers: ["decorator"], foreground_color: s.attribute },
+  { token_type: "method", token_modifiers: ["decorator"], foreground_color: s.attribute },
+  { token_type: "namespace", foreground_color: s.namespace },
+  // parameter property (`private readonly prisma`) = thuộc tính của class → cùng màu với this.prisma
+  { token_type: "parameter", token_modifiers: ["readonly"], foreground_color: s.property, font_style: "normal" },
+  { token_type: "parameter", foreground_color: s.parameter, font_style: "italic" },
+  { token_type: "typeParameter", foreground_color: s.type, font_style: "italic" }, // = VS Code: generic T nghiêng
+  { token_type: "variable", token_modifiers: ["defaultLibrary"], foreground_color: s.special },
+  { token_type: "variable", foreground_color: s.variable },
+  { token_type: "property", foreground_color: s.property },
+  { token_type: "field", foreground_color: s.property },
+  { token_type: "function", foreground_color: s.func },
+  { token_type: "method", foreground_color: s.func },
 ];

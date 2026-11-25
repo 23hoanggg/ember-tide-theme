@@ -9,6 +9,10 @@
 - **Balanced brightness.** Code colors now sit in one even brightness band (measured with APCA), so nothing glares
   at high screen brightness and nothing sinks when the screen is dimmed: strings, types and decorators are a little
   softer, parameters and HTML tags a little clearer, plain text slightly less bright, comments slightly clearer.
+- **Markdown preview follows the theme.** Code blocks in VS Code's Markdown preview now use the theme's syntax colors
+  (VS Code otherwise colors them with its own fixed palette). Only applies while an Ember Tide theme is active.
+- **Quieter git blame.** The inline blame text at the end of the line ("you, 2 hours ago") is a dim gray in VS Code and
+  Zed instead of the bright accent blue that stood out from the code.
 - **Clearer modules.** Namespaces and imported modules (`fs.`, `React.`, `std::`) use a lighter olive instead of the
   dim olive-gold that looked like an unused variable.
 

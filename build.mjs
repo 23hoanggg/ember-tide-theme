@@ -8,6 +8,7 @@ import { publicVariants, localVariants } from "./palette.mjs";
 import { zedTheme, zedLocalTheme, zedSemanticRules } from "./src/zed.mjs";
 import { vscodeThemes } from "./src/vscode.mjs";
 import { terminalFiles } from "./src/terminals.mjs";
+import { markdownPreviewCss } from "./src/markdown.mjs";
 
 const write = (path, data) => {
   mkdirSync(dirname(path), { recursive: true });
@@ -18,6 +19,7 @@ const themeFile = (P) => `themes/ember-tide${P.id === "dark" ? "" : "-" + P.id}-
 
 // ---------- CÔNG KHAI ----------
 for (const { P, theme } of vscodeThemes.filter(({ P }) => isPublic(P))) write(themeFile(P), theme);
+write("themes/markdown-preview.css", markdownPreviewCss(publicVariants)); // màu code trong Markdown preview
 write("zed/themes/ember-tide.json", zedTheme); // thư mục extension Zed (kho Zed build từ đây)
 // Rule semantic token cho settings.json của Zed — để NGOÀI zed/ (Zed extension chỉ được chứa file Zed dùng)
 write("extras/zed-semantic-token-rules.json", zedSemanticRules);

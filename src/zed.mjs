@@ -174,7 +174,8 @@ const style = {
   "ghost_element.active": ui.bgActive,
   "ghost_element.disabled": ui.bgFloat,
 
-  ...status("hint", ui.accent, ui.bgInfo),
+  // hint = chữ git blame cuối dòng và gợi ý mờ → xám trầm, không tranh chú ý với code (trước: xanh nhấn, bật lên khỏi code)
+  ...status("hint", ui.fgDim, ui.bgInfo),
   ...status("info", ui.accent, ui.bgInfo),
   ...status("warning", ui.yellow, ui.bgYellow),
   ...status("error", ui.red, ui.bgRed),

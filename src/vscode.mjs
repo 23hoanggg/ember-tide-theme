@@ -33,6 +33,7 @@ const colors = {
   "selection.background": alpha(ui.accent, "40"),
   "icon.foreground": ui.fgSoft,
   "sash.hoverBorder": ui.accent,
+  "git.blame.editorDecorationForeground": ui.fgDim, // git blame cuối dòng (VS Code ≥ 1.96): xám trầm như Zed
   "textLink.foreground": ui.accent,
   "textLink.activeForeground": ui.focus,
   "textPreformat.foreground": s.string,

@@ -20,9 +20,9 @@ const keysOf = (o) => Object.keys(o).sort();
 // 2026-11-25: chủ dự án chọn quay về đúng màu bản 1.0.0 (Marketplace, build từ commit 546aec5) — bỏ thay đổi màu của 1.1.0/1.2.0.
 // 1.4.0 = bảng màu 1.0.0 cân độ sáng APCA (2026-11-25) + sửa scope sau QA 1.0.0. Chỉ cập nhật khi CỐ Ý đổi màu.
 // Băm trên JSON đã chuẩn hoá chữ hoa hex, để đổi hoa/thường không làm test đỏ.
-const DARK_VSCODE_SHA256 = "26d86b3cbdc2a9be63e154afe0b664351356555093f7c2355c892bc5d26523f7";
+const DARK_VSCODE_SHA256 = "616b735af68f122897c9007616a4cb3d5d54e7567182f8ea9e04a30b83a127a7";
 // sha256 của khối "colors" (màu giao diện) bản Dark
-const DARK_VSCODE_COLORS_SHA256 = "abbaf9a1dfa88eb3d923c066f55500ff219f55faded06d713b708917482b475c";
+const DARK_VSCODE_COLORS_SHA256 = "873af8270b1c84adabd424a015560e13f4cb052c15897a94f0d68cfc8f55f4e2";
 const norm = (o) => JSON.stringify(o).replace(/#[0-9a-fA-F]{6,8}/g, (m) => m.toUpperCase());
 const sha = (s) => createHash("sha256").update(s).digest("hex");
 
@@ -222,7 +222,7 @@ test("Phiên bản khớp giữa package.json và zed/extension.toml", () => {
 });
 
 // Mã băm theme Zed Dark — đúng bản 1.0.0 (2026-11-25: quay về màu 1.0.0 theo chủ dự án)
-const DARK_ZED_SHA256 = "1765ce1a8a9ba41bcd50f5ec9f87e5b7185b2e8538712648ea3da1b2b00098cc";
+const DARK_ZED_SHA256 = "772587c829c8abc2614fee46f9ea536a65ad9dc58eee67a90fdaad58399633d7";
 test("Zed: bản Dark giữ nguyên màu đã ghim", () => {
   assert.equal(sha(norm(zedTheme.themes[0])), DARK_ZED_SHA256, "theme Zed Dark đã thay đổi — nếu cố ý, cập nhật DARK_ZED_SHA256");
 });
@@ -244,7 +244,7 @@ test("VSIX: .vscodeignore chỉ để lọt đúng các file cần thiết", asy
   walk("");
   const included = files.filter((f) => !f.startsWith(".")).sort();
   const expected = ["CHANGELOG.md", "LICENSE", "README.md", "images/icon.png", "package.json", ...readdirSync("themes").map((f) => "themes/" + f)].sort();
-  assert.equal(readdirSync("themes").length, 8);
+  assert.equal(readdirSync("themes").filter((f) => f.endsWith(".json")).length, 8);
   assert.deepEqual(included, expected);
 });
 
@@ -266,4 +266,22 @@ test("noItalic: biến thể không in nghiêng không còn chữ nghiêng ở V
   assert.deepEqual(t.tokenColors.map((r) => r.settings.foreground), base.tokenColors.map((r) => r.settings.foreground));
   assert.ok(base.tokenColors.some((r) => /italic/.test(r.settings.fontStyle ?? "")), "bản thường vẫn có nghiêng");
   assert.ok(Object.values(zedStyleFor(P).syntax).every((v) => v.font_style !== "italic"));
+});
+
+test("Markdown preview: CSS tô code theo đúng từng theme phát hành, không in đậm, đã khai báo trong package.json", () => {
+  const css = readFileSync("themes/markdown-preview.css", "utf8");
+  const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+  assert.deepEqual(pkg.contributes["markdown.previewStyles"], ["./themes/markdown-preview.css"]);
+  for (const P of publicVariants) {
+    assert.ok(css.includes(`body[data-vscode-theme-id="${P.name}"] .hljs-keyword`), `thiếu ${P.name}`);
+    const block = css.split(`/* ${P.name} */`)[1].split("\n/* ")[0];
+    assert.ok(block.includes(`color: ${P.syntax.keyword};`) && block.includes(`color: ${P.syntax.string};`));
+    if (P.noItalic) assert.ok(!block.includes("font-style: italic"), `${P.name} còn chữ nghiêng`);
+  }
+  assert.ok(!/font-weight:\s*(bold|[6-9]00)/.test(css), "không được in đậm");
+});
+
+test("git blame cuối dòng dùng màu xám trầm (VS Code + Zed), không dùng màu nhấn", () => {
+  for (const { P, theme } of vscodeThemes) assert.equal(theme.colors["git.blame.editorDecorationForeground"], P.ui.fgDim);
+  for (const t of zedTheme.themes) assert.notEqual(t.style.hint, variants.find((v) => v.name === t.name).ui.accent);
 });

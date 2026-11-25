@@ -15,6 +15,7 @@
     "selection.background": "#5ED0FF40",
     "icon.foreground": "#C6CDE3",
     "sash.hoverBorder": "#5ED0FF",
+    "git.blame.editorDecorationForeground": "#61698F",
     "textLink.foreground": "#5ED0FF",
     "textLink.activeForeground": "#38DEDA",
     "textPreformat.foreground": "#80D857",

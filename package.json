@@ -86,6 +86,9 @@
         "uiTheme": "vs-dark",
         "path": "./themes/ember-tide-neon-noitalic-color-theme.json"
       }
+    ],
+    "markdown.previewStyles": [
+      "./themes/markdown-preview.css"
     ]
   },
   "scripts": {

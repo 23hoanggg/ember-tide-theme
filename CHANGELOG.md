@@ -3,9 +3,24 @@
 ## 1.3.0
 
 - **Back to the original 1.0.0 colors.** 1.2.0 changed many colors at once and did not feel as stable in use, so
-  1.3.0 restores exactly what 1.0.0 shipped: the VS Code theme, the Zed theme, the optional Zed semantic token rules
-  in `extras/` and the terminal palettes. If you liked 1.0.0, nothing changes for you; if you were on 1.2.0, the
-  night-blue background and the original variable/property tones are back.
+  1.3.0 brings back the 1.0.0 palette: the same UI colors and syntax colors in VS Code, and the same Zed theme, Zed
+  semantic token rules in `extras/` and terminal palettes as 1.0.0. If you were on 1.2.0, the night-blue background and
+  the original variable/property tones are back.
+- **Syntax fixes in VS Code** on top of the 1.0.0 palette (no new colors, only which tokens get which color):
+  - Markdown: list items are plain text again (only the `-` / `1.` marker is orange); `## [1.2.0] - date`
+    headings are one color.
+  - JSON / JSONC: every key uses the property color, at any nesting depth.
+  - TypeScript / JavaScript: `const` names use the variable color, matching what the TS server shows, so the file no
+    longer changes color after a few seconds; `console` / `window` stay the same color too.
+  - C / C++: `#define` bodies are no longer purple; macro names use the attribute color. `std::uint8_t` and `size_t`
+    are builtin types.
+  - Go: `type` is a keyword; `error`, `byte` and `rune` are builtin types.
+  - Python (Pylance): `int`, `str` and `@property` keep their colors when Pylance loads; f-string braces match other
+    languages' interpolation.
+  - Commit messages: long subject lines are tinted yellow/red instead of struck through.
+  - Smaller fixes: C# locals and events, Java `String[]` and `?:`, Swift / C++ / PHP / PowerShell attributes,
+    Lua / Swift / JS fields, doc tags (`@param`) in Java, C, Lua, R and SCSS, Prisma brackets, `.env` keys, regex
+    anchors, BigInt `n`, CSS `from` / `to` keyframes, R `$`, HTML `<!DOCTYPE>`.
 
 ## 1.2.0
 

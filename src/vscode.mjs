@@ -911,6 +911,15 @@ const semanticTokenColors = {
   "*.deprecated": { strikethrough: true },
 };
 
+// Biến thể không in nghiêng (P.noItalic): bỏ "italic" khỏi mọi rule, giữ gạch chân/gạch ngang
+if (P.noItalic) {
+  for (const r of tokenColors) {
+    const fs = r.settings.fontStyle;
+    if (fs !== undefined) r.settings.fontStyle = fs.split(" ").filter((w) => w && w !== "italic").join(" ");
+  }
+  for (const [k, v] of Object.entries(semanticTokenColors)) if (v && typeof v === "object" && v.italic) semanticTokenColors[k] = { ...v, italic: false };
+}
+
 return {
   $schema: "vscode://schemas/color-theme",
   name: P.name,

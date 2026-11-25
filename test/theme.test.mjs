@@ -8,8 +8,8 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
 import { variants, dark, publicVariants, localVariants } from "../palette.mjs";
-import { vscodeThemes } from "../src/vscode.mjs";
-import { zedTheme, zedLocalTheme, zedSemanticRules } from "../src/zed.mjs";
+import { vscodeThemes, vscodeThemeFor } from "../src/vscode.mjs";
+import { zedTheme, zedLocalTheme, zedSemanticRules, zedStyleFor } from "../src/zed.mjs";
 import { terminalFiles, terminalFilesFor } from "../src/terminals.mjs";
 import { report, CVD_ADVISORY } from "../scripts/palette-report.mjs";
 
@@ -243,4 +243,14 @@ test("README: bảng màu khớp bản phát hành và không nhắc biến th�
     const row = readme.split("\n").find((l) => l.startsWith("| ") && publicVariants.every((P) => l.includes("`" + P.syntax[k] + "`")));
     assert.ok(row, `README thiếu dòng bảng màu cho ${k}`);
   }
+});
+
+test("noItalic: biến thể không in nghiêng không còn chữ nghiêng ở VS Code và Zed, màu giữ nguyên", () => {
+  const P = { ...dark, noItalic: true };
+  const t = vscodeThemeFor(P), base = vscodeThemeFor(dark);
+  assert.ok(t.tokenColors.every((r) => !/italic/.test(r.settings.fontStyle ?? "")));
+  assert.ok(Object.values(t.semanticTokenColors).every((v) => typeof v !== "object" || !v.italic));
+  assert.deepEqual(t.tokenColors.map((r) => r.settings.foreground), base.tokenColors.map((r) => r.settings.foreground));
+  assert.ok(base.tokenColors.some((r) => /italic/.test(r.settings.fontStyle ?? "")), "bản thường vẫn có nghiêng");
+  assert.ok(Object.values(zedStyleFor(P).syntax).every((v) => v.font_style !== "italic"));
 });

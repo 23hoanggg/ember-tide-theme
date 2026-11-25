@@ -284,6 +284,8 @@ const style = {
   syntax: Object.fromEntries(Object.entries(syntaxStyles).sort(([a], [b]) => a.localeCompare(b))),
 };
 
+// Biến thể không in nghiêng (P.noItalic): mọi font_style "italic" → "normal"
+if (P.noItalic) for (const v of Object.values(style.syntax)) if (v.font_style === "italic") v.font_style = "normal";
 return style;
 }
 

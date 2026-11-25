@@ -166,11 +166,13 @@ const colors = {
   "editor.inactiveSelectionBackground": alpha(ui.selectionInactive, "CC"),
   "editor.selectionHighlightBackground": T, // các chỗ trùng chữ: chỉ viền, không tô — không lẫn với vùng chọn
   "editor.selectionHighlightBorder": alpha(ui.accent, "66"),
-  "editor.wordHighlightBackground": alpha(ui.focus, "33"), // chỗ khác dùng cùng biến: ngọc mờ
+  // Các lớp tô tạm (cùng biến, hover, linked editing): xám trung tính, cùng tông nền — không tạo mảng màu lạ trong code.
+  // Màu riêng (ngọc) chỉ còn trên thanh cuộn/minimap. Chỉ vùng bôi đen là xanh.
+  "editor.wordHighlightBackground": alpha(ui.overlay, "14"), // chỗ khác dùng cùng biến
   "editor.wordHighlightBorder": T,
-  "editor.wordHighlightStrongBackground": alpha(ui.focus, "45"), // chỗ ghi vào biến: ngọc đậm hơn một chút, không viền
+  "editor.wordHighlightStrongBackground": alpha(ui.overlay, "1F"), // chỗ ghi vào biến: đậm hơn một chút, không viền
   "editor.wordHighlightStrongBorder": T,
-  "editor.wordHighlightTextBackground": alpha(ui.focus, "1F"),
+  "editor.wordHighlightTextBackground": alpha(ui.overlay, "0F"),
   "editor.wordHighlightTextBorder": T,
   "editor.findMatchBackground": ui.findMatch,
   "editor.findMatchBorder": ui.ember,
@@ -178,8 +180,8 @@ const colors = {
   "editor.findMatchHighlightBorder": alpha(ui.yellow, "40"),
   "editor.findRangeHighlightBackground": alpha(ui.accent, "0D"), // cùng tông xanh với nền, không tạo khối màu lạ
   "editor.rangeHighlightBackground": alpha(ui.accent, "12"),
-  "editor.hoverHighlightBackground": alpha(s.typeBuiltin, "29"), // lavender: khác sắc với bôi đen (xanh) và cùng biến (ngọc)
-  "editor.linkedEditingBackground": alpha(ui.focus, "1F"),
+  "editor.hoverHighlightBackground": alpha(ui.overlay, "0F"), // xám rất nhạt: chỉ báo vùng đang hover, không đổi sắc nền
+  "editor.linkedEditingBackground": alpha(ui.overlay, "14"),
   "editor.foldBackground": alpha(ui.bgActive, "33"),
   "editor.foldPlaceholderForeground": ui.fgMuted,
   "editorLink.activeForeground": ui.accent,

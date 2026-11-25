@@ -18,7 +18,8 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 - **Consistent across 35+ languages** — TypeScript/TSX, JavaScript, Python, Go, Rust, C/C++, C#, Java, PHP, Ruby, Lua, Swift, Dart,
   R, Shell, PowerShell, SQL, HTML, CSS/SCSS, Markdown, JSON, YAML, TOML, INI, `.env`, Dockerfile, Makefile, Prisma, Protobuf and more.
 - **Semantic highlighting** matched to the TextMate colors, so nothing jumps when the language server loads.
-- **Calm UI, clear states** — an ember line marks the active tab; selection, search matches, symbol occurrences and hover each get their own hue.
+- **Calm UI, clear states** — an ember line marks the active tab; only the selection is blue and search matches amber —
+  symbol occurrences and hover use a soft neutral tint, so the editor background never breaks into colored patches.
 - **Tested** — `npm test` runs 160+ contrast, separation and color-blindness checks (palette plus the built theme, with translucent colors
   blended onto their real backgrounds), checks the generated files, and pins the published colors.
 

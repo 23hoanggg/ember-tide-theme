@@ -264,8 +264,8 @@ const style = {
   "editor.active_wrap_guide": ui.invisible,
   "editor.indent_guide": ui.indent,
   "editor.indent_guide_active": ui.indentActive,
-  "editor.document_highlight.read_background": alpha(ui.focus, "33"), // = word highlight VS Code
-  "editor.document_highlight.write_background": alpha(ui.focus, "40"),
+  "editor.document_highlight.read_background": alpha(ui.overlay, "14"), // = word highlight VS Code (xám trung tính)
+  "editor.document_highlight.write_background": alpha(ui.overlay, "1F"),
   "editor.document_highlight.bracket_background": alpha(ui.accent, "2E"), // Zed không có viền ngoặc → nền xanh mờ
   "search.match_background": alpha(ui.yellow, "33"), // = find match VS Code (hổ phách)
   "search.active_match_background": ui.findMatch, // kết quả đang chọn: nâu ember, như VS Code

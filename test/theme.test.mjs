@@ -21,7 +21,7 @@ const keysOf = (o) => Object.keys(o).sort();
 // 1.2.0: semantic tokens per language server match TextMate; set VS Code keys that defaulted to hard-coded Dark+ colors.
 // 1.2.0: cross-language tokenColors fixes, semantic/UI keys (see CHANGELOG); func kept #70C7FF.
 // Băm trên JSON đã chuẩn hoá chữ hoa hex, để đổi hoa/thường không làm test đỏ.
-const DARK_VSCODE_SHA256 = "9bc374c70cf9d9206faa9156d37b5436a456ce4d9f50f258c3dffa35b3ee76dc";
+const DARK_VSCODE_SHA256 = "f6a504eb5ae190df2811627fcad08f08f3fcc55c6f9de67d3740582db0d6842d";
 const norm = (o) => JSON.stringify(o).replace(/#[0-9a-fA-F]{6,8}/g, (m) => m.toUpperCase());
 const sha = (s) => createHash("sha256").update(s).digest("hex");
 
@@ -267,7 +267,7 @@ test("Phiên bản khớp giữa package.json và zed/extension.toml", () => {
 
 // Mã băm theme Zed Dark (1.1.0: thêm style function.decorator/function.macro/type.definition/type.parameter cho rule semantic mặc định của Zed)
 // 1.2.0: string.regexp/string.doc/keyword.modifier, capture fallbacks (function.special, tag.component…), vim.* keys.
-const DARK_ZED_SHA256 = "a31bb2695a86f4f593e713628371e9b3cca966a82f01d47d6651f6acba8624ee";
+const DARK_ZED_SHA256 = "60a921bed63c2fcfba3e58a360b83eaaf8d8d6992361cda06f93c8943b78ee79";
 test("Zed: bản Dark giữ nguyên màu đã ghim (v1.2.0)", () => {
   assert.equal(sha(norm(zedTheme.themes[0])), DARK_ZED_SHA256, "theme Zed Dark đã thay đổi — nếu cố ý, cập nhật DARK_ZED_SHA256");
 });

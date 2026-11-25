@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Editor: symbol occurrences, hover and linked editing use a soft neutral tint instead of teal/lavender, so the
+  background no longer breaks into colored patches while you select or hover (VS Code and Zed).
+
 ## 1.2.0
 
 - **Colorblind checks.** `npm test` now simulates color-vision deficiency (deuteranopia/protanopia/tritanopia) and

@@ -1,0 +1,32 @@
+# Ember Tide Neon — sinh tự động từ palette.mjs, đừng sửa tay
+[colors.primary]
+background = "#0C0F23"
+foreground = "#D8DCEC"
+
+[colors.cursor]
+cursor = "#5ED0FF"
+text = "#0C0F23"
+
+[colors.selection]
+background = "#1C3872"
+text = "#F2F5FE"
+
+[colors.normal]
+black = "#424B6B"
+red = "#FE6C8F"
+green = "#92E466"
+yellow = "#FBC044"
+blue = "#3BA6F5"
+magenta = "#D780FC"
+cyan = "#2AD7D7"
+white = "#CAD0E5"
+
+[colors.bright]
+black = "#757F9F"
+red = "#FE98AB"
+green = "#ACF688"
+yellow = "#FFDD96"
+blue = "#72C8FE"
+magenta = "#E4A9FF"
+cyan = "#74EEEE"
+white = "#F2F5FE"

@@ -21,7 +21,8 @@ for (const { P, theme } of vscodeThemes.filter(({ P }) => isPublic(P))) write(th
 write("zed/themes/ember-tide.json", zedTheme); // thư mục extension Zed (kho Zed build từ đây)
 // Rule semantic token cho settings.json của Zed — để NGOÀI zed/ (Zed extension chỉ được chứa file Zed dùng)
 write("extras/zed-semantic-token-rules.json", zedSemanticRules);
-for (const [file, content] of terminalFiles(publicVariants)) write("terminals/" + file, content);
+// Terminal không có chữ nghiêng → bỏ các bản No Italic (trùng màu)
+for (const [file, content] of terminalFiles(publicVariants.filter((v) => !v.noItalic))) write("terminals/" + file, content);
 console.log(`✔ công khai: ${publicVariants.map((v) => v.name).join(", ")} → themes/, zed/, extras/, terminals/`);
 
 // ---------- CỤC BỘ (dist/local, không vào git) ----------
@@ -51,6 +52,6 @@ if (localVariants.length) {
   mkdirSync(`${L}/vscode/images`, { recursive: true });
   copyFileSync("images/icon.png", `${L}/vscode/images/icon.png`);
   write(`${L}/zed/ember-tide-local.json`, zedLocalTheme);
-  for (const [file, content] of terminalFiles(localVariants)) write(`${L}/terminals/${file}`, content);
+  for (const [file, content] of terminalFiles(localVariants.filter((v) => !v.noItalic))) write(`${L}/terminals/${file}`, content);
   console.log(`✔ cục bộ:   ${localVariants.map((v) => v.name).join(", ")} → ${L}/ (vscode, zed, terminals)`);
 }

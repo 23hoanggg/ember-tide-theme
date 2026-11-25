@@ -1,0 +1,14 @@
+# Ember Tide Graphite — sinh tự động từ palette.mjs, đừng sửa tay
+[colors]
+background = "#1C1B22"
+foreground = "#D6D6D9"
+cursor_bg = "#70C7FF"
+cursor_fg = "#1C1B22"
+cursor_border = "#70C7FF"
+selection_bg = "#354254"
+selection_fg = "#EAE9EE"
+ansi = ["#515058", "#F786A1", "#ADD585", "#E4BA7B", "#68AEE3", "#D4A4F0", "#83CDC7", "#CFCED4"]
+brights = ["#807F88", "#F6A3B6", "#C4E4A7", "#FAD7A5", "#7EC6F5", "#E0BBF8", "#ACE0DB", "#EAE9EE"]
+
+[metadata]
+name = "Ember Tide Graphite"

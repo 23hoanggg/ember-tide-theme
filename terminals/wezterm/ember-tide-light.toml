@@ -1,0 +1,14 @@
+# Ember Tide Light — sinh tự động từ palette.mjs, đừng sửa tay
+[colors]
+background = "#FAF7F1"
+foreground = "#373E4C"
+cursor_bg = "#0068A2"
+cursor_fg = "#FAF7F1"
+cursor_border = "#0068A2"
+selection_bg = "#D6E6F7"
+selection_fg = "#141922"
+ansi = ["#2A313E", "#BF2F4E", "#3E7A1C", "#966200", "#1D63B5", "#8B43AA", "#0F7C77", "#9C968C"]
+brights = ["#6D7685", "#D4405C", "#4D8C2A", "#A97500", "#2E78CC", "#A057BF", "#20918B", "#B5AFA6"]
+
+[metadata]
+name = "Ember Tide Light"

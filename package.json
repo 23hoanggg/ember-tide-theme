@@ -1,7 +1,7 @@
 {
   "name": "ember-tide-theme",
   "displayName": "Ember Tide",
-  "description": "A warm–cool dark theme: night-blue background, ember coral and amber, tide blue and teal. Also available for Zed and terminals.",
+  "description": "Warm–cool color themes: Ember Tide (night blue), Light (warm paper), Graphite (neutral gray) and Neon, each with a No Italic version. Also for Zed and terminals.",
   "version": "1.4.0",
   "publisher": "whythohh",
   "author": {
@@ -33,7 +33,11 @@
     "zed",
     "night",
     "terminal",
-    "dark theme"
+    "dark theme",
+    "light theme",
+    "no italic",
+    "graphite",
+    "neon"
   ],
   "galleryBanner": {
     "color": "#111721",
@@ -46,6 +50,41 @@
         "label": "Ember Tide",
         "uiTheme": "vs-dark",
         "path": "./themes/ember-tide-color-theme.json"
+      },
+      {
+        "label": "Ember Tide No Italic",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ember-tide-noitalic-color-theme.json"
+      },
+      {
+        "label": "Ember Tide Light",
+        "uiTheme": "vs",
+        "path": "./themes/ember-tide-light-color-theme.json"
+      },
+      {
+        "label": "Ember Tide Light No Italic",
+        "uiTheme": "vs",
+        "path": "./themes/ember-tide-light-noitalic-color-theme.json"
+      },
+      {
+        "label": "Ember Tide Graphite",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ember-tide-graphite-color-theme.json"
+      },
+      {
+        "label": "Ember Tide Graphite No Italic",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ember-tide-graphite-noitalic-color-theme.json"
+      },
+      {
+        "label": "Ember Tide Neon",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ember-tide-neon-color-theme.json"
+      },
+      {
+        "label": "Ember Tide Neon No Italic",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ember-tide-neon-noitalic-color-theme.json"
       }
     ]
   },

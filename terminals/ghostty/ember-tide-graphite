@@ -1,0 +1,23 @@
+# Ember Tide Graphite — sinh tự động từ palette.mjs, đừng sửa tay
+background = #1C1B22
+foreground = #D6D6D9
+cursor-color = #70C7FF
+cursor-text = #1C1B22
+selection-background = #354254
+selection-foreground = #EAE9EE
+palette = 0=#515058
+palette = 1=#F786A1
+palette = 2=#ADD585
+palette = 3=#E4BA7B
+palette = 4=#68AEE3
+palette = 5=#D4A4F0
+palette = 6=#83CDC7
+palette = 7=#CFCED4
+palette = 8=#807F88
+palette = 9=#F6A3B6
+palette = 10=#C4E4A7
+palette = 11=#FAD7A5
+palette = 12=#7EC6F5
+palette = 13=#E0BBF8
+palette = 14=#ACE0DB
+palette = 15=#EAE9EE

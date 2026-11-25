@@ -1,5 +1,5 @@
-// Ember Tide (Dark) — bảng màu phát hành: màu 1.0.0, cân độ sáng theo APCA (2026-11-25, private/tools/balance.mjs).
-// Biến thể cục bộ (nếu có) nằm trong private/palettes/. Sửa màu ở đây rồi chạy `npm run build`.
+// Ember Tide (Dark) — bảng màu chính: màu 1.0.0, cân độ sáng theo APCA (2026-11-25).
+// Các bản khác nằm cùng thư mục (light, graphite, neon, *-noitalic). Sửa màu ở đây rồi chạy `npm run build`.
 
 export const ui = {
   // Nền: từ tối nhất (khung) tới sáng nhất (phần tử đang active)

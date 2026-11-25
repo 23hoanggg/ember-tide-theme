@@ -36,8 +36,19 @@ test("biến thể: Dark đứng đầu, id/tên không trùng", () => {
   for (const P of variants) assert.ok(["dark", "light"].includes(P.type), `${P.id}: type`);
 });
 
-test("chỉ bản Dark được phát hành; biến thể cục bộ nằm trong private/ và dist/local (không vào git)", () => {
-  assert.deepEqual(publicVariants.map((v) => v.id), ["dark"]);
+const PUBLIC_IDS = ["dark", "noitalic", "light", "light-noitalic", "graphite", "graphite-noitalic", "neon", "neon-noitalic"];
+test("phát hành đúng 8 theme (4 bản + No Italic); biến thể thử nghiệm nằm trong private/ và dist/local (không vào git)", () => {
+  assert.deepEqual(publicVariants.map((v) => v.id), PUBLIC_IDS);
+  // mỗi bản No Italic có đúng một bản gốc cùng màu
+  for (const P of publicVariants.filter((v) => v.noItalic)) {
+    const base = publicVariants.find((v) => !v.noItalic && v.name === P.name.replace(" No Italic", ""));
+    assert.ok(base, `thiếu bản gốc của ${P.name}`);
+    assert.deepEqual([P.ui, P.syntax, P.ansi], [base.ui, base.syntax, base.ansi]);
+  }
+  // package.json khai báo đúng 8 theme, đúng file
+  const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+  assert.deepEqual(pkg.contributes.themes.map((t) => t.label), publicVariants.map((v) => v.name));
+  for (const t of pkg.contributes.themes) assert.ok(existsSync(t.path), `thiếu ${t.path}`);
   const gi = readFileSync(".gitignore", "utf8");
   assert.match(gi, /^dist\/$/m, "dist/ phải nằm trong .gitignore");
   assert.match(gi, /^private\/$/m, "private/ phải nằm trong .gitignore");
@@ -47,7 +58,7 @@ test("chỉ bản Dark được phát hành; biến thể cục bộ nằm trong
 test("không rò rỉ biến thể cục bộ vào file git theo dõi", (t) => {
   const tracked = execFileSync("git", ["ls-files", "-z"], { encoding: "utf8" }).split("\0").filter(Boolean);
   assert.deepEqual(tracked.filter((f) => f.startsWith("private/") || f.startsWith("dist/")), [], "file riêng tư bị git theo dõi");
-  assert.deepEqual(tracked.filter((f) => f.startsWith("palettes/")), ["palettes/dark.mjs"], "palettes/ chỉ được có bản phát hành");
+  assert.deepEqual(tracked.filter((f) => f.startsWith("palettes/")).sort(), PUBLIC_IDS.map((id) => `palettes/${id === "noitalic" ? "dark-noitalic" : id}.mjs`).sort(), "palettes/ chỉ được có bản phát hành");
   if (!HAS_LOCAL) return t.skip("không có biến thể cục bộ trên máy này");
   const needles = localVariants.flatMap((P) => [P.name, `ember-tide-${P.id}`]);
   const leaks = [];
@@ -180,8 +191,9 @@ test("Zed: rule semantic dùng đúng màu vai trò của bản Dark", () => {
   }
 });
 
-test("Terminal: công khai 9 file (Dark) trong terminals/, biến thể cục bộ trong dist/local", () => {
-  for (const [list, dir, n] of [[publicVariants, "terminals", 9], [localVariants, "dist/local/terminals", 9 * localVariants.length]]) {
+test("Terminal: 9 file cho mỗi bản phát hành (No Italic dùng chung màu) trong terminals/, biến thể thử nghiệm trong dist/local", () => {
+  const term = (l) => l.filter((v) => !v.noItalic);
+  for (const [list, dir, n] of [[term(publicVariants), "terminals", 9 * 4], [term(localVariants), "dist/local/terminals", 9 * term(localVariants).length]]) {
     const files = terminalFiles(list);
     assert.equal(files.length, n);
     assert.equal(new Set(files.map(([p]) => p)).size, n, "trùng tên file");
@@ -231,7 +243,8 @@ test("VSIX: .vscodeignore chỉ để lọt đúng các file cần thiết", asy
   };
   walk("");
   const included = files.filter((f) => !f.startsWith(".")).sort();
-  const expected = ["CHANGELOG.md", "LICENSE", "README.md", "images/icon.png", "package.json", "themes/ember-tide-color-theme.json"];
+  const expected = ["CHANGELOG.md", "LICENSE", "README.md", "images/icon.png", "package.json", ...readdirSync("themes").map((f) => "themes/" + f)].sort();
+  assert.equal(readdirSync("themes").length, 8);
   assert.deepEqual(included, expected);
 });
 

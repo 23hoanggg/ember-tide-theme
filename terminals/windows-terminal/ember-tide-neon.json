@@ -1,0 +1,23 @@
+{
+  "name": "Ember Tide Neon",
+  "background": "#0C0F23",
+  "foreground": "#D8DCEC",
+  "cursorColor": "#5ED0FF",
+  "selectionBackground": "#1C3872",
+  "black": "#424B6B",
+  "red": "#FE6C8F",
+  "green": "#92E466",
+  "yellow": "#FBC044",
+  "blue": "#3BA6F5",
+  "purple": "#D780FC",
+  "cyan": "#2AD7D7",
+  "white": "#CAD0E5",
+  "brightBlack": "#757F9F",
+  "brightRed": "#FE98AB",
+  "brightGreen": "#ACF688",
+  "brightYellow": "#FFDD96",
+  "brightBlue": "#72C8FE",
+  "brightPurple": "#E4A9FF",
+  "brightCyan": "#74EEEE",
+  "brightWhite": "#F2F5FE"
+}

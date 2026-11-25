@@ -1,6 +1,8 @@
 # Ember Tide for terminals
 
 Same background, text, cursor, selection and 16 ANSI colors as the integrated terminal in VS Code and Zed.
+Each terminal has one file per theme: Ember Tide (`ember-tide`), Light (`ember-tide-light`), Graphite (`ember-tide-graphite`)
+and Neon (`ember-tide-neon`); the No Italic themes use the same terminal colors. The table shows the Ember Tide file.
 Files in this folder are generated from [`palettes/`](../palettes) by `npm run build` — don't edit them by hand.
 
 | Terminal | OS | File | How to install |

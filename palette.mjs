@@ -1,11 +1,18 @@
 // Ember Tide — điểm gom các biến thể.
-//   palettes/dark.mjs        Ember Tide (phát hành)
-//   private/palettes/*.mjs   biến thể cục bộ (publish: false) — chỉ có trên máy chủ dự án, thư mục bị gitignore.
+//   palettes/*.mjs           8 theme phát hành (Ember Tide, Light, Graphite, Neon + bản No Italic của mỗi bản)
+//   private/palettes/*.mjs   biến thể thử nghiệm (publish: false) — chỉ có trên máy chủ dự án, thư mục bị gitignore.
 // Sửa màu trong các file bảng màu rồi chạy `npm run build`.
 import { existsSync, readdirSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { join } from "node:path";
 import dark from "./palettes/dark.mjs";
+import darkNoItalic from "./palettes/dark-noitalic.mjs";
+import light from "./palettes/light.mjs";
+import lightNoItalic from "./palettes/light-noitalic.mjs";
+import graphite from "./palettes/graphite.mjs";
+import graphiteNoItalic from "./palettes/graphite-noitalic.mjs";
+import neon from "./palettes/neon.mjs";
+import neonNoItalic from "./palettes/neon-noitalic.mjs";
 
 // Bảng màu Dark xuất trực tiếp để các script cũ (kiểm tra, preview) vẫn dùng được
 export { ui, syntax, accents, ansi } from "./palettes/dark.mjs";
@@ -25,7 +32,7 @@ if (existsSync(privateDir)) {
 }
 
 export { dark };
-export const variants = [dark, ...local];
+export const variants = [dark, darkNoItalic, light, lightNoItalic, graphite, graphiteNoItalic, neon, neonNoItalic, ...local];
 // Phát hành (Marketplace, kho Zed, terminals/ trong repo) chỉ gồm biến thể publish: true.
 // Biến thể cục bộ chỉ build vào dist/local/ (không vào git) và cài bằng `npm run install:local`.
 export const publicVariants = variants.filter((v) => v.publish);

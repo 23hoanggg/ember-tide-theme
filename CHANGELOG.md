@@ -1,7 +1,11 @@
 # Changelog
 
-## 1.4.0 (in progress)
+## 1.4.0
 
+- **Eight themes in one extension.** Next to **Ember Tide** (night blue) there are now **Ember Tide Light** (warm paper),
+  **Ember Tide Graphite** (neutral gray, like a browser's dark mode, with softer colors) and **Ember Tide Neon**
+  (deep indigo, more vivid). Each one also comes as a **No Italic** version. Pick them with Ctrl/Cmd+K Ctrl/Cmd+T; Zed and the
+  terminal palettes in `terminals/` get the same themes.
 - **Balanced brightness.** Code colors now sit in one even brightness band (measured with APCA), so nothing glares
   at high screen brightness and nothing sinks when the screen is dimmed: strings, types and decorators are a little
   softer, parameters and HTML tags a little clearer, plain text slightly less bright, comments slightly clearer.

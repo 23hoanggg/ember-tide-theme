@@ -1,0 +1,23 @@
+{
+  "name": "Ember Tide Graphite",
+  "background": "#1C1B22",
+  "foreground": "#D6D6D9",
+  "cursorColor": "#70C7FF",
+  "selectionBackground": "#354254",
+  "black": "#515058",
+  "red": "#F786A1",
+  "green": "#ADD585",
+  "yellow": "#E4BA7B",
+  "blue": "#68AEE3",
+  "purple": "#D4A4F0",
+  "cyan": "#83CDC7",
+  "white": "#CFCED4",
+  "brightBlack": "#807F88",
+  "brightRed": "#F6A3B6",
+  "brightGreen": "#C4E4A7",
+  "brightYellow": "#FAD7A5",
+  "brightBlue": "#7EC6F5",
+  "brightPurple": "#E0BBF8",
+  "brightCyan": "#ACE0DB",
+  "brightWhite": "#EAE9EE"
+}

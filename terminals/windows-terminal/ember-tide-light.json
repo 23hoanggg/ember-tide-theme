@@ -1,0 +1,23 @@
+{
+  "name": "Ember Tide Light",
+  "background": "#FAF7F1",
+  "foreground": "#373E4C",
+  "cursorColor": "#0068A2",
+  "selectionBackground": "#D6E6F7",
+  "black": "#2A313E",
+  "red": "#BF2F4E",
+  "green": "#3E7A1C",
+  "yellow": "#966200",
+  "blue": "#1D63B5",
+  "purple": "#8B43AA",
+  "cyan": "#0F7C77",
+  "white": "#9C968C",
+  "brightBlack": "#6D7685",
+  "brightRed": "#D4405C",
+  "brightGreen": "#4D8C2A",
+  "brightYellow": "#A97500",
+  "brightBlue": "#2E78CC",
+  "brightPurple": "#A057BF",
+  "brightCyan": "#20918B",
+  "brightWhite": "#B5AFA6"
+}

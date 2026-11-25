@@ -1718,7 +1718,7 @@
     {
       "name": "Heading link",
       "scope": [
-        "markup.heading string.other.link"
+        "markup.heading string.other.link.title.markdown"
       ],
       "settings": {
         "foreground": "#70C7FF",
@@ -2247,15 +2247,6 @@
       ],
       "settings": {
         "foreground": "#FF9F5E"
-      }
-    },
-    {
-      "name": "PowerShell type",
-      "scope": [
-        "storage.type.powershell"
-      ],
-      "settings": {
-        "foreground": "#B3B1FF"
       }
     },
     {

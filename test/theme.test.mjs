@@ -20,7 +20,7 @@ const keysOf = (o) => Object.keys(o).sort();
 // 2026-11-25: chủ dự án chọn quay về đúng màu bản 1.0.0 (Marketplace, build từ commit 546aec5) — bỏ thay đổi màu của 1.1.0/1.2.0.
 // 1.3.0 = bảng màu 1.0.0 + sửa scope sau QA (private/docs/qa-1.0.0.md). Màu giao diện (colors) vẫn trùng bản 1.0.0, xem test bên dưới.
 // Băm trên JSON đã chuẩn hoá chữ hoa hex, để đổi hoa/thường không làm test đỏ.
-const DARK_VSCODE_SHA256 = "6a252a9aced85c49eccf8410412ed8b4afcbe8a93fdcf08214d1ac65e0f0cb8f";
+const DARK_VSCODE_SHA256 = "e66d973899695bb3e08114dec7789fcfe4c5805718cc5474646bc55ec18e7211";
 // sha256 của khối "colors" bản 1.0.0 đã phát hành (commit 546aec5)
 const DARK_VSCODE_COLORS_SHA256 = "9cae5327c2c3cdafe3c193bebfa801cbe0c27e35c5e42ae6f7b52661293070e3";
 const norm = (o) => JSON.stringify(o).replace(/#[0-9a-fA-F]{6,8}/g, (m) => m.toUpperCase());

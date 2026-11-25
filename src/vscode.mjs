@@ -792,7 +792,7 @@ const tokenColors = [
   rule("Inline code", ["markup.inline.raw", "markup.fenced_code.block.markdown punctuation.definition", "markup.raw"], s.string),
   rule("Code fence language", ["fenced_code.block.language"], s.attribute),
   rule("Link text", ["string.other.link.title.markdown", "string.other.link.description.markdown", "meta.link.inline.markdown string.other.link"], s.keyword),
-  rule("Heading link", ["markup.heading string.other.link"], s.func, ""),
+  rule("Heading link", ["markup.heading string.other.link.title.markdown"], s.func, ""),
   rule("Link url", ["markup.underline.link", "markup.underline.link.image", "meta.link.reference.def.markdown constant.other.reference.link"], s.property),
   rule("Quote", ["markup.quote", "punctuation.definition.quote.begin.markdown"], s.commentDoc, "italic"),
   rule("List marker", ["punctuation.definition.list.begin.markdown", "beginning.punctuation.definition.list.markdown"], s.number),
@@ -858,7 +858,6 @@ const tokenColors = [
   rule("C++ operator overload", ["entity.name.operator.cpp"], s.func),
   rule("CSS keyframe offset", ["entity.other.keyframe-offset.css"], s.number),
   rule("PHP core constant", ["support.constant.core.php"], s.number),
-  rule("PowerShell type", ["storage.type.powershell"], s.typeBuiltin),
   rule("R accessor", ["keyword.accessor.dollar.r"], s.operator),
 
   rule("Invalid", ["invalid", "invalid.illegal"], ui.red),

@@ -17,14 +17,14 @@ if (zedVersion !== pkg.version) errors.push(`Phiên bản lệch: package.json $
 const changelog = readFileSync("CHANGELOG.md", "utf8");
 if (!changelog.includes(`## ${pkg.version}`)) errors.push(`CHANGELOG.md chưa có mục ## ${pkg.version}`);
 
-for (const f of [pkg.icon, "LICENSE", "zed/LICENSE", "themes/ember-tide-color-theme.json", "zed/themes/ember-tide.json", "extras/zed-semantic-token-rules.json", "terminals/README.md", "terminals/ptyxis/ember-tide.palette", "terminals/windows-terminal/ember-tide.json"]) {
+for (const f of [pkg.icon, "LICENSE", "zed/LICENSE", ...JSON.parse(readFileSync("package.json", "utf8")).contributes.themes.map((t) => t.path.replace(/^\.\//, "")), "zed/themes/ember-tide.json", "extras/zed-semantic-token-rules.json", "terminals/README.md", "terminals/ptyxis/ember-tide.palette", "terminals/windows-terminal/ember-tide.json"]) {
   if (!existsSync(f)) errors.push(`Thiếu file ${f}`);
 }
 
 try {
   const zed = JSON.parse(readFileSync("zed/themes/ember-tide.json", "utf8"));
   if (!zed.themes?.length) errors.push("zed/themes/ember-tide.json không có theme nào");
-  JSON.parse(readFileSync("themes/ember-tide-color-theme.json", "utf8"));
+  for (const t of JSON.parse(readFileSync("package.json", "utf8")).contributes.themes) JSON.parse(readFileSync(t.path, "utf8"));
 } catch (e) {
   errors.push("Theme JSON lỗi: " + e.message);
 }

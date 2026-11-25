@@ -56,7 +56,7 @@ export const ui = {
   yellow: "#8C5A00",
   red: "#BF2F4E",
   coral: "#A84E36",
-  ignored: "#968F85",
+  ignored: "#8F887E",
   bgGreen: "#E4EFDA",
   bgYellow: "#FAF0DE",
   bgRed: "#FBE7EA",

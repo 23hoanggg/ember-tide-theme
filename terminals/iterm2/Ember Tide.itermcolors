@@ -142,18 +142,18 @@
 	<key>Foreground Color</key>
 	<dict>
 		<key>Alpha Component</key><real>1</real>
-		<key>Blue Component</key><real>0.933333</real>
+		<key>Blue Component</key><real>0.909804</real>
 		<key>Color Space</key><string>sRGB</string>
-		<key>Green Component</key><real>0.890196</real>
-		<key>Red Component</key><real>0.862745</real>
+		<key>Green Component</key><real>0.866667</real>
+		<key>Red Component</key><real>0.843137</real>
 	</dict>
 	<key>Bold Color</key>
 	<dict>
 		<key>Alpha Component</key><real>1</real>
-		<key>Blue Component</key><real>0.933333</real>
+		<key>Blue Component</key><real>0.909804</real>
 		<key>Color Space</key><string>sRGB</string>
-		<key>Green Component</key><real>0.890196</real>
-		<key>Red Component</key><real>0.862745</real>
+		<key>Green Component</key><real>0.866667</real>
+		<key>Red Component</key><real>0.843137</real>
 	</dict>
 	<key>Cursor Color</key>
 	<dict>

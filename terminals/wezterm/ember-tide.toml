@@ -1,7 +1,7 @@
 # Ember Tide — sinh tự động từ palette.mjs, đừng sửa tay
 [colors]
 background = "#171D28"
-foreground = "#DCE3EE"
+foreground = "#D7DDE8"
 cursor_bg = "#70C7FF"
 cursor_fg = "#171D28"
 cursor_border = "#70C7FF"

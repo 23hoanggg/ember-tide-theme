@@ -1,6 +1,6 @@
 id = "ember-tide-theme"
 name = "Ember Tide"
-version = "1.3.0"
+version = "1.4.0"
 schema_version = 1
 authors = ["Hoang"]
 description = "A warm–cool dark theme: night-blue background, ember coral and amber, tide blue and teal."

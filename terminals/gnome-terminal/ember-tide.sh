@@ -5,7 +5,7 @@ id=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
 p="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$id/"
 gsettings set "$p" use-theme-colors false
 gsettings set "$p" background-color '#171D28'
-gsettings set "$p" foreground-color '#DCE3EE'
+gsettings set "$p" foreground-color '#D7DDE8'
 gsettings set "$p" cursor-colors-set true
 gsettings set "$p" cursor-background-color '#70C7FF'
 gsettings set "$p" cursor-foreground-color '#171D28'

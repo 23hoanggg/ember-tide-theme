@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 (in progress)
+
+- **Balanced brightness.** Code colors now sit in one even brightness band (measured with APCA), so nothing glares
+  at high screen brightness and nothing sinks when the screen is dimmed: strings, types and decorators are a little
+  softer, parameters and HTML tags a little clearer, plain text slightly less bright, comments slightly clearer.
+- **Clearer modules.** Namespaces and imported modules (`fs.`, `React.`, `std::`) use a lighter olive instead of the
+  dim olive-gold that looked like an unused variable.
+
 ## 1.3.0
 
 - **Back to the original 1.0.0 colors.** 1.2.0 changed many colors at once and did not feel as stable in use, so

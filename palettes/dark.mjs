@@ -1,4 +1,4 @@
-// Ember Tide (Dark) — bảng màu phát hành, đúng các màu của bản 1.0.0 (chủ dự án chọn quay về, 2026-11-25).
+// Ember Tide (Dark) — bảng màu phát hành: màu 1.0.0, cân độ sáng theo APCA (2026-11-25, private/tools/balance.mjs).
 // Biến thể cục bộ (nếu có) nằm trong private/palettes/. Sửa màu ở đây rồi chạy `npm run build`.
 
 export const ui = {
@@ -21,7 +21,7 @@ export const ui = {
   borderSoft: "#202A38",
   borderTide: "#2E4560", // viền tab — xanh thủy triều trầm
 
-  fg: "#DCE3EE",
+  fg: "#D7DDE8",
   fgSoft: "#C3CDDC",
   fgBright: "#F0F4FA",
   fgMuted: "#8996AC",
@@ -60,27 +60,27 @@ export const ui = {
 
 // Màu cú pháp. Tất cả đều ≥ 7:1 trên nền editor (comment ≥ 4.5:1).
 export const syntax = {
-  comment: "#8694AC",
-  commentDoc: "#93A3BA",
+  comment: "#8B99B1",
+  commentDoc: "#94A4BC",
 
   keyword: "#D29BFF", // tím
   func: "#70C7FF", // xanh trời
   property: "#72D4C9", // xanh ngọc
-  type: "#F2CC78", // vàng
+  type: "#E6C16D", // vàng
   typeBuiltin: "#B3B1FF", // tím lavender — string, number, bool…
-  namespace: "#BDAA67", // vàng ô liu — module, namespace (React., std::, fmt.): cùng họ vàng với type nhưng trầm hơn → `React.SubmitEvent` đọc liền một cụm
+  namespace: "#B9BD69", // ô liu sáng (cũ #BDAA67 quá trầm, trông như biến không dùng) — module, namespace (React., std::, fmt.): cùng họ vàng với type nhưng trầm hơn → `React.SubmitEvent` đọc liền một cụm
   number: "#FF9F5E", // cam — số, hằng, boolean
-  attribute: "#8EE0B5", // xanh bạc hà — decorator, attribute, @id của Prisma (tách khỏi cụm cam)
-  string: "#ACE08F", // xanh lá
+  attribute: "#84D6AB", // xanh bạc hà — decorator, attribute, @id của Prisma (tách khỏi cụm cam)
+  string: "#A0D383", // xanh lá
   regex: "#F7AEE6", // hồng — regex
-  escape: "#F2CC78",
-  variable: "#EDA898", // san hô nhạt
-  parameter: "#FF8689", // đỏ san hô, in nghiêng — nổi rõ, tách khỏi type vàng, variable san hô nhạt (không nghiêng)
+  escape: "#E6C16D",
+  variable: "#ECA898", // san hô nhạt
+  parameter: "#FF8B8D", // đỏ san hô, in nghiêng — nổi rõ, tách khỏi type vàng, variable san hô nhạt (không nghiêng)
   special: "#8AB3FF", // xanh phớt tím, ĐẬM + nghiêng — this, self, super: từ khoá quan trọng, dễ bắt mắt khi đọc
-  tag: "#FF8FB0", // hồng đỏ — tag HTML/JSX
-  operator: "#8CBECB", // cyan xám — toán tử: dịu hơn keyword, chỉ sáng hơn dấu câu một chút (là "chất keo", không tranh chú ý)
-  punctuation: "#9AA8BD", // dấu ; , . — chìm hơn chữ để code dễ đọc
-  bracket: "#B7C3D4",
+  tag: "#FF93B4", // hồng đỏ — tag HTML/JSX
+  operator: "#85B6C3", // cyan xám — toán tử: dịu hơn keyword, chỉ sáng hơn dấu câu một chút (là "chất keo", không tranh chú ý)
+  punctuation: "#9AA8BE", // dấu ; , . — chìm hơn chữ để code dễ đọc
+  bracket: "#AFBBCB",
   ghost: "#5F6D84", // gợi ý AI / inline completion
 };
 

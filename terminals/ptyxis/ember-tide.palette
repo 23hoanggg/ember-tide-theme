@@ -3,7 +3,7 @@
 Name=Ember Tide
 
 [Light]
-Foreground=#DCE3EE
+Foreground=#D7DDE8
 Background=#171D28
 Color0=#465166
 Color1=#FF7F9F
@@ -24,13 +24,13 @@ Color15=#F0F4FA
 
 BellForeground=#171D28
 BellBackground=#E8B96F
-RemoteForeground=#DCE3EE
+RemoteForeground=#D7DDE8
 RemoteBackground=#2F6E9E
 SuperuserForeground=#171D28
 SuperuserBackground=#FF7F9F
 
 [Dark]
-Foreground=#DCE3EE
+Foreground=#D7DDE8
 Background=#171D28
 Color0=#465166
 Color1=#FF7F9F
@@ -51,7 +51,7 @@ Color15=#F0F4FA
 
 BellForeground=#171D28
 BellBackground=#E8B96F
-RemoteForeground=#DCE3EE
+RemoteForeground=#D7DDE8
 RemoteBackground=#2F6E9E
 SuperuserForeground=#171D28
 SuperuserBackground=#FF7F9F

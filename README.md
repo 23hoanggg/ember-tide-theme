@@ -23,16 +23,16 @@ write, tide blue and teal for the things you call. Both editors are generated fr
 | Keyword | `#D29BFF` | violet |
 | Function / method | `#70C7FF` | sky blue |
 | Property / field | `#72D4C9` | teal |
-| Type / class | `#F2CC78` | gold |
+| Type / class | `#E6C16D` | gold |
 | Built-in type (`string`, `int`…) | `#B3B1FF` | lavender |
-| Namespace / module | `#BDAA67` | olive gold |
+| Namespace / module | `#B9BD69` | light olive |
 | Number / constant / boolean | `#FF9F5E` | orange |
-| Decorator / attribute | `#8EE0B5` | mint |
-| String | `#ACE08F` | green |
-| Variable | `#EDA898` | coral |
-| Parameter | `#FF8689` *italic* | coral red |
+| Decorator / attribute | `#84D6AB` | mint |
+| String | `#A0D383` | green |
+| Variable | `#ECA898` | coral |
+| Parameter | `#FF8B8D` *italic* | coral red |
 | `this` / `self` | `#8AB3FF` *italic* | periwinkle |
-| Comment | `#8694AC` *italic* | slate |
+| Comment | `#8B99B1` *italic* | slate |
 
 ## Install
 
